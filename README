@@ -1,0 +1,29 @@
+arpsecd README
+
+--
+
+Building instructions
+
+  1) arpsecd has been developed for the Linux operating system, but may be cross compiled on other UNIX based platforms such as OSX.  Non-unix versions have not been tested, however.
+
+  2) A local-build of the latest version of gprolog must be availble to link againsts.  The packages provided by Ubuntu cause link errors (do to hardware issues), so the library must be acquired and built locally.  Once build, you need to set the GPROLOG_INCLUDE value in the Makefile.
+
+  3) Make sure that the gplc is in your path, or st the GPLC variable in the Makefile.
+
+--
+
+Installing
+
+  1) 
+
+-- 
+
+Running
+
+  1) Type 
+
+A good tutorial on ARP is available at: http://www.erg.abdn.ac.uk/~gorry/eg3561/inet-pages/arp.html
+
+The environment variable GPROLOG path is the one that points to the location of the prolog implementation (gprolog).  E.g., 
+
+    GPROLOG_PATH=/usr/local/share/bin

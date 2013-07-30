@@ -1,0 +1,4 @@
+grep METRIC *.log  | grep add | grep " ARP" | awk '{print $12}' > arp-add.dat
+grep METRIC *.log  | grep " ARP B" | awk '{print $11}' > arp-bin.dat
+grep METRIC *.log | grep RARP | grep add | awk '{print $12}' > rarp-add.dat
+grep METRIC *.log | grep "RARP B" | awk '{print $11}' > rarp-bin.dat
