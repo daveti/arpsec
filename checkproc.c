@@ -10,7 +10,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#define GPROLOG_BIN_PATH	"/usr/bin/gprolog"
+#define GPROLOG_BIN_PATH	"/usr/local/bin/gprolog"
 
 pid_t pid;
 int  gprlog_pipefds[2], ret=0, l, gpout_pipefds[2];

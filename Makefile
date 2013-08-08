@@ -4,7 +4,7 @@
 # Created	: Thu Mar 14 07:07:42 EDT 2013
 # By		: Patrick Mcdaniel
 #
-# Modified	: Jul 7, 2013
+# Modified	: Aug 7, 2013
 # By		: daveti
 
 #
@@ -12,7 +12,7 @@
    
 # System setup
 #GPROLOG_INCLUDE=/home/mcdaniel/gprolog-1.4.2/include
-GPROLOG_INCLUDE=/usr/local/gprolog-1.4.4/include
+GPROLOG_INCLUDE=/usr/local/gprolog-1.4.2/include
 INCLUDES=-I$(GPROLOG_INCLUDE)
 LIBDIRS=
 

@@ -9,7 +9,7 @@
 //
 //  Author  : Patrick McDaniel
 //  Created : Tue Mar 26 10:25:00 EDT 2013
-//
+//  daveti  : Aug 5, 2013
 
 // Project Includes
 #include <stdio.h>
@@ -22,6 +22,12 @@
 void ascSetLocalSystem( char *sys );
 void ascSetLocalNet( char *net );
 void ascSetLocalMedia(  char *med );
+
+// Dump all the local infomation for debugging
+void ascDumpLocalInfo(void);
+
+// Release the memory used by local info
+void ascReleaseMemForLocalInfo(void);
 
 // determine whether this response is in relation to prev request
 int ascPendingNetworkBinding( AsNetworkAddress addr );

@@ -1,11 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  File          : AsControl.cpp
+//  File          : AsControl.c
 //  Description   : The AsControl module implements a shim for the system
 //                  trust validation for the arpsec deamon
 //
 //  Author  : Patrick McDaniel
 //  Created : Tue Mar 26 10:25:00 EDT 2013
+//  Dev	    : daveti
 
 //
 // Includes
@@ -77,6 +78,46 @@ void ascSetLocalMedia(  char *med ) {
     // Set value and return
     ascLocalMedia = med;
     return;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function	: ascDumpLocalInfo
+// Description	: Dump the local information for debugging
+//
+// Inputs	: void
+// Outputs	: void
+// Dev		: daveti
+
+void ascDumpLocalInfo(void)
+{
+	asLogMessage("Info - LocalSystem: %s", ascLocalSystem);
+	asLogMessage("Info - LocalNet: %s", ascLocalNet);
+	asLogMessage("Info - LocalMedia: %s", ascLocalMedia);
+	return;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : ascReleaseMemForLocalInfo
+// Description  : Release the memory for local information
+//
+// Note		: This function only works for ASKRN_RELAY mode!
+// Inputs       : void
+// Outputs      : void
+// Dev          : daveti
+
+void ascReleaseMemForLocalInfo(void)
+{
+	// free the memory for setup local info
+	if (ascLocalSystem)
+		free(ascLocalSystem);
+	if (ascLocalNet)
+		free(ascLocalNet);
+	if (ascLocalMedia)
+		free(ascLocalMedia);
+
+        return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -196,6 +237,9 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	asStopMetricsTimer( "ARP add binding ");
 	asLogMessage( "Successfully processed ARP RES [%s->%s]", msg->target.media, msg->binding.network );
 
+	// TODO
+	// daveti: add the binding into ARP cache
+
     } else {
 
 	// Check the source system
@@ -205,6 +249,9 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	    aslAddBindingStatement( msg->source, msg->target.network, msg->binding.media, now );
 	    asLogMessage( "Successfully processed foriegn ARP RES [%s->%s]", 
 		    msg->target.media, msg->binding.network );
+
+		// TODO
+		// daveti: add the binding into ARP cache
 
 	} else {
 
@@ -308,6 +355,9 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	asLogMessage( "Successfully processed RARP RES [%s->%s]", msg->target.network, msg->binding.media );
 	asStopMetricsTimer( "RARP add binding ");
 
+	// TODO
+	// daveti: update the ARP cache
+
     } else {
 
 	// Check the source system
@@ -317,6 +367,10 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	    aslAddBindingStatement( msg->source, msg->binding.media, msg->target.network, now );
 	    asLogMessage( "Successfully processed foreign RARP RES [%s->%s]", 
 		    msg->target.network, msg->binding.media );
+
+		// TODO
+		// daveti: update the ARP cache
+
 	} else {
 
 	    // Ignore message
@@ -411,10 +465,39 @@ int ascControlLoop( int mode ) {
 	return( -1 );
     }
 
+   // daveti: setup the select before the loop
+   nfds = 0;
+   FD_ZERO( &rdfds );
+   FD_ZERO( &wrfds );
+   next.tv_sec = SELECT_WAIT_PERIOD;
+   next.tv_usec = 0;
+   int *relayfds = askGetRelayHandle3();
+   int maxfd = 0;
+   int i;
+   if (relayfds) {
+	for (i = 0; i < ARPSEC_MAX_NUM_OF_CPUS; i++) {
+	    if (relayfds[i] != 0) {
+		// add this fd into select read set
+		FD_SET(relayfds[i], &rdfds);
+		asLogMessage("Got file handler[%d]", relayfds[i]);
+		
+		// Check for max
+		if (relayfds[i] > maxfd) {
+			maxfd = relayfds[i];
+		}
+	    } else {
+		// No new files
+		nfds = maxfd + 1;
+		break;
+	    }
+	}
+    }
+
     // Loop until done
     ascControlDone = 0;
     while ( !ascControlDone ) {
 
+/* daveti - move this outside the loop
 	// Setup the select wait
 	nfds = 0;
 	FD_ZERO( &rdfds );
@@ -430,10 +513,11 @@ int ascControlLoop( int mode ) {
 	    printf( "Got file handle\n" );
 	    nfds = fh+1;
 	}
+*/
 							
 	// Do the select, then process the result
 	rval = select(nfds, &rdfds, &wrfds, NULL, &next); 
-	asLogMessage( "Out of select ..." );
+	// asLogMessage( "Out of select ..." );
 	if ( rval < 0 ) {
 
 	    // We got an error on the select, prepare to bail out
@@ -444,10 +528,13 @@ int ascControlLoop( int mode ) {
 	else if (rval > 0) {
 
 	    // We select the file handle and should process data
+	    printf("daveti: ready to read from relay\n");
 	} 
 
 	// Ok, do normal processing
-	if ( (msg = askGetNextMessage()) != NULL ) {
+	//if ( (msg = askGetNextMessage()) != NULL ) {
+	// daveti: make it a while loop
+	while ((msg = askGetNextMessage()) != NULL) {
 	    ascProcessMessage(msg);
 	    askReleaseBuffer(msg);
 	}
@@ -498,19 +585,4 @@ void ascSigHupHandler( int sig ) {
     asLogMessage( "System received SIGHUP signal, processing." );
     return;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

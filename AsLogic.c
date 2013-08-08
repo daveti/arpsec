@@ -28,7 +28,7 @@
 #define GPROLOG_PATH "GRPROLOG_PATH"
 #define GPROLOG_PROGRAM "arpsec.pl"
 //daveti
-#define GPROLOG_DEFAULT_PATH "/usr/local/gprolog-1.4.4/bin"
+#define GPROLOG_DEFAULT_PATH "/usr/local/gprolog-1.4.2/bin"
 //#define GPROLOG_DEFAULT_PATH "/usr/bin"
 #define VALID_BINDING_MARKER "X = "
 #define MAX_OUTPUT_LINES 25

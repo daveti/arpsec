@@ -23,14 +23,35 @@
 #define ASKRN_SIMULATION    1  // Simluation of the kernel operation
 #define ASKRN_RELAY	    2  // Interaction with the kernel directly
 
-#define ARPSEC_RELAY_FILE	"/sys/kernel/debug/arpsec_cpu"
-#define ARPSEC_ETH_ALEN		6  // Length of ethernet (hardware) address
-#define ARPSEC_IPV4_ALEN	4  // Length of IPv4 address
-#define ARPSEC_ARP_16BIT	2  // 16-bit used by ARP
+// Linux Kernel ARP definitions
+#define ARPSEC_DEBUGFS			"/sys/kernel/debug"
+#define ARPSEC_RELAY_FILE		"/sys/kernel/debug/arpsec_cpu"
+#define ARPSEC_RELAY_FILE_BUFF		(strlen(ARPSEC_RELAY_FILE)+2)
+#define ARPSEC_ETH_ALEN			6  // Length of ethernet (hardware) address
+#define ARPSEC_IPV4_ALEN		4  // Length of IPv4 address
+#define ARPSEC_ARP_16BIT		2  // 16-bit used by ARP
+#define ARPSEC_MAX_NUM_OF_CPUS		12 // Max number of CPUs
+#define ARPSEC_PKG_SIZE			28 // Size of ARP pkg
+#define ARPSEC_RELAY_BUFFLEN		280// Length of the buffer to read from relay
+#define ARPSEC_IP_ADDRESS_LEN		sizeof("net255_255_255_255")
+#define ARPSEC_MAC_ADDRESS_LEN		sizeof("mediaff_ff_ff_ff_ff_ff")
+#define ARPSEC_MAC_BROAD_STRING_FF	"mediaff_ff_ff_ff_ff_ff"
+#define ARPSEC_MAC_BROAD_STRING_00	"media0_0_0_0_0_0"
+#define ARPSEC_HOSTNAME_LEN		128
+#define ARPSEC_IF_NAME			"eth0"	// For Fedora, this may be "em1"
+#define ARPSEC_GENERAL_BUFF_LEN		128
 
+// Linux Kernel ARP opcode
+// #include <linux/if_arp.h>
+#define ARPSEC_ARPOP_REQUEST	1
+#define ARPSEC_ARPOP_REPLY	2
+#define ARPSEC_ARPOP_RREQUEST	3
+#define ARPSEC_ARPOP_RREPLY	4
+
+// Linux Kernel ARP/RARP msg data structure
 typedef struct _arpmsg {
         unsigned char 	ar_hrd[ARPSEC_ARP_16BIT];         /* format of hardware address   */
-        unsgined char	ar_pro[ARPSEC_ARP_16BIT];         /* format of protocol address   */
+        unsigned char	ar_pro[ARPSEC_ARP_16BIT];         /* format of protocol address   */
         unsigned char   ar_hln;         	/* length of hardware address   */
         unsigned char   ar_pln;         	/* length of protocol address   */
         unsigned char	ar_op[ARPSEC_ARP_16BIT];          /* ARP opcode (command)         */
@@ -52,6 +73,56 @@ int askShutdownRelay( void );
 
 // Get a reference to the relay file handle (used for selecting)
 int askGetRelayHandle( void );
+void askGetRelayHandle2( void );
+int * askGetRelayHandle3( void );
+
+// Get format of hardware address from kernel arpmsg
+int askGetArHrdFromArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Get format of protocol address from kernel arpmsg
+int askGetArProFromArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Get length of hardware address from kernel arpmsg
+int askGetArHlnFromArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Get length of protocol address from kernel arpmsg
+int askGetArPlnFromArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Get ARP opcode from kernel arpmsg
+int askGetOpcodeFromArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Get sender hardware address from kernel arpmsg
+char * askGetArShaFromArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Get sender IP address from kernel arpmsg
+char * askGetArSipFromArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Get target hardware address from kernel arpmsg
+char * askGetArThaFromArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Get target IP address from kernel arpmsg
+char * askGetArTipFromArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Dump a kernel arpmsg
+void askDumpArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Dump a kernel arpmsg
+void askDumpArpmsg2(arpsec_arpmsg *arp_ptr);
+
+// Check if the MAC is a broadcast address
+int askCheckMacBroadcast(char *mac_ptr);
+
+// Validate a kernel arpmsg
+int askValidateArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Setup a bunch of the local information
+int askSetupLocalInfo( void );
+
+// Convert a kernel arpmsg into askRelayMessage
+askRelayMessage * askConvertArpmsg(arpsec_arpmsg *arp_ptr);
+
+// Get system name ('sys'+hostname) based on the IP dot string
+char * askGetSystemName(char *ip_ptr);
 
 // Get the next message off the relay, or nothing if non available
 askRelayMessage * askGetNextMessage( void );

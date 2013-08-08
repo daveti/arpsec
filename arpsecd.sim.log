@@ -1,0 +1,64 @@
+debian:/home/daveti/arpsecd# ./arpsecd -s
+Sun Aug  4 16:00:00 2013 : Intializing arpsecd logic ...
+Sun Aug  4 16:00:00 2013 : Forking child process for logic ...
+Sun Aug  4 16:00:00 2013 : Process forked (parent live)
+Sun Aug  4 16:00:00 2013 : Waiting for input [bytes written], ty=1
+Sun Aug  4 16:00:00 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:00 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:00 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:00 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:00 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:00 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:00 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:00 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:00 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:00 2013 : GPL input [Sun Aug  4 16:00:00 2013 : Process forked (child live)]
+Sun Aug  4 16:00:00 2013 : GPL input [Sun Aug  4 16:00:00 2013 : Child exec logic [/usr/local/gprolog-1.4.4/bin/gprolog][--consult-file[arpsec.pl] ...]
+Sun Aug  4 16:00:00 2013 : GPL input [GNU Prolog 1.4.4 (32 bits)]
+Sun Aug  4 16:00:00 2013 : GPL input [Compiled Jul 30 2013, 12:21:03 with gcc]
+Sun Aug  4 16:00:00 2013 : GPL input [By Daniel Diaz]
+Sun Aug  4 16:00:00 2013 : GPL input [Copyright (C) 1999-2013 Daniel Diaz]
+Sun Aug  4 16:00:00 2013 : GPL input [compiling /home/daveti/arpsecd/arpsec.pl for byte code...]
+Sun Aug  4 16:00:00 2013 : GPL input [/home/daveti/arpsecd/arpsec.pl compiled, 102 lines read - 8244 bytes written, 9 ms]
+Sun Aug  4 16:00:00 2013 : GPL input [| ?- ]
+Sun Aug  4 16:00:00 2013 : arpsecd logic initialized.
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys55061 (net=net226_182_41_201,med=media47_69_6a_27_81_85)
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys25845 (net=net191_43_82_5,med=mediabd_55_97_3c_64_63)
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys51320 (net=net152_250_126_169,med=media21_4f_2_11_9a_9a)
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys52325 (net=net242_78_249_206,med=mediaec_7c_c0_55_e5_19)
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys59744 (net=net112_56_251_108,med=media73_b7_1d_cb_e3_ba)
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys12946 (net=net46_91_252_78,med=mediaca_6c_5f_62_e4_53)
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys21968 (net=net198_59_114_10,med=media4c_d9_5e_3b_d0_ab)
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys50345 (net=net232_228_110_202,med=mediac2_bd_dd_e8_d9_1d)
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys18203 (net=net195_230_84_99,med=media2c_7f_b9_55_46_1f)
+Sun Aug  4 16:00:00 2013 : Creating simulated system sys36304 (net=net199_68_85_60,med=mediafa_56_27_ad_f0_b0)
+Sun Aug  4 16:00:01 2013 : Out of select ...
+Sun Aug  4 16:00:01 2013 : Out of select ...
+Sun Aug  4 16:00:01 2013 : Out of select ...
+Sun Aug  4 16:00:01 2013 : Out of select ...
+Sun Aug  4 16:00:01 2013 : Out of select ...
+Sun Aug  4 16:00:01 2013 : Out of select ...
+Sun Aug  4 16:00:01 2013 : Out of select ...
+Sun Aug  4 16:00:01 2013 : Out of select ...
+Sun Aug  4 16:00:01 2013 : Out of select ...
+Sun Aug  4 16:00:01 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RREQ,sdn=media47_69_6a_27_81_85,dst=HWANY,addr=media21_4f_2_11_9a_9a]
+Sun Aug  4 16:00:01 2013 : Writing to logic [valid_binding(X,media21_4f_2_11_9a_9a,1375657201).
+]
+Sun Aug  4 16:00:01 2013 : Waiting for input [X], ty=2
+Sun Aug  4 16:00:01 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:01 2013 : GPL input []
+Sun Aug  4 16:00:01 2013 : GPL input [uncaught exception: error(syntax_error('user_input:1 (char:39) integer overflow (exceeds max_integer)'),read_term/3)]
+Sun Aug  4 16:00:01 2013 : GPL input [| ?- ]
+Sun Aug  4 16:00:01 2013 : Failed to find good RARP REQ binding [media21_4f_2_11_9a_9a]
+Sun Aug  4 16:00:01 2013 : METRIC: RARP Binding : 100740
+Sun Aug  4 16:00:01 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RRES,src=sys59744,sdn=mediabd_55_97_3c_64_63,dst=HWANY,addr=media73_b7_1d_cb_e3_ba,bind=net112_56_251_108]
+Sun Aug  4 16:00:01 2013 : PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE
+Sun Aug  4 16:00:01 2013 : Writing to logic [trusted(sys59744,1375657201).
+]
+Sun Aug  4 16:00:01 2013 : Data is ready for reading from logic.
+Sun Aug  4 16:00:01 2013 : GPL input []
+Sun Aug  4 16:00:01 2013 : GPL input [uncaught exception: error(syntax_error('user_input:2 (char:19) integer overflow (exceeds max_integer)'),read_term/3)]
+Sun Aug  4 16:00:01 2013 : GPL input [| ?- ]
+Sun Aug  4 16:00:01 2013 : Faild to get a postive or negative result on system trust (sys59744,1375657201)
+debian:/home/daveti/arpsecd# ll
+
