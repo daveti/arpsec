@@ -8,6 +8,7 @@
 //
 //  Author  : Patrick McDaniel
 //  Created : Tue Mar 26 13:06:54 EDT 2013
+//  Dev	    : daveti Aug 21 2013
 //
 
 // Includes
@@ -50,6 +51,8 @@ typedef struct {
 	AsNetworkAddress    network;	// Network address to bind to
 	AsMediaAddress	    media;	// Media address to bind to
     } binding;
+
+    void	*dev_ptr;	// daveti: device ptr from kernel
 } askRelayMessage;
 
 // A random function

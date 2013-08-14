@@ -4,5 +4,6 @@ AsLog.o: AsLog.c AsLog.h
 AsLogic.o: AsLogic.c AsLogic.h AsDefs.h AsLog.h
 AsTMeasure.o: AsTMeasure.c AsTMeasure.h AsDefs.h
 AsKrnRelay.o: AsKrnRelay.c AsKrnRelay.h AsDefs.h AsLog.h AsControl.h
+AsNetlink.o: AsNetlink.c AsNetlink.h AsKrnRelay.h AsDefs.h AsLog.h
 AsControl.o: AsControl.c AsControl.h AsDefs.h AsLogic.h AsKrnRelay.h \
- AsLog.h AsTMeasure.h
+ AsLog.h AsTMeasure.h AsNetlink.h

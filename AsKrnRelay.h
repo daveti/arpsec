@@ -61,6 +61,10 @@ typedef struct _arpmsg {
         unsigned char           ar_tip[ARPSEC_IPV4_ALEN];              /* target IP address            */
 } arpsec_arpmsg;
 
+typedef struct _arpsec_rlmsg {
+	arpsec_arpmsg	arpsec_arp_msg;
+	void		*arpsec_dev_ptr;
+} arpsec_rlmsg;
 
 //
 // Module methods
@@ -75,6 +79,9 @@ int askShutdownRelay( void );
 int askGetRelayHandle( void );
 void askGetRelayHandle2( void );
 int * askGetRelayHandle3( void );
+
+// Get the net device pointer from kernel rlmsg
+void *askGetDevPtrFromRlmsg(arpsec_rlmsg *rlmsg_ptr);
 
 // Get format of hardware address from kernel arpmsg
 int askGetArHrdFromArpmsg(arpsec_arpmsg *arp_ptr);
@@ -119,7 +126,7 @@ int askValidateArpmsg(arpsec_arpmsg *arp_ptr);
 int askSetupLocalInfo( void );
 
 // Convert a kernel arpmsg into askRelayMessage
-askRelayMessage * askConvertArpmsg(arpsec_arpmsg *arp_ptr);
+askRelayMessage * askConvertArpmsg(arpsec_rlmsg *rlmsg_ptr);
 
 // Get system name ('sys'+hostname) based on the IP dot string
 char * askGetSystemName(char *ip_ptr);

@@ -25,6 +25,7 @@
 #include "AsKrnRelay.h"
 #include "AsLog.h"
 #include "AsTMeasure.h"
+#include "AsNetlink.h"
 
 // Defines
 #define SELECT_WAIT_PERIOD 1
@@ -155,6 +156,7 @@ int ascPendingMediaBinding( AsMediaAddress addr )  {
 //
 // Inputs       : msg - received message
 // Outputs      : 0 if successful, -1 if failure
+// Dev		: daveti
 
 int ascProcessArpRequest( askRelayMessage *msg ) {
 
@@ -174,8 +176,14 @@ int ascProcessArpRequest( askRelayMessage *msg ) {
     if ( strcmp( msg->target.network, ascLocalNet ) == 0 ) {
 
 	// TODO: implement the arp response tickle of the kernel when we have it
-	asLogMessage( "ascProcessArpRequest: UNIMPLEMNTED ARP RESPONSE, waiting for kernel" );
-	ret = -1;
+	// asLogMessage( "ascProcessArpRequest: UNIMPLEMNTED ARP RESPONSE, waiting for kernel" );
+	// ret = -1;
+	// daveti
+	ret = asnReplyToArpRequest(msg);
+	if (ret == -1)
+		asLogMessage("ascProcessArpRequest: Error on asnReplyToArpRequest()");
+	else
+		asLogMessage("ascProcessArpRequest: Info - ARP reply sent");
 
 
     } else {
@@ -202,10 +210,12 @@ int ascProcessArpRequest( askRelayMessage *msg ) {
 //
 // Inputs       : msg - received message
 // Outputs      : 0 if successful, -1 if failure
+// Dev		: daveti
 
 int ascProcessArpResponse( askRelayMessage *msg ) {
 
     //Local variables
+    int ret = 0;
     AsTime now = time(NULL);
 
     // Do a quick sanity check
@@ -237,8 +247,12 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	asStopMetricsTimer( "ARP add binding ");
 	asLogMessage( "Successfully processed ARP RES [%s->%s]", msg->target.media, msg->binding.network );
 
-	// TODO
 	// daveti: add the binding into ARP cache
+	ret = asnAddBindingToArpCache(msg);
+	if (ret == -1)
+		asLogMessage("ascProcessArpResponse: Error on asnAddBindingToArpCache()");
+	else
+		asLogMessage("ascProcessArpResponse: Info - ARP cache updated");
 
     } else {
 
@@ -250,8 +264,12 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	    asLogMessage( "Successfully processed foriegn ARP RES [%s->%s]", 
 		    msg->target.media, msg->binding.network );
 
-		// TODO
-		// daveti: add the binding into ARP cache
+	    // daveti: add the binding into ARP cache
+            ret = asnAddBindingToArpCache(msg);
+            if (ret == -1)
+		asLogMessage("ascProcessArpResponse: Error on asnAddBindingToArpCache()");
+	    else
+            	asLogMessage("ascProcessArpResponse: Info - ARP cache updated");
 
 	} else {
 
@@ -264,7 +282,7 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
     }
 
     // Otherwise this is intended for somebody else
-    return( 0 );
+    return( ret );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -274,6 +292,7 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 //
 // Inputs       : msg - received message
 // Outputs      : 0 if successful, -1 if failure
+// Dev		: daveti
 
 int ascProcessRArpRequest( askRelayMessage *msg ) {
 
@@ -293,7 +312,8 @@ int ascProcessRArpRequest( askRelayMessage *msg ) {
     if ( strcmp( msg->target.media, ascLocalMedia ) == 0 ) {
 
 	// TODO: implement the arp response tickle of the kernel when we have it
-	asLogMessage( "ascProcessArpRequest: UNIMPLEMNTED RARP RESPONSE, waiting for kernel" );
+	// daveti
+	asLogMessage( "ascProcessRArpRequest: UNIMPLEMNTED RARP RESPONSE, waiting for kernel" );
 	ret = -1;
 
     } else {
@@ -320,10 +340,12 @@ int ascProcessRArpRequest( askRelayMessage *msg ) {
 //
 // Inputs       : msg - received message
 // Outputs      : 0 if successful, -1 if failure
+// Dev		: daveti
 
 int ascProcessRArpResponse( askRelayMessage *msg ) {
 
     //Local variables
+    int ret = 0;
     AsTime now = time(NULL);
 
     // Do a quick sanity check
@@ -380,7 +402,7 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
     }
 
     // Otherwise this is intended for somebody else
-    return( 0 );
+    return( ret );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -458,12 +480,16 @@ int ascControlLoop( int mode ) {
 
     // Intalialize all of the subsystems
     sim = (mode) ? ASKRN_SIMULATION : ASKRN_RELAY;
-    if ( aslInitLogic() || (askInitRelay(sim)) ) {
+    if ( aslInitLogic() || (askInitRelay(sim)) || (asnInitNetlink(sim)) ) {
 
 	// Log and error out of processing
 	asLogMessage( "arpsec deamon initalization failed, aborting.\n" );
 	return( -1 );
     }
+
+   // daveti: test the bidirectional netlink socket
+   if (sim == ASKRN_RELAY)
+	asnTestNetlink();
 
    // daveti: setup the select before the loop
    nfds = 0;
@@ -552,6 +578,7 @@ int ascControlLoop( int mode ) {
     }
 
     // Close downt the procesing
+    asnShutdownNetlink();
     askShutdownRelay();
     aslShutdownLogic();
 

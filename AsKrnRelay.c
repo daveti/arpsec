@@ -258,7 +258,7 @@ askRelayMessage * askGetNextMessage( void ) {
     // Local variables
     askRelayMessage *msg = NULL;
     char read_buffer[ARPSEC_RELAY_BUFFLEN];
-    arpsec_arpmsg *arp_msg_ptr;
+    arpsec_rlmsg *rlmsg_ptr;
     int num_of_read;
     int i;
 
@@ -289,12 +289,12 @@ askRelayMessage * askGetNextMessage( void ) {
 			// asLogMessage("Info: nothing to read for file [%d]", relayfd[i]);
 			continue;
 		}
-		else if (num_of_read % ARPSEC_PKG_SIZE) {
+		else if (num_of_read % sizeof(arpsec_rlmsg)) {
 			// broken msg
 			asLogMessage("Error on broken msg from kernel for file [%d]", relayfd[i]);
 			continue;
 		}
-		else if (num_of_read / ARPSEC_PKG_SIZE != 1) {
+		else if (num_of_read / sizeof(arpsec_rlmsg) != 1) {
 			// more than 1 msg got the same time
 			// may need enhancement to queue all the msgs...
 			// currently only warning with processing
@@ -304,12 +304,12 @@ askRelayMessage * askGetNextMessage( void ) {
 
 		// read this buffer like arp_msg
 		asLogMessage("Info: read on msg from kernel for file [%d]", relayfd[i]);
-		arp_msg_ptr = (arpsec_arpmsg *)malloc(ARPSEC_PKG_SIZE);
-		memcpy(arp_msg_ptr, read_buffer, ARPSEC_PKG_SIZE);
+		rlmsg_ptr = (arpsec_rlmsg *)malloc(sizeof(arpsec_rlmsg));
+		memcpy(rlmsg_ptr, read_buffer, sizeof(arpsec_rlmsg));
 		
 		// convert the arpmsg into askRelayMsg...
-		msg = askConvertArpmsg(arp_msg_ptr);
-		free(arp_msg_ptr);
+		msg = askConvertArpmsg(rlmsg_ptr);
+		free(rlmsg_ptr);
 
 		// check if this is a valid ARP/RARP msg...
 		if (msg) {
@@ -337,6 +337,20 @@ int askSubmitMessage( askRelayMessage *buf ) {
 
     // Return successfully
     return( 0 );
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : askGetDevPtrFromRlmsg
+// Description  : get the net_device ptr from kernel rlmsg
+//
+// Inputs       : rlmsg_ptr - pointer to the kernel rlmsg
+// Outputs      : void *
+// Dev          : daveti
+
+void *askGetDevPtrFromRlmsg(arpsec_rlmsg *rlmsg_ptr)
+{
+	return (void *)rlmsg_ptr->arpsec_dev_ptr;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -729,15 +743,17 @@ char * askGetSystemName(char *ip_ptr)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Function     : askConvertArpmsg
-// Description  : convert a kernel arpmsg to a relay message
+// Description  : convert a kernel relay msg to a arpsecd logic message
 //
-// Inputs       : arp_ptr - arpmsg pointer
+// Inputs       : rlmsg_ptr - relay msg pointer
 // Outputs      : msg - askRelayMessage pointer
 // Dev		: daveti
  
-askRelayMessage * askConvertArpmsg( arpsec_arpmsg *arp_ptr) {
+askRelayMessage * askConvertArpmsg( arpsec_rlmsg *rlmsg_ptr) {
 
 	askRelayMessage *msg = NULL;
+	arpsec_arpmsg *arp_ptr = &(rlmsg_ptr->arpsec_arp_msg);
+	void *dev_ptr = rlmsg_ptr->arpsec_dev_ptr;
 	char *tmp_ptr;
 
 	// Validate this ARP msg from kernel
@@ -812,6 +828,10 @@ askRelayMessage * askConvertArpmsg( arpsec_arpmsg *arp_ptr) {
 				msg = NULL;
 				break;
 		}
+
+		// Save the net device ptr
+		if (msg)
+			msg->dev_ptr = dev_ptr;
 	}
 
 	return msg;

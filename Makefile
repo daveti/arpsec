@@ -32,6 +32,7 @@ ASOBJS=	arpsecd.o \
 	AsLogic.o \
 	AsTMeasure.o \
 	AsKrnRelay.o \
+	AsNetlink.o \
 	AsControl.o
 ARPSECPL=	arpsec.o
 TARGETS	=	arpsecd \
