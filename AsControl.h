@@ -18,6 +18,10 @@
 //
 // Module methods
 
+// Get the local information associated with this process
+char *ascGetLocalNet(void);
+char *ascGetLocalMedia(void);
+
 // Setup the local infomation associated with this process
 void ascSetLocalSystem( char *sys );
 void ascSetLocalNet( char *net );

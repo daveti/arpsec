@@ -24,6 +24,7 @@
 // Project Includes
 #include "AsNetlink.h"
 #include "AsKrnRelay.h"
+#include "AsControl.h"
 #include "AsLog.h"
 
 // Defines
@@ -219,6 +220,9 @@ int asnGenArpReqStruct(askRelayMessage *msg_ptr, struct arpreq *arpReq_ptr)
 		asLogMessage("asnGenArpReqStruct: Error on asn_mac_pton()");
 		return -1;
 	}
+	
+	// Set the ARP protocol hardware identifier
+	arpReq_ptr->arp_ha.sa_family = ARPHRD_ETHER;
 
 	// Set the ARP entry flag
 	arpReq_ptr->arp_flags = ATF_COM;
@@ -236,6 +240,61 @@ int asnGenArpReqStruct(askRelayMessage *msg_ptr, struct arpreq *arpReq_ptr)
 
 int asnGenArpMsgStruct(askRelayMessage *msg_ptr, arpsec_arpmsg *arpMsg_ptr)
 {
+        // Defensive checking
+        if ((msg_ptr->op != RFC_826_ARP_REQ) &&
+                (msg_ptr->op != RFC_903_ARP_RREQ))
+        {
+                asLogMessage("asnGenArpReqStruct: Error on unsupported msg opcode [%d]",
+                                msg_ptr->op);
+                return -1;
+        }
+
+	// Note: the first 4 members of arpmsg will be ignored
+	// as the kernel changes do not care about them except
+	// dev_ptr, ar_op, ar_sip, ar_sha, ar_tip, ar_tha. The key
+	// is to construct the right format of the ARP/RARP reply
+	// cause the kernel will create and send the reply directly
+	// without considering if the src from the REQ should be
+	// the target....
+	// daveti Aug 14, 2013
+
+        char ip[ARPSEC_NETLINK_STR_IPV4_LEN] = {0};
+        char mac[ARPSEC_NETLINK_STR_MAC_LEN] = {0};
+
+	// Set the opcode
+	if (msg_ptr->op == RFC_826_ARP_REQ)
+		arpMsg_ptr->ar_op[ARPSEC_ARP_16BIT-1] = ARPSEC_ARPOP_REPLY;
+	else
+		arpMsg_ptr->ar_op[ARPSEC_ARP_16BIT-1] = ARPSEC_ARPOP_RREPLY;
+
+	// Set the sender IP/MAC using local info
+	// This works for both REP/RREP
+	asnLogicIpToStringIp(ascGetLocalNet(), ip);
+	asnLogicMacToStringMac(ascGetLocalMedia(), mac);
+	asLogMessage("asnGenArpMsgStruct: Info - sender: ip=[%s], mac=[%s]", ip, mac);
+
+	inet_pton(AF_INET, ip, arpMsg_ptr->ar_sip);
+	if (asn_mac_pton(mac, arpMsg_ptr->ar_sha) == -1)
+	{
+		asLogMessage("asnGenArpMsgStruct: Error on asn_mac_pton() for sender");
+		return -1;
+	}
+
+	// Set the target IP/MAC from REQ/RREQ sender's IP/MAC
+	// This works for both REP/RREP
+	memset(ip, 0, ARPSEC_NETLINK_STR_IPV4_LEN);
+	memset(mac, 0, ARPSEC_NETLINK_STR_MAC_LEN);
+        asnLogicIpToStringIp(msg_ptr->sndr_net, ip);
+        asnLogicMacToStringMac(msg_ptr->sndr, mac);
+	asLogMessage("asnGenArpMsgStruct: Info - target: ip=[%s], mac=[%s]", ip, mac);
+
+	inet_pton(AF_INET, ip, arpMsg_ptr->ar_tip);
+	if (asn_mac_pton(mac, arpMsg_ptr->ar_tha) == -1)
+	{
+		asLogMessage("asnGenArpMsgStruct: Error on asn_mac_pton() for target");
+		return -1;
+	}
+
 	return 0;
 }
 

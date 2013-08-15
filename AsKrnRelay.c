@@ -756,6 +756,9 @@ askRelayMessage * askConvertArpmsg( arpsec_rlmsg *rlmsg_ptr) {
 	void *dev_ptr = rlmsg_ptr->arpsec_dev_ptr;
 	char *tmp_ptr;
 
+	// Debug
+	asLogMessage("Info: dev_ptr from kernel [%p]", dev_ptr);
+
 	// Validate this ARP msg from kernel
 	if ( askValidateArpmsg(arp_ptr) == -1) {
 		asLogMessage("Error on invalid ARP/RARP msg from the kernel");
@@ -772,6 +775,9 @@ askRelayMessage * askConvertArpmsg( arpsec_rlmsg *rlmsg_ptr) {
 		// NOTE: treat the msg->source as the hostname
 		// with the prefix 'sys' - look into askSetupLocalInfo
 		// for detailes...
+
+		// Set the sender IP for all the cases
+		msg->sndr_net = askGetArSipFromArpmsg(arp_ptr);
 
 		switch (askGetOpcodeFromArpmsg(arp_ptr))
 		{
@@ -1022,7 +1028,8 @@ askRelayMessage * askAllocateBuffer( askRelayMessage **buf ) {
 // Description  : Release the buffer received from a previous request
 //
 // Inputs       : buf - the buffer to release
-// Outputs      : 0 if successful, -1 if failure 
+// Outputs      : 0 if successful, -1 if failure
+// Updated	: daveti - sndr_net added
 
 int askReleaseBuffer( askRelayMessage *buf ) {
 
@@ -1031,6 +1038,7 @@ int askReleaseBuffer( askRelayMessage *buf ) {
     if ( buf->source != NULL ) free( buf->source );
     if ( buf->sndr != NULL ) free( buf->sndr );
     if ( buf->dest != NULL ) free( buf->dest );
+    if ( buf->sndr_net != NULL ) free( buf->sndr_net );
     if ( (buf->op == RFC_826_ARP_REQ) || (buf->op == RFC_826_ARP_RES) ) {
 	if (  buf->target.network != NULL ) free( buf->target.network );
 	if (  buf->binding.media != NULL ) free( buf->binding.media );

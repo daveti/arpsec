@@ -41,6 +41,32 @@ char	*ascLocalMedia = NULL;	    // The local media address name
 
 ////////////////////////////////////////////////////////////////////////////////
 //
+// Function     : ascGetLocalNet
+// Description  : Get the local infomation associated with this process
+//
+// Inputs       : void
+// Outputs      : ascLocalNet
+
+char *ascGetLocalNet(void)
+{
+    return ascLocalNet;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : ascGetLocalMedia
+// Description  : Get the local infomation associated with this process
+//
+// Inputs       : void
+// Outputs      : ascLocalMedia
+
+char *ascGetLocalMedia(void)
+{
+    return ascLocalMedia;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
 // Function     : ascSetLocalSystem
 // Description  : Setup the local infomation associated with this process
 //
@@ -312,9 +338,13 @@ int ascProcessRArpRequest( askRelayMessage *msg ) {
     if ( strcmp( msg->target.media, ascLocalMedia ) == 0 ) {
 
 	// TODO: implement the arp response tickle of the kernel when we have it
-	// daveti
-	asLogMessage( "ascProcessRArpRequest: UNIMPLEMNTED RARP RESPONSE, waiting for kernel" );
-	ret = -1;
+	// asLogMessage( "ascProcessRArpRequest: UNIMPLEMNTED RARP RESPONSE, waiting for kernel" );
+	// ret = -1;
+        ret = asnReplyToArpRequest(msg);
+        if (ret == -1)
+                asLogMessage("ascProcessRArpRequest: Error on asnReplyToArpRequest()");
+        else
+                asLogMessage("ascProcessRArpRequest: Info - ARP reply sent");
 
     } else {
 
@@ -377,8 +407,12 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	asLogMessage( "Successfully processed RARP RES [%s->%s]", msg->target.network, msg->binding.media );
 	asStopMetricsTimer( "RARP add binding ");
 
-	// TODO
-	// daveti: update the ARP cache
+        // daveti: add the binding into ARP cache
+        ret = asnAddBindingToArpCache(msg);
+        if (ret == -1)
+                asLogMessage("ascProcessRArpResponse: Error on asnAddBindingToArpCache()");
+        else
+                asLogMessage("ascProcessRArpResponse: Info - ARP cache updated");
 
     } else {
 
@@ -390,8 +424,13 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	    asLogMessage( "Successfully processed foreign RARP RES [%s->%s]", 
 		    msg->target.network, msg->binding.media );
 
-		// TODO
-		// daveti: update the ARP cache
+            // daveti: add the binding into ARP cache
+	    ret = asnAddBindingToArpCache(msg);
+            if (ret == -1)
+                    asLogMessage("ascProcessRArpResponse: Error on asnAddBindingToArpCache()");
+            else
+                    asLogMessage("ascProcessRArpResponse: Info - ARP cache updated");
+
 
 	} else {
 
