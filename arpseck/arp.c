@@ -137,6 +137,7 @@ EXPORT_SYMBOL(clip_tbl_hook);
 #define ARPSEC_NETLINK_OP_TEST		0
 #define ARPSEC_NETLINK_OP_REPLY		1
 #define ARPSEC_NETLINK_OP_BIND		2
+#define ARPSEC_NETLINK_OP_DELETE	3
 #define ARPSEC_RELAY_BUFF_SIZE  	8192
 #define ARPSEC_RELAY_BUFF_NUM   	4
 
@@ -301,6 +302,40 @@ static int arpsec_nl_bind(arpsec_nlmsg *ptr)
 
 	return rtn;
 }
+static int arp_req_delete(struct net *net, struct arpreq *r,
+			struct net_device *dev);
+static int arpsec_nl_delete(arpsec_nlmsg *ptr)
+{
+        struct net_device *dev = ptr->arpsec_dev_ptr;
+        struct arpreq *r = &(ptr->arpsec_arp_req);
+        struct net *net = dev_net(dev);
+        int rtn; 
+
+        printk(KERN_INFO "arpseck: entering arpsec_nl_delete\n");
+
+        // Defensive checking for dev
+        if (IS_ERR(dev))
+                printk(KERN_ERR "arpseck: arpsec_nl_delete - invalid dev ptr [%p]\n", dev);
+        else 
+                printk(KERN_INFO "arpseck: arpsec_nl_delete - dev ptr [%p], name [%s]\n",
+                        dev, dev->name);
+
+        // Defensive checking for net
+        if (IS_ERR(net))
+                printk(KERN_ERR "arpseck: arpsec_nl_delete - invalid net ptr [%p]\n", net);
+        else 
+                printk(KERN_INFO "arpseck: arpsec_nl_delete - net ptr [%p], dev ptr [%p]\n",
+                        net, __dev_get_by_name(net, r->arp_dev));
+
+        rtnl_lock();
+        rtn = arp_req_delete(net, r, dev);
+        rtnl_unlock();
+
+        if (rtn < 0) 
+                printk(KERN_ERR "arpseck: arp_req_delete failure with err [%d]\n", rtn);
+
+        return rtn;
+}
 static void arpsec_nl_handler(struct sk_buff *skb)
 {
         struct nlmsghdr *nlh;
@@ -329,6 +364,10 @@ static void arpsec_nl_handler(struct sk_buff *skb)
 
 		case ARPSEC_NETLINK_OP_BIND:
 			rtn = arpsec_nl_bind(arpsec_nlmsg_ptr);
+			break;
+
+		case ARPSEC_NETLINK_OP_DELETE:
+			rtn = arpsec_nl_delete(arpsec_nlmsg_ptr);
 			break;
 
 		default:

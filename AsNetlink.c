@@ -177,7 +177,7 @@ void asnTestNetlink(void)
 // Inputs       : arpReq_ptr - arpreq struct pointer
 // Outputs      : 0 if successful, -1 if not
 
-int asnGenArpReqStruct(askRelayMessage *msg_ptr, struct arpreq *arpReq_ptr)
+int asnGenArpReqStruct(askRelayMessage *msg_ptr, struct arpreq *arpReq_ptr, int opcode)
 {
 	// Defensive checking
 	if ((msg_ptr->op != RFC_826_ARP_RES) &&
@@ -214,18 +214,22 @@ int asnGenArpReqStruct(askRelayMessage *msg_ptr, struct arpreq *arpReq_ptr)
 	// Set the defalut device name
 	strncpy(arpReq_ptr->arp_dev, ARPSEC_IF_NAME, sizeof(arpReq_ptr->arp_dev)-1);
 
-	// Set the MAC address
-	if (asn_mac_pton(mac, arpReq_ptr->arp_ha.sa_data) == -1)
+	// Set up the hardware info only for bind
+	if (opcode == ARPSEC_NETLINK_OP_BIND)
 	{
-		asLogMessage("asnGenArpReqStruct: Error on asn_mac_pton()");
-		return -1;
-	}
+		// Set the MAC address
+		if (asn_mac_pton(mac, arpReq_ptr->arp_ha.sa_data) == -1)
+		{
+			asLogMessage("asnGenArpReqStruct: Error on asn_mac_pton()");
+			return -1;
+		}
 	
-	// Set the ARP protocol hardware identifier
-	arpReq_ptr->arp_ha.sa_family = ARPHRD_ETHER;
+		// Set the ARP protocol hardware identifier
+		arpReq_ptr->arp_ha.sa_family = ARPHRD_ETHER;
 
-	// Set the ARP entry flag
-	arpReq_ptr->arp_flags = ATF_COM;
+		// Set the ARP entry flag
+		arpReq_ptr->arp_flags = ATF_COM;
+	}
 
 	return 0;
 }
@@ -244,7 +248,7 @@ int asnGenArpMsgStruct(askRelayMessage *msg_ptr, arpsec_arpmsg *arpMsg_ptr)
         if ((msg_ptr->op != RFC_826_ARP_REQ) &&
                 (msg_ptr->op != RFC_903_ARP_RREQ))
         {
-                asLogMessage("asnGenArpReqStruct: Error on unsupported msg opcode [%d]",
+                asLogMessage("asnGenArpMsgStruct: Error on unsupported msg opcode [%d]",
                                 msg_ptr->op);
                 return -1;
         }
@@ -300,6 +304,74 @@ int asnGenArpMsgStruct(askRelayMessage *msg_ptr, arpsec_arpmsg *arpMsg_ptr)
 
 ////////////////////////////////////////////////////////////////////////////////
 //
+// Function     : asnDelBindingInArpCache
+// Description  : delete the binding in the kernel ARP cache
+//
+// Inputs       : askRelayMessage pointer
+// Outputs      : 0 if successful, -1 if not
+
+int asnDelBindingToArpCache(askRelayMessage *msg_ptr)
+{
+        struct nlmsghdr *nlh;
+        struct iovec iov;
+        struct msghdr msg;
+        struct arpreq arpReq;
+        arpsec_nlmsg tmp_nlmsg;
+        int rtn = 0;
+
+        // Init the stack struct to avoid potential error
+        memset(&iov, 0, sizeof(iov));
+        memset(&msg, 0, sizeof(msg));
+        memset(&arpReq, 0, sizeof(arpReq));
+        memset(&tmp_nlmsg, 0, sizeof(tmp_nlmsg));
+
+        // Create the nelink msg
+        nlh = (struct nlmsghdr *)malloc(NLMSG_SPACE(sizeof(arpsec_nlmsg)));
+        memset(nlh, 0, NLMSG_SPACE(sizeof(arpsec_nlmsg)));
+        nlh->nlmsg_len = NLMSG_SPACE(sizeof(arpsec_nlmsg));
+        nlh->nlmsg_pid = arpsec_pid;
+        nlh->nlmsg_flags = 0;
+
+        // Create the arpreq structure
+        rtn = asnGenArpReqStruct(msg_ptr, &arpReq, ARPSEC_NETLINK_OP_DELETE);
+        if (rtn == -1)
+        {
+                asLogMessage("asnDelBindingInArpCache: Error on asnGenArpReqStruct()");
+                free(nlh);
+                return -1;
+        }
+
+        // Fill up the netlink msg
+        tmp_nlmsg.arpsec_opcode = ARPSEC_NETLINK_OP_DELETE;
+        tmp_nlmsg.arpsec_dev_ptr = msg_ptr->dev_ptr;
+        memcpy(&(tmp_nlmsg.arpsec_arp_req), &arpReq, sizeof(arpReq));
+        memcpy(NLMSG_DATA(nlh), &tmp_nlmsg, sizeof(tmp_nlmsg));
+
+        // Create the socket msg
+        iov.iov_base = (void *)nlh;
+        iov.iov_len = nlh->nlmsg_len;
+        msg.msg_name = (void *)&arpsec_nl_dest_addr;
+        msg.msg_namelen = sizeof(arpsec_nl_dest_addr);
+        msg.msg_iov = &iov;
+        msg.msg_iovlen = 1;
+
+        // Send the msg to the kernel
+        rtn = sendmsg(arpsec_sock_fd, &msg, 0);
+        if (rtn == -1)
+        {
+                asLogMessage("asnDelBindingInArpCache: Error on sending netlink bind msg to the kernel [%s]",
+                                strerror(errno));
+                free(nlh);
+                return rtn;
+        }
+        asLogMessage("asnDelBindingInArpCache: Info - send netlink bind msg to the kernel");
+
+        free(nlh);
+        return rtn;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
 // Function     : asnAddBindingToArpCache
 // Description  : add the binding into kernel ARP cache
 //
@@ -329,7 +401,7 @@ int asnAddBindingToArpCache(askRelayMessage *msg_ptr)
         nlh->nlmsg_flags = 0;
 
 	// Create the arpreq structure
-	rtn = asnGenArpReqStruct(msg_ptr, &arpReq);
+	rtn = asnGenArpReqStruct(msg_ptr, &arpReq, ARPSEC_NETLINK_OP_BIND);
 	if (rtn == -1)
 	{
 		asLogMessage("asnAddBindingToArpCache: Error on asnGenArpReqStruct()");

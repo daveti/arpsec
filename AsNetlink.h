@@ -21,6 +21,7 @@
 #define ARPSEC_NETLINK_OP_TEST          0
 #define ARPSEC_NETLINK_OP_REPLY         1
 #define ARPSEC_NETLINK_OP_BIND          2
+#define ARPSEC_NETLINK_OP_DELETE	3
 #define ARPSEC_NETLINK_STR_MAC_LEN	sizeof("ff:ff:ff:ff:ff:ff")
 #define ARPSEC_NETLINK_STR_IPV4_LEN	sizeof("255.255.255.255")
 
@@ -48,11 +49,14 @@ void asnTestNetlink(void);
 // Insert the ARP binding into the kernel ARP cache
 int asnAddBindingToArpCache(askRelayMessage *msg_ptr);
 
+// Delete the ARP binding in the kernel ARP cache
+int asnDelBindingInArpCache(askRelayMessage *msg_ptr);
+
 // Trigger the kernel to reply this ARP request
 int asnReplyToArpRequest(askRelayMessage *msg_ptr);
 
 // Generate an arpreq struct based on askRelayMessage
-int asnGenArpReqStruct(askRelayMessage *msg_ptr, struct arpreq *arpReq_ptr);
+int asnGenArpReqStruct(askRelayMessage *msg_ptr, struct arpreq *arpReq_ptr, int opcode);
 
 // Generate an arpmsg struct based on askRelayMessage
 int asnGenArpMsgStruct(askRelayMessage *msg_ptr, arpsec_arpmsg *arpMsg_ptr);
