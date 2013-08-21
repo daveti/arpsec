@@ -46,6 +46,7 @@ int     pipefd;
 // daveti: relayfd is used instead of pipefd
 int	relayfd[ARPSEC_MAX_NUM_OF_CPUS]    = {0};	// Relay file handler array
 int	relayidx;					// Relay file handler index
+int	relayAutoDebugfs;				// Flag to check if debugfs is auto mounted
 int	ask_initialized	    = 0;		// Intialized flag
 int	ask_operating_mode  = ASKRN_UNKNOWN;    // Mode variable
 char	askSimSystems[MAX_SIM_VALS][128];	// Simluated systems	
@@ -134,7 +135,7 @@ int askShutdownRelay( void ) {
 		}
 
 		// umount the debugfs
-		if (umount(ARPSEC_DEBUGFS) == -1)
+		if ((relayAutoDebugfs == 0) && (umount(ARPSEC_DEBUGFS) == -1))
 			asLogMessage("Error on umount [%s]", strerror(errno));
 	}
 
@@ -182,9 +183,14 @@ void askGetRelayHandle2( void ) {
     else {
       // mount the debugfs at first
       if (mount("debugfs", ARPSEC_DEBUGFS, "debugfs", 0, NULL) == -1) {
-	asLogMessage("Error on mount debugfs [%s]", strerror(errno));
-	printf("mount debugfs failed\n");
-	return;
+	// check if the debugfs is mounted already
+	if (errno == EBUSY) 
+		asLogMessage("Info: Debugfs is already mounted");
+	else {
+		asLogMessage("Error on mount debugfs [%s]", strerror(errno));
+		printf("mount debugfs failed\n");
+		return;
+	}
       }
 
       // open the files here for input from relay
