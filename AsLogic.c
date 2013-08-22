@@ -18,6 +18,8 @@
 #include <string.h>
 #include <errno.h>
 #include <signal.h>
+#include <sys/types.h>
+#include <regex.h>
 
 // Project Includes
 #include "AsLogic.h"
@@ -341,8 +343,14 @@ int aslSystemTrusted( AsSystem s, AsTime t ) {
 
 	// Negative confirmation
 	if ( strcmp( aslOutputLines[i], "no") == 0 ) {
-	    asLogMessage( "System (%s) found to be trusted at time (%lu)", s, t );
+	    asLogMessage( "System (%s) found to be NOT trusted at time (%lu)", s, t );
 	    return( 1 );
+	}
+	// daveti: add another pattern of negative confirmation
+	// currently no idea why this may be triggered...
+	else if ( aslIsGplOutputNegative(aslOutputLines[i]) == 1 ) {
+	    asLogMessage( "System (%s) found to be NOT trusted at time (%lu) with time delay", s, t);
+	    return ( 1 );
 	}
     }
 
@@ -685,3 +693,28 @@ char buf[256];
     kill(pid, signo); //send signo signal to the child process
 
 #endif
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : aslIsGplOutputNegative
+// Description  : check if the output from GPL is negative
+//
+// Inputs       : output - GPL output
+// Outputs      : 0 if False, 1 if True
+// Dev		: daveti
+
+int aslIsGplOutputNegative(char *output)
+{
+	// There may be different patterns of negative response from GPL
+	// we need to handle. This function is used to include all these
+	// stupid things...as I am not familiar with GPL:(
+	// BTW, POSIX regex is used here - hopefully it will not cause
+	// trouble for portability....(who cares:)
+
+	int rtn;
+	regex_t regex;
+
+	// Pattern [(X ms) no], e.g., [(4 ms) no]
+
+	return rtn;
+}

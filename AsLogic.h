@@ -45,6 +45,12 @@ int aslFindValidNetworkBinding( AsNetworkAddress n, AsMediaAddress m, AsTime t )
 int aslSystemTrusted( AsSystem s, AsTime t );
 
 //
+// Util functions
+
+// Check if the output from GPL is negative
+int aslIsGplOutputNegative( char *output);
+
+//
 // Unit testing
 
 // Validate logic interface with randomized inputs

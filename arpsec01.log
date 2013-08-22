@@ -1,0 +1,1020 @@
+Wed Aug 21 20:07:58 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:07:58 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:07:58 2013 : arpmsg[7] = 0x2(2)
+Wed Aug 21 20:07:58 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:07:58 2013 : arpmsg[9] = 0x3(3)
+Wed Aug 21 20:07:58 2013 : arpmsg[10] = 0xba(186)
+Wed Aug 21 20:07:58 2013 : arpmsg[11] = 0xc0(192)
+Wed Aug 21 20:07:58 2013 : arpmsg[12] = 0xf5(245)
+Wed Aug 21 20:07:58 2013 : arpmsg[13] = 0x79(121)
+Wed Aug 21 20:07:58 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:07:58 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:07:58 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:07:58 2013 : arpmsg[17] = 0x9(9)
+Wed Aug 21 20:07:58 2013 : arpmsg[18] = 0xb8(184)
+Wed Aug 21 20:07:58 2013 : arpmsg[19] = 0xca(202)
+Wed Aug 21 20:07:58 2013 : arpmsg[20] = 0x3a(58)
+Wed Aug 21 20:07:58 2013 : arpmsg[21] = 0x8e(142)
+Wed Aug 21 20:07:58 2013 : arpmsg[22] = 0x39(57)
+Wed Aug 21 20:07:58 2013 : arpmsg[23] = 0x96(150)
+Wed Aug 21 20:07:58 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:07:58 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:07:58 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:07:58 2013 : arpmsg[27] = 0x7b(123)
+Wed Aug 21 20:07:58 2013 : ===============================
+Wed Aug 21 20:07:58 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:07:58 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:07:58 2013 : ==================================
+Wed Aug 21 20:07:58 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:07:58 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:07:58 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:07:58 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:07:58 2013 : ARP_opcode: 2
+Wed Aug 21 20:07:58 2013 : sender_hardware_address: media0_3_ba_c0_f5_79
+Wed Aug 21 20:07:58 2013 : sender_IP_address: net128_223_6_9
+Wed Aug 21 20:07:58 2013 : target_hardware_address: mediab8_ca_3a_8e_39_96
+Wed Aug 21 20:07:58 2013 : target_IP_address: net128_223_6_123
+Wed Aug 21 20:07:58 2013 : ==================================
+Wed Aug 21 20:07:58 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:07:58 2013 : Info - got the remote hostname [dns.cs.uoregon.edu] for IP [128.223.6.9]
+Wed Aug 21 20:07:58 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_RES,src=sysdns_cs_uoregon_edu,sdn=media0_3_ba_c0_f5_79,dst=mediab8_ca_3a_8e_39_96,addr=net128_223_6_9,bind=media0_3_ba_c0_f5_79]
+Wed Aug 21 20:07:58 2013 : PENDING NETWORK BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug 21 20:07:58 2013 : Writing to logic [trusted(sysdns_cs_uoregon_edu,1377140878).
+]
+Wed Aug 21 20:07:58 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:07:58 2013 : GPL input []
+Wed Aug 21 20:07:58 2013 : GPL input [no]
+Wed Aug 21 20:07:58 2013 : System (sysdns_cs_uoregon_edu) found to be trusted at time (1377140878)
+Wed Aug 21 20:07:58 2013 : Writing to logic [asserta(binding_statement(sysdns_cs_uoregon_edu,media0_3_ba_c0_f5_79,net128_223_6_9,1377140878)).
+]
+Wed Aug 21 20:07:58 2013 : Waiting for input [yes], ty=3
+Wed Aug 21 20:07:58 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:07:58 2013 : GPL input []
+Wed Aug 21 20:07:58 2013 : GPL input [yes]
+Wed Aug 21 20:07:58 2013 : Binding statement added successfully (sysdns_cs_uoregon_edu,1377140878)
+Wed Aug 21 20:07:58 2013 : METRIC: ARP add binding  : 100425
+Wed Aug 21 20:07:58 2013 : Successfully processed ARP RES [net128_223_6_9->media0_3_ba_c0_f5_79]
+Wed Aug 21 20:07:58 2013 : asnLogicIpToStringIp: log=[net128_223_6_9], str=[128.223.6.9]
+Wed Aug 21 20:07:58 2013 : asnLogicMacToStringMac: log=[media0_3_ba_c0_f5_79], str=[00:03:ba:c0:f5:79]
+Wed Aug 21 20:07:58 2013 : asnGenArpReqStruct: Info - ip=[128.223.6.9], mac=[00:03:ba:c0:f5:79]
+Wed Aug 21 20:07:58 2013 : asnAddBindingToArpCache: Info - send netlink bind msg to the kernel
+Wed Aug 21 20:07:58 2013 : ascProcessArpResponse: Info - ARP cache updated
+Wed Aug 21 20:07:59 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:07:59 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:07:59 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:07:59 2013 : ===============================
+Wed Aug 21 20:07:59 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:07:59 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:07:59 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:07:59 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:07:59 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:07:59 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:07:59 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:07:59 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:07:59 2013 : arpmsg[12] = 0xdc(220)
+Wed Aug 21 20:07:59 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:07:59 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:07:59 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:07:59 2013 : arpmsg[17] = 0x3(3)
+Wed Aug 21 20:07:59 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:07:59 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:07:59 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:07:59 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:07:59 2013 : ===============================
+Wed Aug 21 20:07:59 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:07:59 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:07:59 2013 : ==================================
+Wed Aug 21 20:07:59 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:07:59 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:07:59 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:07:59 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:07:59 2013 : ARP_opcode: 1
+Wed Aug 21 20:07:59 2013 : sender_hardware_address: media0_d0_1_95_dc_0
+Wed Aug 21 20:07:59 2013 : sender_IP_address: net128_223_6_3
+Wed Aug 21 20:07:59 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:07:59 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:07:59 2013 : ==================================
+Wed Aug 21 20:07:59 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:07:59 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_dc_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:07:59 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140879).
+]
+Wed Aug 21 20:07:59 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:07:59 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:07:59 2013 : GPL input []
+Wed Aug 21 20:07:59 2013 : GPL input [no]
+Wed Aug 21 20:07:59 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:07:59 2013 : METRIC: ARP Binding : 100590
+Wed Aug 21 20:08:01 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:01 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:01 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:01 2013 : ===============================
+Wed Aug 21 20:08:01 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:01 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:01 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:01 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:01 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:01 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:01 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:01 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:01 2013 : arpmsg[12] = 0xe0(224)
+Wed Aug 21 20:08:01 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:01 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:01 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:01 2013 : arpmsg[17] = 0x2(2)
+Wed Aug 21 20:08:01 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:01 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:01 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:01 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:01 2013 : ===============================
+Wed Aug 21 20:08:01 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:01 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:01 2013 : ==================================
+Wed Aug 21 20:08:01 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:01 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:01 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:01 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:01 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:01 2013 : sender_hardware_address: media0_d0_1_95_e0_0
+Wed Aug 21 20:08:01 2013 : sender_IP_address: net128_223_6_2
+Wed Aug 21 20:08:01 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:01 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:01 2013 : ==================================
+Wed Aug 21 20:08:01 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:01 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_e0_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:01 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140881).
+]
+Wed Aug 21 20:08:01 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:01 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:01 2013 : GPL input []
+Wed Aug 21 20:08:01 2013 : GPL input [no]
+Wed Aug 21 20:08:01 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:01 2013 : METRIC: ARP Binding : 100533
+Wed Aug 21 20:08:04 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:04 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:04 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : ===============================
+Wed Aug 21 20:08:04 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:04 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:04 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:04 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:04 2013 : arpmsg[12] = 0xdc(220)
+Wed Aug 21 20:08:04 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:04 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:04 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[17] = 0x3(3)
+Wed Aug 21 20:08:04 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:04 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:04 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:04 2013 : ===============================
+Wed Aug 21 20:08:04 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : ==================================
+Wed Aug 21 20:08:04 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:04 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:04 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:04 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:04 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:04 2013 : sender_hardware_address: media0_d0_1_95_dc_0
+Wed Aug 21 20:08:04 2013 : sender_IP_address: net128_223_6_3
+Wed Aug 21 20:08:04 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:04 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:04 2013 : ==================================
+Wed Aug 21 20:08:04 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_dc_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:04 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140884).
+]
+Wed Aug 21 20:08:04 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:04 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:04 2013 : GPL input []
+Wed Aug 21 20:08:04 2013 : GPL input [no]
+Wed Aug 21 20:08:04 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:04 2013 : METRIC: ARP Binding : 100599
+Wed Aug 21 20:08:04 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:04 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:04 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : ===============================
+Wed Aug 21 20:08:04 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:04 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:04 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:04 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:04 2013 : arpmsg[12] = 0xe0(224)
+Wed Aug 21 20:08:04 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:04 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:04 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[17] = 0x2(2)
+Wed Aug 21 20:08:04 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:04 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:04 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:04 2013 : ===============================
+Wed Aug 21 20:08:04 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : ==================================
+Wed Aug 21 20:08:04 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:04 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:04 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:04 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:04 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:04 2013 : sender_hardware_address: media0_d0_1_95_e0_0
+Wed Aug 21 20:08:04 2013 : sender_IP_address: net128_223_6_2
+Wed Aug 21 20:08:04 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:04 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:04 2013 : ==================================
+Wed Aug 21 20:08:04 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_e0_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:04 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140884).
+]
+Wed Aug 21 20:08:04 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:04 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:04 2013 : GPL input []
+Wed Aug 21 20:08:04 2013 : GPL input [no]
+Wed Aug 21 20:08:04 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:04 2013 : METRIC: ARP Binding : 100562
+Wed Aug 21 20:08:08 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:08 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:08 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : ===============================
+Wed Aug 21 20:08:08 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:08 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:08 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:08 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:08 2013 : arpmsg[12] = 0xdc(220)
+Wed Aug 21 20:08:08 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:08 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:08 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[17] = 0x3(3)
+Wed Aug 21 20:08:08 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:08 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:08 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:08 2013 : ===============================
+Wed Aug 21 20:08:08 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : ==================================
+Wed Aug 21 20:08:08 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:08 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:08 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:08 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:08 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:08 2013 : sender_hardware_address: media0_d0_1_95_dc_0
+Wed Aug 21 20:08:08 2013 : sender_IP_address: net128_223_6_3
+Wed Aug 21 20:08:08 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:08 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:08 2013 : ==================================
+Wed Aug 21 20:08:08 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_dc_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:08 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140888).
+]
+Wed Aug 21 20:08:08 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:08 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:08 2013 : GPL input []
+Wed Aug 21 20:08:08 2013 : GPL input [no]
+Wed Aug 21 20:08:08 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:08 2013 : METRIC: ARP Binding : 100633
+Wed Aug 21 20:08:08 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:08 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:08 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : ===============================
+Wed Aug 21 20:08:08 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:08 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:08 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:08 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:08 2013 : arpmsg[12] = 0xe0(224)
+Wed Aug 21 20:08:08 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:08 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:08 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[17] = 0x2(2)
+Wed Aug 21 20:08:08 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:08 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:08 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:08 2013 : ===============================
+Wed Aug 21 20:08:08 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : ==================================
+Wed Aug 21 20:08:08 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:08 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:08 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:08 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:08 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:08 2013 : sender_hardware_address: media0_d0_1_95_e0_0
+Wed Aug 21 20:08:08 2013 : sender_IP_address: net128_223_6_2
+Wed Aug 21 20:08:08 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:08 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:08 2013 : ==================================
+Wed Aug 21 20:08:08 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_e0_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:08 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140888).
+]
+Wed Aug 21 20:08:08 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:08 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:08 2013 : GPL input []
+Wed Aug 21 20:08:08 2013 : GPL input [no]
+Wed Aug 21 20:08:08 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:08 2013 : METRIC: ARP Binding : 100578
+Wed Aug 21 20:08:09 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:09 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:09 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : ===============================
+Wed Aug 21 20:08:09 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:09 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:09 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:09 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:09 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:09 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:09 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:09 2013 : arpmsg[12] = 0xdc(220)
+Wed Aug 21 20:08:09 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:09 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:09 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[17] = 0x3(3)
+Wed Aug 21 20:08:09 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:09 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:09 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[27] = 0xf9(249)
+Wed Aug 21 20:08:09 2013 : ===============================
+Wed Aug 21 20:08:09 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : ==================================
+Wed Aug 21 20:08:09 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:09 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:09 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:09 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:09 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:09 2013 : sender_hardware_address: media0_d0_1_95_dc_0
+Wed Aug 21 20:08:09 2013 : sender_IP_address: net128_223_6_3
+Wed Aug 21 20:08:09 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:09 2013 : target_IP_address: net128_223_6_249
+Wed Aug 21 20:08:09 2013 : ==================================
+Wed Aug 21 20:08:09 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_dc_0,dst=HWANY,addr=net128_223_6_249]
+Wed Aug 21 20:08:09 2013 : Writing to logic [valid_binding(net128_223_6_249,X,1377140889).
+]
+Wed Aug 21 20:08:09 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:09 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:09 2013 : GPL input []
+Wed Aug 21 20:08:09 2013 : GPL input [no]
+Wed Aug 21 20:08:09 2013 : Failed to find good ARP REQ binding [net128_223_6_249]
+Wed Aug 21 20:08:09 2013 : METRIC: ARP Binding : 100605
+Wed Aug 21 20:08:09 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:09 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:09 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : ===============================
+Wed Aug 21 20:08:09 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:09 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:09 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:09 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[7] = 0x2(2)
+Wed Aug 21 20:08:09 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[9] = 0x3(3)
+Wed Aug 21 20:08:09 2013 : arpmsg[10] = 0xba(186)
+Wed Aug 21 20:08:09 2013 : arpmsg[11] = 0xc0(192)
+Wed Aug 21 20:08:09 2013 : arpmsg[12] = 0xf5(245)
+Wed Aug 21 20:08:09 2013 : arpmsg[13] = 0x79(121)
+Wed Aug 21 20:08:09 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:09 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:09 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[17] = 0x9(9)
+Wed Aug 21 20:08:09 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[19] = 0x24(36)
+Wed Aug 21 20:08:09 2013 : arpmsg[20] = 0xe8(232)
+Wed Aug 21 20:08:09 2013 : arpmsg[21] = 0x1d(29)
+Wed Aug 21 20:08:09 2013 : arpmsg[22] = 0x6a(106)
+Wed Aug 21 20:08:09 2013 : arpmsg[23] = 0x29(41)
+Wed Aug 21 20:08:09 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:09 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:09 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[27] = 0xb8(184)
+Wed Aug 21 20:08:09 2013 : ===============================
+Wed Aug 21 20:08:09 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : ==================================
+Wed Aug 21 20:08:09 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:09 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:09 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:09 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:09 2013 : ARP_opcode: 2
+Wed Aug 21 20:08:09 2013 : sender_hardware_address: media0_3_ba_c0_f5_79
+Wed Aug 21 20:08:09 2013 : sender_IP_address: net128_223_6_9
+Wed Aug 21 20:08:09 2013 : target_hardware_address: media0_24_e8_1d_6a_29
+Wed Aug 21 20:08:09 2013 : target_IP_address: net128_223_6_184
+Wed Aug 21 20:08:09 2013 : ==================================
+Wed Aug 21 20:08:09 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : Info - got the remote hostname [dns.cs.uoregon.edu] for IP [128.223.6.9]
+Wed Aug 21 20:08:09 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_RES,src=sysdns_cs_uoregon_edu,sdn=media0_3_ba_c0_f5_79,dst=media0_24_e8_1d_6a_29,addr=net128_223_6_9,bind=media0_3_ba_c0_f5_79]
+Wed Aug 21 20:08:09 2013 : PENDING NETWORK BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug 21 20:08:09 2013 : Writing to logic [trusted(sysdns_cs_uoregon_edu,1377140889).
+]
+Wed Aug 21 20:08:09 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:09 2013 : GPL input []
+Wed Aug 21 20:08:09 2013 : GPL input [(4 ms) no]
+Wed Aug 21 20:08:09 2013 : Faild to get a postive or negative result on system trust (sysdns_cs_uoregon_edu,1377140889)
+root@arpsec01:~/arpsec# 
+Wed Aug 21 20:07:58 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:07:58 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:07:58 2013 : arpmsg[7] = 0x2(2)
+Wed Aug 21 20:07:58 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:07:58 2013 : arpmsg[9] = 0x3(3)
+Wed Aug 21 20:07:58 2013 : arpmsg[10] = 0xba(186)
+Wed Aug 21 20:07:58 2013 : arpmsg[11] = 0xc0(192)
+Wed Aug 21 20:07:58 2013 : arpmsg[12] = 0xf5(245)
+Wed Aug 21 20:07:58 2013 : arpmsg[13] = 0x79(121)
+Wed Aug 21 20:07:58 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:07:58 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:07:58 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:07:58 2013 : arpmsg[17] = 0x9(9)
+Wed Aug 21 20:07:58 2013 : arpmsg[18] = 0xb8(184)
+Wed Aug 21 20:07:58 2013 : arpmsg[19] = 0xca(202)
+Wed Aug 21 20:07:58 2013 : arpmsg[20] = 0x3a(58)
+Wed Aug 21 20:07:58 2013 : arpmsg[21] = 0x8e(142)
+Wed Aug 21 20:07:58 2013 : arpmsg[22] = 0x39(57)
+Wed Aug 21 20:07:58 2013 : arpmsg[23] = 0x96(150)
+Wed Aug 21 20:07:58 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:07:58 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:07:58 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:07:58 2013 : arpmsg[27] = 0x7b(123)
+Wed Aug 21 20:07:58 2013 : ===============================
+Wed Aug 21 20:07:58 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:07:58 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:07:58 2013 : ==================================
+Wed Aug 21 20:07:58 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:07:58 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:07:58 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:07:58 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:07:58 2013 : ARP_opcode: 2
+Wed Aug 21 20:07:58 2013 : sender_hardware_address: media0_3_ba_c0_f5_79
+Wed Aug 21 20:07:58 2013 : sender_IP_address: net128_223_6_9
+Wed Aug 21 20:07:58 2013 : target_hardware_address: mediab8_ca_3a_8e_39_96
+Wed Aug 21 20:07:58 2013 : target_IP_address: net128_223_6_123
+Wed Aug 21 20:07:58 2013 : ==================================
+Wed Aug 21 20:07:58 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:07:58 2013 : Info - got the remote hostname [dns.cs.uoregon.edu] for IP [128.223.6.9]
+Wed Aug 21 20:07:58 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_RES,src=sysdns_cs_uoregon_edu,sdn=media0_3_ba_c0_f5_79,dst=mediab8_ca_3a_8e_39_96,addr=net128_223_6_9,bind=media0_3_ba_c0_f5_79]
+Wed Aug 21 20:07:58 2013 : PENDING NETWORK BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug 21 20:07:58 2013 : Writing to logic [trusted(sysdns_cs_uoregon_edu,1377140878).
+]
+Wed Aug 21 20:07:58 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:07:58 2013 : GPL input []
+Wed Aug 21 20:07:58 2013 : GPL input [no]
+Wed Aug 21 20:07:58 2013 : System (sysdns_cs_uoregon_edu) found to be trusted at time (1377140878)
+Wed Aug 21 20:07:58 2013 : Writing to logic [asserta(binding_statement(sysdns_cs_uoregon_edu,media0_3_ba_c0_f5_79,net128_223_6_9,1377140878)).
+]
+Wed Aug 21 20:07:58 2013 : Waiting for input [yes], ty=3
+Wed Aug 21 20:07:58 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:07:58 2013 : GPL input []
+Wed Aug 21 20:07:58 2013 : GPL input [yes]
+Wed Aug 21 20:07:58 2013 : Binding statement added successfully (sysdns_cs_uoregon_edu,1377140878)
+Wed Aug 21 20:07:58 2013 : METRIC: ARP add binding  : 100425
+Wed Aug 21 20:07:58 2013 : Successfully processed ARP RES [net128_223_6_9->media0_3_ba_c0_f5_79]
+Wed Aug 21 20:07:58 2013 : asnLogicIpToStringIp: log=[net128_223_6_9], str=[128.223.6.9]
+Wed Aug 21 20:07:58 2013 : asnLogicMacToStringMac: log=[media0_3_ba_c0_f5_79], str=[00:03:ba:c0:f5:79]
+Wed Aug 21 20:07:58 2013 : asnGenArpReqStruct: Info - ip=[128.223.6.9], mac=[00:03:ba:c0:f5:79]
+Wed Aug 21 20:07:58 2013 : asnAddBindingToArpCache: Info - send netlink bind msg to the kernel
+Wed Aug 21 20:07:58 2013 : ascProcessArpResponse: Info - ARP cache updated
+Wed Aug 21 20:07:59 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:07:59 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:07:59 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:07:59 2013 : ===============================
+Wed Aug 21 20:07:59 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:07:59 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:07:59 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:07:59 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:07:59 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:07:59 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:07:59 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:07:59 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:07:59 2013 : arpmsg[12] = 0xdc(220)
+Wed Aug 21 20:07:59 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:07:59 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:07:59 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:07:59 2013 : arpmsg[17] = 0x3(3)
+Wed Aug 21 20:07:59 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:07:59 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:07:59 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:07:59 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:07:59 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:07:59 2013 : ===============================
+Wed Aug 21 20:07:59 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:07:59 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:07:59 2013 : ==================================
+Wed Aug 21 20:07:59 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:07:59 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:07:59 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:07:59 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:07:59 2013 : ARP_opcode: 1
+Wed Aug 21 20:07:59 2013 : sender_hardware_address: media0_d0_1_95_dc_0
+Wed Aug 21 20:07:59 2013 : sender_IP_address: net128_223_6_3
+Wed Aug 21 20:07:59 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:07:59 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:07:59 2013 : ==================================
+Wed Aug 21 20:07:59 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:07:59 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_dc_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:07:59 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140879).
+]
+Wed Aug 21 20:07:59 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:07:59 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:07:59 2013 : GPL input []
+Wed Aug 21 20:07:59 2013 : GPL input [no]
+Wed Aug 21 20:07:59 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:07:59 2013 : METRIC: ARP Binding : 100590
+Wed Aug 21 20:08:01 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:01 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:01 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:01 2013 : ===============================
+Wed Aug 21 20:08:01 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:01 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:01 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:01 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:01 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:01 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:01 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:01 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:01 2013 : arpmsg[12] = 0xe0(224)
+Wed Aug 21 20:08:01 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:01 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:01 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:01 2013 : arpmsg[17] = 0x2(2)
+Wed Aug 21 20:08:01 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:01 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:01 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:01 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:01 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:01 2013 : ===============================
+Wed Aug 21 20:08:01 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:01 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:01 2013 : ==================================
+Wed Aug 21 20:08:01 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:01 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:01 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:01 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:01 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:01 2013 : sender_hardware_address: media0_d0_1_95_e0_0
+Wed Aug 21 20:08:01 2013 : sender_IP_address: net128_223_6_2
+Wed Aug 21 20:08:01 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:01 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:01 2013 : ==================================
+Wed Aug 21 20:08:01 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:01 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_e0_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:01 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140881).
+]
+Wed Aug 21 20:08:01 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:01 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:01 2013 : GPL input []
+Wed Aug 21 20:08:01 2013 : GPL input [no]
+Wed Aug 21 20:08:01 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:01 2013 : METRIC: ARP Binding : 100533
+Wed Aug 21 20:08:04 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:04 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:04 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : ===============================
+Wed Aug 21 20:08:04 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:04 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:04 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:04 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:04 2013 : arpmsg[12] = 0xdc(220)
+Wed Aug 21 20:08:04 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:04 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:04 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[17] = 0x3(3)
+Wed Aug 21 20:08:04 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:04 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:04 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:04 2013 : ===============================
+Wed Aug 21 20:08:04 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : ==================================
+Wed Aug 21 20:08:04 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:04 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:04 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:04 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:04 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:04 2013 : sender_hardware_address: media0_d0_1_95_dc_0
+Wed Aug 21 20:08:04 2013 : sender_IP_address: net128_223_6_3
+Wed Aug 21 20:08:04 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:04 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:04 2013 : ==================================
+Wed Aug 21 20:08:04 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_dc_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:04 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140884).
+]
+Wed Aug 21 20:08:04 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:04 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:04 2013 : GPL input []
+Wed Aug 21 20:08:04 2013 : GPL input [no]
+Wed Aug 21 20:08:04 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:04 2013 : METRIC: ARP Binding : 100599
+Wed Aug 21 20:08:04 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:04 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:04 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : ===============================
+Wed Aug 21 20:08:04 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:04 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:04 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:04 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:04 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:04 2013 : arpmsg[12] = 0xe0(224)
+Wed Aug 21 20:08:04 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:04 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:04 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[17] = 0x2(2)
+Wed Aug 21 20:08:04 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:04 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:04 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:04 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:04 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:04 2013 : ===============================
+Wed Aug 21 20:08:04 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : ==================================
+Wed Aug 21 20:08:04 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:04 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:04 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:04 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:04 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:04 2013 : sender_hardware_address: media0_d0_1_95_e0_0
+Wed Aug 21 20:08:04 2013 : sender_IP_address: net128_223_6_2
+Wed Aug 21 20:08:04 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:04 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:04 2013 : ==================================
+Wed Aug 21 20:08:04 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:04 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_e0_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:04 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140884).
+]
+Wed Aug 21 20:08:04 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:04 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:04 2013 : GPL input []
+Wed Aug 21 20:08:04 2013 : GPL input [no]
+Wed Aug 21 20:08:04 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:04 2013 : METRIC: ARP Binding : 100562
+Wed Aug 21 20:08:08 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:08 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:08 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : ===============================
+Wed Aug 21 20:08:08 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:08 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:08 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:08 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:08 2013 : arpmsg[12] = 0xdc(220)
+Wed Aug 21 20:08:08 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:08 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:08 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[17] = 0x3(3)
+Wed Aug 21 20:08:08 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:08 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:08 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:08 2013 : ===============================
+Wed Aug 21 20:08:08 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : ==================================
+Wed Aug 21 20:08:08 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:08 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:08 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:08 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:08 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:08 2013 : sender_hardware_address: media0_d0_1_95_dc_0
+Wed Aug 21 20:08:08 2013 : sender_IP_address: net128_223_6_3
+Wed Aug 21 20:08:08 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:08 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:08 2013 : ==================================
+Wed Aug 21 20:08:08 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_dc_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:08 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140888).
+]
+Wed Aug 21 20:08:08 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:08 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:08 2013 : GPL input []
+Wed Aug 21 20:08:08 2013 : GPL input [no]
+Wed Aug 21 20:08:08 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:08 2013 : METRIC: ARP Binding : 100633
+Wed Aug 21 20:08:08 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:08 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:08 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : ===============================
+Wed Aug 21 20:08:08 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:08 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:08 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:08 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:08 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:08 2013 : arpmsg[12] = 0xe0(224)
+Wed Aug 21 20:08:08 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:08 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:08 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[17] = 0x2(2)
+Wed Aug 21 20:08:08 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:08 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:08 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:08 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:08 2013 : arpmsg[27] = 0x70(112)
+Wed Aug 21 20:08:08 2013 : ===============================
+Wed Aug 21 20:08:08 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : ==================================
+Wed Aug 21 20:08:08 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:08 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:08 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:08 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:08 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:08 2013 : sender_hardware_address: media0_d0_1_95_e0_0
+Wed Aug 21 20:08:08 2013 : sender_IP_address: net128_223_6_2
+Wed Aug 21 20:08:08 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:08 2013 : target_IP_address: net128_223_6_112
+Wed Aug 21 20:08:08 2013 : ==================================
+Wed Aug 21 20:08:08 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:08 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_e0_0,dst=HWANY,addr=net128_223_6_112]
+Wed Aug 21 20:08:08 2013 : Writing to logic [valid_binding(net128_223_6_112,X,1377140888).
+]
+Wed Aug 21 20:08:08 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:08 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:08 2013 : GPL input []
+Wed Aug 21 20:08:08 2013 : GPL input [no]
+Wed Aug 21 20:08:08 2013 : Failed to find good ARP REQ binding [net128_223_6_112]
+Wed Aug 21 20:08:08 2013 : METRIC: ARP Binding : 100578
+Wed Aug 21 20:08:09 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:09 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:09 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : ===============================
+Wed Aug 21 20:08:09 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:09 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:09 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:09 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[7] = 0x1(1)
+Wed Aug 21 20:08:09 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[9] = 0xd0(208)
+Wed Aug 21 20:08:09 2013 : arpmsg[10] = 0x1(1)
+Wed Aug 21 20:08:09 2013 : arpmsg[11] = 0x95(149)
+Wed Aug 21 20:08:09 2013 : arpmsg[12] = 0xdc(220)
+Wed Aug 21 20:08:09 2013 : arpmsg[13] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:09 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:09 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[17] = 0x3(3)
+Wed Aug 21 20:08:09 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[19] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[20] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[21] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[22] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[23] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:09 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:09 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[27] = 0xf9(249)
+Wed Aug 21 20:08:09 2013 : ===============================
+Wed Aug 21 20:08:09 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : ==================================
+Wed Aug 21 20:08:09 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:09 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:09 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:09 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:09 2013 : ARP_opcode: 1
+Wed Aug 21 20:08:09 2013 : sender_hardware_address: media0_d0_1_95_dc_0
+Wed Aug 21 20:08:09 2013 : sender_IP_address: net128_223_6_3
+Wed Aug 21 20:08:09 2013 : target_hardware_address: media0_0_0_0_0_0
+Wed Aug 21 20:08:09 2013 : target_IP_address: net128_223_6_249
+Wed Aug 21 20:08:09 2013 : ==================================
+Wed Aug 21 20:08:09 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media0_d0_1_95_dc_0,dst=HWANY,addr=net128_223_6_249]
+Wed Aug 21 20:08:09 2013 : Writing to logic [valid_binding(net128_223_6_249,X,1377140889).
+]
+Wed Aug 21 20:08:09 2013 : Waiting for input [X], ty=2
+Wed Aug 21 20:08:09 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:09 2013 : GPL input []
+Wed Aug 21 20:08:09 2013 : GPL input [no]
+Wed Aug 21 20:08:09 2013 : Failed to find good ARP REQ binding [net128_223_6_249]
+Wed Aug 21 20:08:09 2013 : METRIC: ARP Binding : 100605
+Wed Aug 21 20:08:09 2013 : Info: read on msg from kernel for file [4]
+Wed Aug 21 20:08:09 2013 : Info: dev_ptr from kernel [0xffff88020b098000]
+Wed Aug 21 20:08:09 2013 : Start dumping the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : ===============================
+Wed Aug 21 20:08:09 2013 : arpmsg[0] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[1] = 0x1(1)
+Wed Aug 21 20:08:09 2013 : arpmsg[2] = 0x8(8)
+Wed Aug 21 20:08:09 2013 : arpmsg[3] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[4] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[5] = 0x4(4)
+Wed Aug 21 20:08:09 2013 : arpmsg[6] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[7] = 0x2(2)
+Wed Aug 21 20:08:09 2013 : arpmsg[8] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[9] = 0x3(3)
+Wed Aug 21 20:08:09 2013 : arpmsg[10] = 0xba(186)
+Wed Aug 21 20:08:09 2013 : arpmsg[11] = 0xc0(192)
+Wed Aug 21 20:08:09 2013 : arpmsg[12] = 0xf5(245)
+Wed Aug 21 20:08:09 2013 : arpmsg[13] = 0x79(121)
+Wed Aug 21 20:08:09 2013 : arpmsg[14] = 0x80(128)
+Wed Aug 21 20:08:09 2013 : arpmsg[15] = 0xdf(223)
+Wed Aug 21 20:08:09 2013 : arpmsg[16] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[17] = 0x9(9)
+Wed Aug 21 20:08:09 2013 : arpmsg[18] = 0x0(0)
+Wed Aug 21 20:08:09 2013 : arpmsg[19] = 0x24(36)
+Wed Aug 21 20:08:09 2013 : arpmsg[20] = 0xe8(232)
+Wed Aug 21 20:08:09 2013 : arpmsg[21] = 0x1d(29)
+Wed Aug 21 20:08:09 2013 : arpmsg[22] = 0x6a(106)
+Wed Aug 21 20:08:09 2013 : arpmsg[23] = 0x29(41)
+Wed Aug 21 20:08:09 2013 : arpmsg[24] = 0x80(128)
+Wed Aug 21 20:08:09 2013 : arpmsg[25] = 0xdf(223)
+Wed Aug 21 20:08:09 2013 : arpmsg[26] = 0x6(6)
+Wed Aug 21 20:08:09 2013 : arpmsg[27] = 0xb8(184)
+Wed Aug 21 20:08:09 2013 : ===============================
+Wed Aug 21 20:08:09 2013 : End dumping the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : ==================================
+Wed Aug 21 20:08:09 2013 : format_of_hardware_address: 1
+Wed Aug 21 20:08:09 2013 : format_of_protocol_address: 0x800
+Wed Aug 21 20:08:09 2013 : length_of_hardware_address: 6
+Wed Aug 21 20:08:09 2013 : length_of_protocol_address: 4
+Wed Aug 21 20:08:09 2013 : ARP_opcode: 2
+Wed Aug 21 20:08:09 2013 : sender_hardware_address: media0_3_ba_c0_f5_79
+Wed Aug 21 20:08:09 2013 : sender_IP_address: net128_223_6_9
+Wed Aug 21 20:08:09 2013 : target_hardware_address: media0_24_e8_1d_6a_29
+Wed Aug 21 20:08:09 2013 : target_IP_address: net128_223_6_184
+Wed Aug 21 20:08:09 2013 : ==================================
+Wed Aug 21 20:08:09 2013 : End dumping(2) the kernel arpmsg
+Wed Aug 21 20:08:09 2013 : Info - got the remote hostname [dns.cs.uoregon.edu] for IP [128.223.6.9]
+Wed Aug 21 20:08:09 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_RES,src=sysdns_cs_uoregon_edu,sdn=media0_3_ba_c0_f5_79,dst=media0_24_e8_1d_6a_29,addr=net128_223_6_9,bind=media0_3_ba_c0_f5_79]
+Wed Aug 21 20:08:09 2013 : PENDING NETWORK BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug 21 20:08:09 2013 : Writing to logic [trusted(sysdns_cs_uoregon_edu,1377140889).
+]
+Wed Aug 21 20:08:09 2013 : Data is ready for reading from logic.
+Wed Aug 21 20:08:09 2013 : GPL input []
+Wed Aug 21 20:08:09 2013 : GPL input [(4 ms) no]
+Wed Aug 21 20:08:09 2013 : Faild to get a postive or negative result on system trust (sysdns_cs_uoregon_edu,1377140889)
+root@arpsec01:~/arpsec# 

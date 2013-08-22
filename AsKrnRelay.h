@@ -38,7 +38,7 @@
 #define ARPSEC_MAC_BROAD_STRING_FF	"mediaff_ff_ff_ff_ff_ff"
 #define ARPSEC_MAC_BROAD_STRING_00	"media0_0_0_0_0_0"
 #define ARPSEC_HOSTNAME_LEN		128
-#define ARPSEC_IF_NAME			"eth0"	// For Fedora, this may be "em1"
+#define ARPSEC_IF_NAME			"eth1"	// For Fedora, this may be "em1", For Ubuntu, it may be "eth1", others are "eth0"
 #define ARPSEC_GENERAL_BUFF_LEN		128
 
 // Linux Kernel ARP opcode
