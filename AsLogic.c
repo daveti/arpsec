@@ -780,7 +780,7 @@ int aslIsGplOutputPositive(char *output)
         char msgBuf[100] = {0};
 
         // Pattern 1: [(X ms) yes], e.g., [(4 ms) yes]
-        rtn = regcomp(&regex, "\\([0-9]+ ms\\) no", REG_EXTENDED);
+        rtn = regcomp(&regex, "\\([0-9]+ ms\\) yes", REG_EXTENDED);
         if (rtn)
         {
                 asLogMessage("aslIsGplOutputPositive: Error on regcomp [%s]", strerror(errno));
