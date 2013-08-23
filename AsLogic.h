@@ -48,7 +48,10 @@ int aslSystemTrusted( AsSystem s, AsTime t );
 // Util functions
 
 // Check if the output from GPL is negative
-int aslIsGplOutputNegative( char *output);
+int aslIsGplOutputNegative(char *output);
+
+// Check if the output from GPL is positive
+int aslIsGplOutputPositive(char *output);
 
 //
 // Unit testing

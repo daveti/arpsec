@@ -341,6 +341,17 @@ int aslSystemTrusted( AsSystem s, AsTime t ) {
 
 	}
 
+	// Positive confirmation final version
+	// All other patterns of positive cases
+	// should be added into aslIsGplOutputPositive()
+	// Aug 23, 2013
+	// daveti
+	if (aslIsGplOutputPositive(aslOutputLines[i]) == 1)
+	{
+		asLogMessage("System (%s) found to be trusted at time (%lu) with time delay", s, t);
+		return( 1 );
+	}
+
 	// Negative confirmation
 	if ( strcmp( aslOutputLines[i], "no") == 0 ) {
 	    asLogMessage( "System (%s) found to be NOT trusted at time (%lu)", s, t );
@@ -746,3 +757,57 @@ int aslIsGplOutputNegative(char *output)
 
 	return 0;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : aslIsGplOutputPositive
+// Description  : check if the output from GPL is positive
+//
+// Inputs       : output - GPL output
+// Outputs      : 0 if False, 1 if True, -1 if internal error
+// Dev          : daveti
+
+int aslIsGplOutputPositive(char *output)
+{
+        // There may be different patterns of positive response from GPL
+        // we need to handle. This function is used to include all these
+        // stupid things...as I am not familiar with GPL:(
+        // BTW, POSIX regex is used here - hopefully it will not cause
+        // trouble for portability....(who cares:)
+
+        int rtn = 0;
+        regex_t regex;
+        char msgBuf[100] = {0};
+
+        // Pattern 1: [(X ms) yes], e.g., [(4 ms) yes]
+        rtn = regcomp(&regex, "\\([0-9]+ ms\\) no", REG_EXTENDED);
+        if (rtn)
+        {
+                asLogMessage("aslIsGplOutputPositive: Error on regcomp [%s]", strerror(errno));
+                return -1;
+        }
+
+        rtn = regexec(&regex, output, 0, NULL, 0);
+        if (!rtn)
+        {
+                asLogMessage("aslIsGplOutputPositive: Info - [%s] matches pattern 1", output);
+                // To support multiple patterns in futher
+                // return inmmediately if matches
+                // otherwise keep hunting
+                return 1;
+        }
+        else if (rtn == REG_NOMATCH)
+                asLogMessage("aslIsGplOutputPositive: Info - [%s] does not match pattern 1", output);
+        else
+        {
+                regerror(rtn, &regex, msgBuf, sizeof(msgBuf));
+                asLogMessage("aslIsGplOutputPositive: Info - [%s] match failed for pattern 1 [%s]", output, msgBuf);
+        }
+
+        regfree(&regex);
+
+        // Pattern 2: ...
+
+        return 0;
+}
+
