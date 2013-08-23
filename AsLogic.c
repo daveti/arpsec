@@ -700,7 +700,7 @@ char buf[256];
 // Description  : check if the output from GPL is negative
 //
 // Inputs       : output - GPL output
-// Outputs      : 0 if False, 1 if True
+// Outputs      : 0 if False, 1 if True, -1 if internal error
 // Dev		: daveti
 
 int aslIsGplOutputNegative(char *output)
@@ -711,10 +711,38 @@ int aslIsGplOutputNegative(char *output)
 	// BTW, POSIX regex is used here - hopefully it will not cause
 	// trouble for portability....(who cares:)
 
-	int rtn;
+	int rtn = 0;
 	regex_t regex;
+	char msgBuf[100] = {0};
 
-	// Pattern [(X ms) no], e.g., [(4 ms) no]
+	// Pattern 1: [(X ms) no], e.g., [(4 ms) no]
+	rtn = regcomp(&regex, "\\([0-9]+ ms\\) no", REG_EXTENDED);
+	if (rtn)
+	{
+		asLogMessage("aslIsGplOutputNegative: Error on regcomp [%s]", strerror(errno));
+		return -1;
+	}
 
-	return rtn;
+	rtn = regexec(&regex, output, 0, NULL, 0);
+	if (!rtn)
+	{
+		asLogMessage("aslIsGplOutputNegative: Info - [%s] matches pattern 1", output);
+		// To support multiple patterns in futher
+		// return inmmediately if matches
+		// otherwise keep hunting
+		return 1;
+	}
+	else if (rtn == REG_NOMATCH)
+		asLogMessage("aslIsGplOutputNegative: Info - [%s] does not match pattern 1", output);
+	else
+	{
+		regerror(rtn, &regex, msgBuf, sizeof(msgBuf));
+		asLogMessage("aslIsGplOutputNegative: Info - [%s] match failed for pattern 1 [%s]", output, msgBuf);
+	}
+
+	regfree(&regex);
+
+	// Pattern 2: ...
+
+	return 0;
 }
