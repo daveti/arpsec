@@ -2,12 +2,12 @@ arpsec
 
 ARP Security
 
-Originated by Patrick McDaniel
+Originated by Patrick McDaniel and Kevin Butler
 
-Maintained by Dave Tian
+Futher developed and maintained by Dave Tian
 
-http://daveti.blog.com
+http://davejingtian.org
 
-daveti@cs.uoregon.edu
+root@davejingtian.org
 
 Jul 30, 2013
