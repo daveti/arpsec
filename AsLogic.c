@@ -317,6 +317,10 @@ int aslSystemTrusted( AsSystem s, AsTime t ) {
     int lines = aslGetPrologOutput();
     for ( i=0; i<lines; i++)  {
 
+	// daveti: handle speical case with empty ouput
+	if (aslOutputLines[i][0] == 0x0)
+		continue;
+
 	// Positive confirmation
 	if ( strcmp( aslOutputLines[i], "yes") == 0 ) {
 	    asLogMessage( "System (%s) found to be trusted at time (%lu)", s, t );
@@ -359,7 +363,7 @@ int aslSystemTrusted( AsSystem s, AsTime t ) {
 	}
 	// daveti: add another pattern of negative confirmation
 	// currently no idea why this may be triggered...
-	else if ( aslIsGplOutputNegative(aslOutputLines[i]) == 1 ) {
+	if ( aslIsGplOutputNegative(aslOutputLines[i]) == 1 ) {
 	    asLogMessage( "System (%s) found to be NOT trusted at time (%lu) with time delay", s, t);
 	    return ( 1 );
 	}
@@ -615,7 +619,7 @@ int aslGetPrologOutput( void ) {
 	} 
 	strncpy( aslOutputLines[aslNumOutputLines],  &aslOutputBuffer[tpos], len );
 	aslOutputLines[aslNumOutputLines][len] = 0x0; // Null terminate
-	asLogMessage( "GPL input [%s]", aslOutputLines[aslNumOutputLines] );
+	asLogMessage( "GPL output [%s]", aslOutputLines[aslNumOutputLines] );
 	tpos += len + 1;
 	aslNumOutputLines ++;
 
