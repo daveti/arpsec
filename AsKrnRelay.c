@@ -705,6 +705,9 @@ int askCheckMacBroadcast(char *mac_ptr)
 //
 // Note		: gprolog does not allow '.' in the statement. Will replace all the
 //		: '.' into '_' here!
+// Note 2	: '-' may cause trouble too - replace it with '_' here. Actually
+//		: the mapping between original hostname and the system name are not
+//		: 1:1 now. But consider the limitation of gprolog naming, K.I.S.S.
 // Inputs       : ip_ptr - IP dot string pointer - char *
 // Outputs      : sys - char *
 // Dev          : daveti
@@ -737,7 +740,7 @@ char * askGetSystemName(char *ip_ptr)
 
 	for (i = 0; (hbuf[i] != '\0') && (ARPSEC_HOSTNAME_LEN - i > 1); i++)
 	{
-		if (hbuf[i] != '.')
+		if ((hbuf[i] != '.') && (hbuf[i] != '-'))
 			sys[rtn + i] = hbuf[i];
 		else
 			sys[rtn + i] = '_';

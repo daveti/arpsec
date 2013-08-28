@@ -242,6 +242,7 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 
     //Local variables
     int ret = 0;
+    int bound = 0;
     AsTime now = time(NULL);
 
     // Do a quick sanity check
@@ -256,10 +257,29 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	// Check the source system
 	if ( ! aslSystemTrusted(msg->source, now) )  {
 
+	    // daveti: Before attesting, the binding needs to be
+	    // added into ARP cache temperarily.
+            ret = asnAddBindingToArpCache(msg);
+            if (ret == -1)
+                asLogMessage("ascProcessArpResponse: Error on asnAddBindingToArpCache() for temp");
+            else {
+                asLogMessage("ascProcessArpResponse: Info - ARP cache updated for temp");
+		bound = 1;
+	    }
+
 	    // Go attest the system
 	    if( astAttestSystem(msg->source) ) {
 		asLogMessage( "Unable to attest system [%s] at time [%lu], ignoring ARP RES", 
 			msg->source, now );
+
+		// daveti: once the attestation fails, the binding needs
+		// to be removed from the ARP cache.
+        	ret = asnDelBindingInArpCache(msg);
+        	if (ret == -1)
+                	asLogMessage("ascProcessArpResponse: Error on asnDelBindingInArpCache()");
+        	else
+                	asLogMessage("ascProcessArpResponse: Info - ARP cache updated (entry removed)");
+
 		return( -1 );
 	    }
 
@@ -274,11 +294,16 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	asLogMessage( "Successfully processed ARP RES [%s->%s]", msg->target.media, msg->binding.network );
 
 	// daveti: add the binding into ARP cache
-	ret = asnAddBindingToArpCache(msg);
-	if (ret == -1)
-		asLogMessage("ascProcessArpResponse: Error on asnAddBindingToArpCache()");
-	else
+	if (bound == 1)
 		asLogMessage("ascProcessArpResponse: Info - ARP cache updated");
+	else
+	{
+		ret = asnAddBindingToArpCache(msg);
+		if (ret == -1)
+			asLogMessage("ascProcessArpResponse: Error on asnAddBindingToArpCache()");
+		else
+			asLogMessage("ascProcessArpResponse: Info - ARP cache updated");
+	}
 
     } else {
 
@@ -376,6 +401,7 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 
     //Local variables
     int ret = 0;
+    int bound = 0;
     AsTime now = time(NULL);
 
     // Do a quick sanity check
@@ -390,10 +416,29 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	// Check the source system
 	if ( ! aslSystemTrusted(msg->source, now) )  {
 
+            // daveti: Before attesting, the binding needs to be
+            // added into ARP cache temperarily.
+            ret = asnAddBindingToArpCache(msg);
+            if (ret == -1)
+                asLogMessage("ascProcessRArpResponse: Error on asnAddBindingToArpCache() for temp");
+            else {
+                asLogMessage("ascProcessRArpResponse: Info - ARP cache updated for temp");
+		bound = 1;
+	    }
+
 	    // Go attest the system
 	    if( astAttestSystem(msg->source) ) {
 		asLogMessage( "Unable to attest system [%s] at time [%lu], ignoring ARP RES", 
 			msg->source, now );
+
+                // daveti: once the attestation fails, the binding needs
+                // to be removed from the ARP cache.
+                ret = asnDelBindingInArpCache(msg);
+                if (ret == -1)
+                        asLogMessage("ascProcessRArpResponse: Error on asnDelBindingInArpCache()");
+                else
+                        asLogMessage("ascProcessRArpResponse: Info - ARP cache updated (entry removed)");
+
 		return( -1 );
 	    }
 
@@ -408,11 +453,16 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	asStopMetricsTimer( "RARP add binding ");
 
         // daveti: add the binding into ARP cache
-        ret = asnAddBindingToArpCache(msg);
-        if (ret == -1)
-                asLogMessage("ascProcessRArpResponse: Error on asnAddBindingToArpCache()");
-        else
-                asLogMessage("ascProcessRArpResponse: Info - ARP cache updated");
+	if (bound == 1)
+		asLogMessage("ascProcessRArpResponse: Info - ARP cache updated");
+	else
+	{
+        	ret = asnAddBindingToArpCache(msg);
+        	if (ret == -1)
+                	asLogMessage("ascProcessRArpResponse: Error on asnAddBindingToArpCache()");
+        	else
+                	asLogMessage("ascProcessRArpResponse: Info - ARP cache updated");
+	}
 
     } else {
 

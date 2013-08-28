@@ -310,7 +310,7 @@ int asnGenArpMsgStruct(askRelayMessage *msg_ptr, arpsec_arpmsg *arpMsg_ptr)
 // Inputs       : askRelayMessage pointer
 // Outputs      : 0 if successful, -1 if not
 
-int asnDelBindingToArpCache(askRelayMessage *msg_ptr)
+int asnDelBindingInArpCache(askRelayMessage *msg_ptr)
 {
         struct nlmsghdr *nlh;
         struct iovec iov;
