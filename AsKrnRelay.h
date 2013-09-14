@@ -66,6 +66,32 @@ typedef struct _arpsec_rlmsg {
 	void		*arpsec_dev_ptr;
 } arpsec_rlmsg;
 
+// Add support for global relay queue
+// to handle multiple msgs from the kernel
+// Sep 13, 2013
+// daveti
+#define ARPSEC_RELAY_QUEUE_MSG_NUM	200
+#define ARPSEC_RELAY_QUEUE_SIZE		(sizeof(arpsec_rlmsg)*ARPSEC_RELAY_QUEUE_MSG_NUM)
+
+
+//
+// Relay Queue related methods
+
+// Init the global relay queue
+void askInitRelayQueue(void);
+
+// Add msgs into the queue
+int askAddMsgIntoRelayQueue(void *msg, int len);
+
+// Get the head msg from the queue
+arpsec_rlmsg *askGetHeadMsgFromRelayQueue(void);
+
+// Remove the head msg from the queue
+void askDelHeadMsgFromRelayQueue(void);
+
+// Get the number of the msgs in the queue
+int askGetMsgNumInRelayQueue(void);
+
 //
 // Module methods
 	

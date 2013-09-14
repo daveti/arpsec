@@ -47,6 +47,13 @@ int     pipefd;
 int	relayfd[ARPSEC_MAX_NUM_OF_CPUS]    = {0};	// Relay file handler array
 int	relayidx;					// Relay file handler index
 int	relayAutoDebugfs;				// Flag to check if debugfs is auto mounted
+int	relayCpuNum;					// How many CPUs are used for relay
+// daveti: add global queue to handle multiple msgs from the kernel
+unsigned char *relayQueue;
+unsigned char *relayQueuePtr;
+// daveti: add Round-robin support for reading msgs from multiple CPUs
+int	relayidxNext;
+
 int	ask_initialized	    = 0;		// Intialized flag
 int	ask_operating_mode  = ASKRN_UNKNOWN;    // Mode variable
 char	askSimSystems[MAX_SIM_VALS][128];	// Simluated systems	
@@ -97,6 +104,14 @@ int askInitRelay( int mode ) {
 	}
 	ascDumpLocalInfo();
 	askGetRelayHandle2();
+
+	// daveti:
+	// Setup the relayQueue
+	askInitRelayQueue();
+
+	// daveti:
+	// Round-robin support for reading multiple CPUs
+	relayidxNext = 0;
     } 
 
     // Setup intialized, return successfully
@@ -121,6 +136,9 @@ int askShutdownRelay( void ) {
 	// daveti: do nothing for simulation mode
 	if (ask_operating_mode == ASKRN_RELAY)
 	{
+		// free the memory for relay queue
+		free(relayQueue);
+
 		// free the memory for setup local info
 		ascReleaseMemForLocalInfo();
 
@@ -202,8 +220,10 @@ void askGetRelayHandle2( void ) {
       else if (num_of_cpu > ARPSEC_MAX_NUM_OF_CPUS) {
 	asLogMessage("Error on exceeding the max num of cpus");
       }
-
       else {
+	// Save the num of CPUs used for relay
+	relayCpuNum = num_of_cpu;
+
 	// open all the relay files
 	char filename[ARPSEC_RELAY_FILE_BUFF];
 	int i;
@@ -265,8 +285,10 @@ askRelayMessage * askGetNextMessage( void ) {
     askRelayMessage *msg = NULL;
     char read_buffer[ARPSEC_RELAY_BUFFLEN];
     arpsec_rlmsg *rlmsg_ptr;
+    arpsec_rlmsg *msg_ptr;
     int num_of_read;
     int i;
+    int j;
 
     // If simulating, randomly generate a message (probablistically)
     if ( ask_operating_mode ==  ASKRN_SIMULATION ) {
@@ -280,10 +302,39 @@ askRelayMessage * askGetNextMessage( void ) {
 	// Normal kernel processing here
 	// asLogMessage( "TODO: implement kernel interface" );
 	// daveti: Read from relayfd to see if there is anything
-	for (i = 0; i < ARPSEC_MAX_NUM_OF_CPUS; i++) {
-		if (relayfd[i] == 0)
-			break;
 
+	// daveti: add support for global relay queue
+	// Try to read the queue at first before going to read
+	// another CPU.
+	// NOTE: though we do not have to drop msgs from the kernel
+	// but we may run into the extreme case - always processing
+	// the queue. But this may suggest the high ARP load on this
+	// machine which sounds unreasonable...
+	msg_ptr = askGetHeadMsgFromRelayQueue();
+	if (msg_ptr != NULL)
+	{
+		// pop up the msg from the queue
+                asLogMessage("Info: read head msg from relay queue");
+                rlmsg_ptr = (arpsec_rlmsg *)malloc(sizeof(arpsec_rlmsg));
+                memcpy(rlmsg_ptr, msg_ptr, sizeof(arpsec_rlmsg));
+		askDelHeadMsgFromRelayQueue();
+
+                // convert the arpmsg into askRelayMsg...
+                msg = askConvertArpmsg(rlmsg_ptr);
+                free(rlmsg_ptr);
+
+                // check if this is a valid ARP/RARP msg...
+                if (msg) {
+			return(msg);
+                } else {
+                        asLogMessage("Error on askConvertArpmsg - move on");
+                }
+	}
+
+	// for (i = 0; i < ARPSEC_MAX_NUM_OF_CPUS; i++) {
+	// daveti: add Round-robin support to go thru all the CPUs
+	for (i = relayidxNext, j = 0; j < relayCpuNum; i = (i+1)%relayCpuNum, j++)
+	{
 		num_of_read = read(relayfd[i], read_buffer, ARPSEC_RELAY_BUFFLEN);
 		if (num_of_read == -1) {
 			// bad read
@@ -302,11 +353,16 @@ askRelayMessage * askGetNextMessage( void ) {
 		}
 		else if (num_of_read / sizeof(arpsec_rlmsg) != 1) {
 			// more than 1 msg got the same time
-			// may need enhancement to queue all the msgs...
-			// currently only warning with processing
-			// this first msg...
-			printf("daveti: got more than 1 ARP msg from one CPU\n");
+			asLogMessage("Info: got [%d] msgs from file [%d] - push the extra msgs into relay queue",
+					(num_of_read/sizeof(arpsec_rlmsg)), relayfd[i]);
+
+			// Try to push all the msgs into the queue except the first msg
+			if (askAddMsgIntoRelayQueue((read_buffer+sizeof(arpsec_rlmsg)), (num_of_read-sizeof(arpsec_rlmsg))) != 0)
+				asLogMessage("Error on askAddMsgIntoRelayQueue");
 		}
+
+		// Update the Round-robin index for next round
+		relayidxNext = (i + 1) % relayCpuNum;
 
 		// read this buffer like arp_msg
 		asLogMessage("Info: read on msg from kernel for file [%d]", relayfd[i]);
@@ -1122,6 +1178,146 @@ char * askMessageToString( askRelayMessage *msg, char *str, int len ) {
     return( str );
 
 }
+
+
+//
+// Relay Queue related methods
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : askInitRelayQueue
+// Description  : init the global relay queue
+//
+// Inputs       : void
+// Outputs      : void
+// Dev		: daveti
+
+void askInitRelayQueue(void)
+{
+	relayQueue = malloc(ARPSEC_RELAY_QUEUE_SIZE);
+	relayQueuePtr = relayQueue;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : askAddMsgIntoRelayQueue
+// Description  : add msgs into the relay queue
+//
+// Inputs       : void *msg - msg ptr from the read buffer
+//		: int len - length of the msgs
+// Outputs      : 0 - success; -1 - failure
+// Dev          : daveti
+
+int askAddMsgIntoRelayQueue(void *msg, int len)
+{
+	int numOfMsgInQueue;
+	int numOfMsgRequested;
+	int numOfMsgToBeQueued;
+	int rtn = 0;
+
+	numOfMsgInQueue = askGetMsgNumInRelayQueue();
+	numOfMsgRequested = len % sizeof(arpsec_rlmsg);
+	numOfMsgToBeQueued = numOfMsgRequested;
+
+	// Defensive checking
+	if (numOfMsgInQueue == ARPSEC_RELAY_QUEUE_MSG_NUM)
+	{
+		asLogMessage("Warning: the relay queue is already full!\n"
+			"All the requested [%d] msgs will be dropped\n"
+			"Please consider to enlarge the size of the queue!",
+			numOfMsgRequested);
+		return -1;
+	}
+
+	if (numOfMsgInQueue + numOfMsgRequested > ARPSEC_RELAY_QUEUE_MSG_NUM)
+	{
+		numOfMsgToBeQueued = ARPSEC_RELAY_QUEUE_MSG_NUM - numOfMsgInQueue;
+		asLogMessage("Warning: relay queue could not hold all the msgs\n"
+			"numOfMsgInQueue [%d], numOfMsgRequested [%d], "
+			"numOfMsgInQueueMax [%d]\n"
+			"numOfMsgToBeQueued [%d], numOfMsgToBeDroped [%d]",
+			numOfMsgInQueue,
+			numOfMsgRequested,
+			ARPSEC_RELAY_QUEUE_MSG_NUM,
+			numOfMsgToBeQueued,
+			(numOfMsgRequested - numOfMsgToBeQueued));
+		rtn = -1;
+	}
+
+	// Push the msg into the queue
+	memcpy(relayQueuePtr, msg, numOfMsgToBeQueued*sizeof(arpsec_rlmsg));
+	
+	// Update the relay queue ptr
+	relayQueuePtr += numOfMsgToBeQueued * sizeof(arpsec_rlmsg);
+
+	// Debug
+	asLogMessage("Info: pushed [%d] msgs into the relay queue "
+		"and [%d] msgs in the relay queue now",
+		numOfMsgToBeQueued,
+		askGetMsgNumInRelayQueue());
+
+	return rtn;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : askGetHeadMsgFromRelayQueue
+// Description  : get the head msg in the relay queue
+//
+// Inputs       : void
+// Outputs      : arpsec_rlmsg *msg - ptr to the arpsec_rlmsg msg
+// Dev          : daveti
+
+arpsec_rlmsg *askGetHeadMsgFromRelayQueue(void)
+{
+	arpsec_rlmsg *out = NULL;
+	if (relayQueuePtr != relayQueue)
+		out = (arpsec_rlmsg *)relayQueue;
+
+	return out;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : askDelHeadMsgFromRelayQueue
+// Description  : delete the head msg in the relay queue
+//
+// Inputs       : void
+// Outputs      : void
+// Dev          : daveti
+
+void askDelHeadMsgFromRelayQueue(void)
+{
+	// Defensive checking
+	if (relayQueuePtr == relayQueue)
+		return;
+
+	// Delete the head msg in the queue
+	memmove(relayQueue,
+		relayQueue+sizeof(arpsec_rlmsg),
+		(size_t)(relayQueuePtr-relayQueue-sizeof(arpsec_rlmsg)));
+
+	// Update the relay queue ptr
+	relayQueuePtr -= sizeof(arpsec_rlmsg);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : askGetMsgNumInRelayQueue
+// Description  : get the number of msgs hold in the relay queue
+//
+// Inputs       : void
+// Outputs      : void
+// Dev          : daveti
+
+int askGetMsgNumInRelayQueue(void)
+{
+	if (relayQueuePtr == relayQueue + ARPSEC_RELAY_QUEUE_SIZE)
+		return ARPSEC_RELAY_QUEUE_MSG_NUM;
+	else
+		return (int)((relayQueuePtr-relayQueue)%sizeof(arpsec_rlmsg));
+}
+
 
 //
 // Simluation Methods
