@@ -1,0 +1,14 @@
+# tpmdb.csv
+# Provides the verification info of the remote TPM info
+# mac: MAC address of the remote machine
+# ipv4: IPv4 address of the remote machine
+# aikPubKeyLen: length of the AIK public key of the remote TPM
+# aikPubKeyFilePath: the key file usually under ./tpmdb
+# pcrMask: PCR mask - based on 24 PCRs
+# pcrLen: length of the PCR good value file of the remote TPM
+# pcrFilePath: the pcr file usually under ./tpmdb
+# Sep 17, 2013
+# root@davejingtian.org
+# http://davejingtian.org
+mac,ipv4,aikPubKeyLen,aikPubKeyFilePath,pcrMask,pcrLen,pcrFilePath
+b8:ca:3a:8e:38:44,128.223.6.113,284,/root/arpsec/tpmdb/arpsec02_aik_pub_key.key,111111110000000000000000,160,/root/arpsec/tpmdb/arpsec02_pcr_good_value.pcr

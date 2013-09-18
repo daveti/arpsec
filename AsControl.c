@@ -26,6 +26,7 @@
 #include "AsLog.h"
 #include "AsTMeasure.h"
 #include "AsNetlink.h"
+#include "AsTpmDB.h"
 
 // Defines
 #define SELECT_WAIT_PERIOD 1
@@ -550,7 +551,7 @@ int ascProcessMessage( askRelayMessage *msg ) {
 // Description  : This is the control loop used for the arpsec deamon
 //
 // Inputs       : mode - simulate or run normally
-// Outputs      : 0 if successful, -1 if not
+// Outputs      : 0 if successful, -1 if no
 
 int ascControlLoop( int mode ) {
     
@@ -569,16 +570,20 @@ int ascControlLoop( int mode ) {
 
     // Intalialize all of the subsystems
     sim = (mode) ? ASKRN_SIMULATION : ASKRN_RELAY;
-    if ( aslInitLogic() || (askInitRelay(sim)) || (asnInitNetlink(sim)) ) {
-
+    if ( aslInitLogic() || (askInitRelay(sim)) || (asnInitNetlink(sim)) || (astdbInitDB(sim)) )
+    {
 	// Log and error out of processing
 	asLogMessage( "arpsec deamon initalization failed, aborting.\n" );
 	return( -1 );
     }
 
    // daveti: test the bidirectional netlink socket
+   // daveti: test the TPM DB
    if (sim == ASKRN_RELAY)
+   {
 	asnTestNetlink();
+	astdbDisplayDB();
+   }
 
    // daveti: setup the select before the loop
    nfds = 0;
@@ -667,6 +672,7 @@ int ascControlLoop( int mode ) {
     }
 
     // Close downt the procesing
+    astdbShutdownDB();
     asnShutdownNetlink();
     askShutdownRelay();
     aslShutdownLogic();

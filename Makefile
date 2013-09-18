@@ -4,6 +4,8 @@
 # Created	: Thu Mar 14 07:07:42 EDT 2013
 # By		: Patrick Mcdaniel
 #
+# Modified	: Sep 18, 2013 - add AsTpmDb
+# By		: daveti 
 # Modified	: Aug 7, 2013
 # By		: daveti
 
@@ -33,6 +35,7 @@ ASOBJS=	arpsecd.o \
 	AsTMeasure.o \
 	AsKrnRelay.o \
 	AsNetlink.o \
+	AsTpmDB.o \
 	AsControl.o
 ARPSECPL=	arpsec.o
 TARGETS	=	arpsecd \

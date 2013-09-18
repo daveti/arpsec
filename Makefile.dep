@@ -6,5 +6,6 @@ AsTMeasure.o: AsTMeasure.c AsTMeasure.h AsDefs.h
 AsKrnRelay.o: AsKrnRelay.c AsKrnRelay.h AsDefs.h AsLog.h AsControl.h
 AsNetlink.o: AsNetlink.c AsNetlink.h AsKrnRelay.h AsDefs.h AsControl.h \
  AsLog.h
+AsTpmDB.o: AsTpmDB.c AsTpmDB.h AsLog.h AsKrnRelay.h AsDefs.h
 AsControl.o: AsControl.c AsControl.h AsDefs.h AsLogic.h AsKrnRelay.h \
- AsLog.h AsTMeasure.h AsNetlink.h
+ AsLog.h AsTMeasure.h AsNetlink.h AsTpmDB.h
