@@ -33,12 +33,26 @@
 
 // Module data
 int	ascControlDone = 0;
+int	ascForceAttestFlag = 0;	    // daveti: Force the attestation even if the logic approves
 char	*ascLocalSystem = NULL;	    // The name of the local system
 char	*ascLocalNet = NULL;	    // The local network address name
 char	*ascLocalMedia = NULL;	    // The local media address name
 
 //
 // Module functions
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : ascForceAttest
+// Description  : Force the attestation even if the logic approves - for UT!
+//
+// Inputs       : void
+// Outputs      : void
+
+void ascForceAttest(void)
+{
+	ascForceAttestFlag = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -256,7 +270,8 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
     if ( ascPendingNetworkBinding(msg->target.network) ) {
 
 	// Check the source system
-	if ( ! aslSystemTrusted(msg->source, now) )  {
+	// daveti: add the forceAttestFlag for UT
+	if ( (!aslSystemTrusted(msg->source, now)) || (ascForceAttestFlag == 1) )  {
 
 	    // daveti: Before attesting, the binding needs to be
 	    // added into ARP cache temperarily.
@@ -269,7 +284,9 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	    }
 
 	    // Go attest the system
-	    if( astAttestSystem(msg->source) ) {
+	    //if( astAttestSystem(msg->source) ) {
+	    if (astAttestSystem(msg))
+	    {
 		asLogMessage( "Unable to attest system [%s] at time [%lu], ignoring ARP RES", 
 			msg->source, now );
 
@@ -415,7 +432,8 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
     if ( ascPendingMediaBinding(msg->target.media) ) {
 
 	// Check the source system
-	if ( ! aslSystemTrusted(msg->source, now) )  {
+	// daveti: add the forceAttestFlag for UT
+	if ( (!aslSystemTrusted(msg->source, now)) || (ascForceAttestFlag == 1) )  {
 
             // daveti: Before attesting, the binding needs to be
             // added into ARP cache temperarily.
@@ -428,7 +446,9 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	    }
 
 	    // Go attest the system
-	    if( astAttestSystem(msg->source) ) {
+	    //if( astAttestSystem(msg->source) ) {
+	    if (astAttestSystem(msg))
+	    {
 		asLogMessage( "Unable to attest system [%s] at time [%lu], ignoring ARP RES", 
 			msg->source, now );
 
@@ -569,8 +589,16 @@ int ascControlLoop( int mode ) {
     signal( SIGHUP, ascSigHupHandler );
 
     // Intalialize all of the subsystems
+    // NOTE: the order of init of subsystems
+    // does matters!
+    // Sep 21, 2013
+    // daveti
     sim = (mode) ? ASKRN_SIMULATION : ASKRN_RELAY;
-    if ( aslInitLogic() || (askInitRelay(sim)) || (asnInitNetlink(sim)) || (astdbInitDB(sim)) )
+    if ( aslInitLogic()
+	|| (askInitRelay(sim))
+	|| (asnInitNetlink(sim))
+	|| (astdbInitDB(sim))
+	|| (astInitAttest(sim)) )
     {
 	// Log and error out of processing
 	asLogMessage( "arpsec deamon initalization failed, aborting.\n" );
@@ -676,6 +704,7 @@ int ascControlLoop( int mode ) {
     asnShutdownNetlink();
     askShutdownRelay();
     aslShutdownLogic();
+    tpmw_close_tpm();
 
     // Return sucessfully
     return( 0 );

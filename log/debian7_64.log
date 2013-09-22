@@ -1,0 +1,136 @@
+Wed Aug  7 16:13:17 2013 : Intializing arpsecd logic ...
+Wed Aug  7 16:13:17 2013 : Forking child process for logic ...
+Wed Aug  7 16:13:17 2013 : Process forked (parent live)
+Wed Aug  7 16:13:17 2013 : Waiting for input [bytes written], ty=1
+Wed Aug  7 16:13:17 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:13:17 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:13:17 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:13:17 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:13:17 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:13:17 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:13:17 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:13:17 2013 : GPL input [Wed Aug  7 16:13:17 2013 : Process forked (child live)]
+Wed Aug  7 16:13:17 2013 : GPL input [Wed Aug  7 16:13:17 2013 : Child exec logic [/usr/local/gprolog-1.4.2/bin/gprolog][--consult-file[arpsec.pl] ...]
+Wed Aug  7 16:13:17 2013 : GPL input [GNU Prolog 1.4.2]
+Wed Aug  7 16:13:17 2013 : GPL input [By Daniel Diaz]
+Wed Aug  7 16:13:17 2013 : GPL input [Copyright (C) 1999-2012 Daniel Diaz]
+Wed Aug  7 16:13:17 2013 : GPL input [compiling /root/arpsecd/arpsec.pl for byte code...]
+Wed Aug  7 16:13:17 2013 : GPL input [/root/arpsecd/arpsec.pl compiled, 102 lines read - 8230 bytes written, 14 ms]
+Wed Aug  7 16:13:17 2013 : arpsecd logic initialized.
+Wed Aug  7 16:13:17 2013 : Info - got IPv4 address for eth0: 192.168.122.213
+Wed Aug  7 16:13:17 2013 : Info - got MAC address for eth0: 52_54_0_dc_18_20
+Wed Aug  7 16:13:17 2013 : Info - LocalSystem: sysdebian7bit64
+Wed Aug  7 16:13:17 2013 : Info - LocalNet: net192_168_122_213
+Wed Aug  7 16:13:17 2013 : Info - LocalMedia: media52_54_0_dc_18_20
+Wed Aug  7 16:13:17 2013 : arpsecd got [4] CPUs
+Wed Aug  7 16:13:17 2013 : Relay opened for file /sys/kernel/debug/arpsec_cpu0
+Wed Aug  7 16:13:17 2013 : Relay opened for file /sys/kernel/debug/arpsec_cpu1
+Wed Aug  7 16:13:17 2013 : Relay opened for file /sys/kernel/debug/arpsec_cpu2
+Wed Aug  7 16:13:17 2013 : Relay opened for file /sys/kernel/debug/arpsec_cpu3
+Wed Aug  7 16:13:17 2013 : Got file handler[4]
+Wed Aug  7 16:13:17 2013 : Got file handler[5]
+Wed Aug  7 16:13:17 2013 : Got file handler[7]
+Wed Aug  7 16:13:17 2013 : Got file handler[8]
+Wed Aug  7 16:15:34 2013 : Info: read on msg from kernel for file [5]
+Wed Aug  7 16:15:34 2013 : Start dumping the kernel arpmsg
+Wed Aug  7 16:15:34 2013 : ===============================
+Wed Aug  7 16:15:34 2013 : arpmsg[0] = 0x0(0)
+Wed Aug  7 16:15:34 2013 : arpmsg[1] = 0x1(1)
+Wed Aug  7 16:15:34 2013 : arpmsg[2] = 0x8(8)
+Wed Aug  7 16:15:34 2013 : arpmsg[3] = 0x0(0)
+Wed Aug  7 16:15:34 2013 : arpmsg[4] = 0x6(6)
+Wed Aug  7 16:15:34 2013 : arpmsg[5] = 0x4(4)
+Wed Aug  7 16:15:34 2013 : arpmsg[6] = 0x0(0)
+Wed Aug  7 16:15:34 2013 : arpmsg[7] = 0x1(1)
+Wed Aug  7 16:15:34 2013 : arpmsg[8] = 0x52(82)
+Wed Aug  7 16:15:34 2013 : arpmsg[9] = 0x54(84)
+Wed Aug  7 16:15:34 2013 : arpmsg[10] = 0x0(0)
+Wed Aug  7 16:15:34 2013 : arpmsg[11] = 0xa7(167)
+Wed Aug  7 16:15:34 2013 : arpmsg[12] = 0xcd(205)
+Wed Aug  7 16:15:34 2013 : arpmsg[13] = 0x75(117)
+Wed Aug  7 16:15:34 2013 : arpmsg[14] = 0xc0(192)
+Wed Aug  7 16:15:34 2013 : arpmsg[15] = 0xa8(168)
+Wed Aug  7 16:15:34 2013 : arpmsg[16] = 0x7a(122)
+Wed Aug  7 16:15:34 2013 : arpmsg[17] = 0x1(1)
+Wed Aug  7 16:15:34 2013 : arpmsg[18] = 0xff(255)
+Wed Aug  7 16:15:34 2013 : arpmsg[19] = 0xff(255)
+Wed Aug  7 16:15:34 2013 : arpmsg[20] = 0xff(255)
+Wed Aug  7 16:15:34 2013 : arpmsg[21] = 0xff(255)
+Wed Aug  7 16:15:34 2013 : arpmsg[22] = 0xff(255)
+Wed Aug  7 16:15:34 2013 : arpmsg[23] = 0xff(255)
+Wed Aug  7 16:15:34 2013 : arpmsg[24] = 0xc0(192)
+Wed Aug  7 16:15:34 2013 : arpmsg[25] = 0xa8(168)
+Wed Aug  7 16:15:34 2013 : arpmsg[26] = 0x7a(122)
+Wed Aug  7 16:15:34 2013 : arpmsg[27] = 0xd5(213)
+Wed Aug  7 16:15:34 2013 : ===============================
+Wed Aug  7 16:15:34 2013 : End dumping the kernel arpmsg
+Wed Aug  7 16:15:34 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug  7 16:15:34 2013 : ==================================
+Wed Aug  7 16:15:34 2013 : format_of_hardware_address: 1
+Wed Aug  7 16:15:34 2013 : format_of_protocol_address: 0x800
+Wed Aug  7 16:15:34 2013 : length_of_hardware_address: 6
+Wed Aug  7 16:15:34 2013 : length_of_protocol_address: 4
+Wed Aug  7 16:15:34 2013 : ARP_opcode: 1
+Wed Aug  7 16:15:34 2013 : sender_hardware_address: media52_54_0_a7_cd_75
+Wed Aug  7 16:15:34 2013 : sender_IP_address: net192_168_122_1
+Wed Aug  7 16:15:34 2013 : target_hardware_address: mediaff_ff_ff_ff_ff_ff
+Wed Aug  7 16:15:34 2013 : target_IP_address: net192_168_122_213
+Wed Aug  7 16:15:34 2013 : ==================================
+Wed Aug  7 16:15:34 2013 : End dumping(2) the kernel arpmsg
+Wed Aug  7 16:15:34 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media52_54_0_a7_cd_75,dst=HWANY,addr=net192_168_122_213]
+Wed Aug  7 16:15:34 2013 : ascProcessArpRequest: UNIMPLEMNTED ARP RESPONSE, waiting for kernel
+Wed Aug  7 16:19:10 2013 : Info: read on msg from kernel for file [8]
+Wed Aug  7 16:19:10 2013 : Start dumping the kernel arpmsg
+Wed Aug  7 16:19:10 2013 : ===============================
+Wed Aug  7 16:19:10 2013 : arpmsg[0] = 0x0(0)
+Wed Aug  7 16:19:10 2013 : arpmsg[1] = 0x1(1)
+Wed Aug  7 16:19:10 2013 : arpmsg[2] = 0x8(8)
+Wed Aug  7 16:19:10 2013 : arpmsg[3] = 0x0(0)
+Wed Aug  7 16:19:10 2013 : arpmsg[4] = 0x6(6)
+Wed Aug  7 16:19:10 2013 : arpmsg[5] = 0x4(4)
+Wed Aug  7 16:19:10 2013 : arpmsg[6] = 0x0(0)
+Wed Aug  7 16:19:10 2013 : arpmsg[7] = 0x2(2)
+Wed Aug  7 16:19:10 2013 : arpmsg[8] = 0x52(82)
+Wed Aug  7 16:19:10 2013 : arpmsg[9] = 0x54(84)
+Wed Aug  7 16:19:10 2013 : arpmsg[10] = 0x0(0)
+Wed Aug  7 16:19:10 2013 : arpmsg[11] = 0xa7(167)
+Wed Aug  7 16:19:10 2013 : arpmsg[12] = 0xcd(205)
+Wed Aug  7 16:19:10 2013 : arpmsg[13] = 0x75(117)
+Wed Aug  7 16:19:10 2013 : arpmsg[14] = 0xc0(192)
+Wed Aug  7 16:19:10 2013 : arpmsg[15] = 0xa8(168)
+Wed Aug  7 16:19:10 2013 : arpmsg[16] = 0x7a(122)
+Wed Aug  7 16:19:10 2013 : arpmsg[17] = 0x1(1)
+Wed Aug  7 16:19:10 2013 : arpmsg[18] = 0x52(82)
+Wed Aug  7 16:19:10 2013 : arpmsg[19] = 0x54(84)
+Wed Aug  7 16:19:10 2013 : arpmsg[20] = 0x0(0)
+Wed Aug  7 16:19:10 2013 : arpmsg[21] = 0xdc(220)
+Wed Aug  7 16:19:10 2013 : arpmsg[22] = 0x18(24)
+Wed Aug  7 16:19:10 2013 : arpmsg[23] = 0x20(32)
+Wed Aug  7 16:19:10 2013 : arpmsg[24] = 0xc0(192)
+Wed Aug  7 16:19:10 2013 : arpmsg[25] = 0xa8(168)
+Wed Aug  7 16:19:10 2013 : arpmsg[26] = 0x7a(122)
+Wed Aug  7 16:19:10 2013 : arpmsg[27] = 0xd5(213)
+Wed Aug  7 16:19:10 2013 : ===============================
+Wed Aug  7 16:19:10 2013 : End dumping the kernel arpmsg
+Wed Aug  7 16:19:10 2013 : Start dumping(2) the kernel arpmsg
+Wed Aug  7 16:19:10 2013 : ==================================
+Wed Aug  7 16:19:10 2013 : format_of_hardware_address: 1
+Wed Aug  7 16:19:10 2013 : format_of_protocol_address: 0x800
+Wed Aug  7 16:19:10 2013 : length_of_hardware_address: 6
+Wed Aug  7 16:19:10 2013 : length_of_protocol_address: 4
+Wed Aug  7 16:19:10 2013 : ARP_opcode: 2
+Wed Aug  7 16:19:10 2013 : sender_hardware_address: media52_54_0_a7_cd_75
+Wed Aug  7 16:19:10 2013 : sender_IP_address: net192_168_122_1
+Wed Aug  7 16:19:10 2013 : target_hardware_address: media52_54_0_dc_18_20
+Wed Aug  7 16:19:10 2013 : target_IP_address: net192_168_122_213
+Wed Aug  7 16:19:10 2013 : ==================================
+Wed Aug  7 16:19:10 2013 : End dumping(2) the kernel arpmsg
+Wed Aug  7 16:19:10 2013 : Info - got the remote hostname [daveti.local] for IP [192.168.122.1]
+Wed Aug  7 16:19:10 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_RES,src=sysdaveti.local,sdn=media52_54_0_a7_cd_75,dst=media52_54_0_dc_18_20,addr=net192_168_122_1,bind=media52_54_0_a7_cd_75]
+Wed Aug  7 16:19:10 2013 : PENDING NETWORK BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:19:10 2013 : Writing to logic [trusted(sysdaveti.local,1375917550).
+]
+Wed Aug  7 16:19:10 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:19:10 2013 : GPL input [uncaught exception: error(syntax_error('user_input:1 (char:18) , or ) expected'),read_term/3)]
+Wed Aug  7 16:19:10 2013 : Faild to get a postive or negative result on system trust (sysdaveti.local,1375917550)
+Opening pipe from kernel space

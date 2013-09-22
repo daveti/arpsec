@@ -18,6 +18,9 @@
 //
 // Module methods
 
+// Force the attestation for UT
+void ascForceAttest(void);
+
 // Get the local information associated with this process
 char *ascGetLocalNet(void);
 char *ascGetLocalMedia(void);

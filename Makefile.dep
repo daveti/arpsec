@@ -2,10 +2,13 @@ arpsecd.o: arpsecd.c /usr/local/gprolog-1.4.2/include/gprolog.h \
  AsControl.h AsDefs.h AsLogic.h AsLog.h
 AsLog.o: AsLog.c AsLog.h
 AsLogic.o: AsLogic.c AsLogic.h AsDefs.h AsLog.h
-AsTMeasure.o: AsTMeasure.c AsTMeasure.h AsDefs.h
+AsTMeasure.o: AsTMeasure.c AsDefs.h AsLog.h AsKrnRelay.h AsNetlink.h \
+ AsTMeasure.h AsTpmDB.h AT.h tpmw.h
 AsKrnRelay.o: AsKrnRelay.c AsKrnRelay.h AsDefs.h AsLog.h AsControl.h
 AsNetlink.o: AsNetlink.c AsNetlink.h AsKrnRelay.h AsDefs.h AsControl.h \
  AsLog.h
 AsTpmDB.o: AsTpmDB.c AsTpmDB.h AsLog.h AsKrnRelay.h AsDefs.h
+AT.o: AT.c AT.h
+tpmw.o: tpmw.c tpmw.h AT.h
 AsControl.o: AsControl.c AsControl.h AsDefs.h AsLogic.h AsKrnRelay.h \
- AsLog.h AsTMeasure.h AsNetlink.h AsTpmDB.h
+ AsLog.h AsTMeasure.h AsTpmDB.h AsNetlink.h

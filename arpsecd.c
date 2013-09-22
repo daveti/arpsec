@@ -5,6 +5,8 @@
 //
 //  Author  : Patrick McDaniel
 //  Created : Tue Mar 26 11:44:08 EDT 2013
+//  Dev	    : daveti
+//  Modified: Fri Sep 20 10:51:12 PDT 2013
 //
 
 // Incliudes	
@@ -21,14 +23,15 @@
 #include "AsLog.h"
 
 // Definitions
-#define ARPSEC_ARGUMENTS "shl:"
+#define ARPSEC_ARGUMENTS "shfl:"
 #define USAGE \
-    "\nUSAGE: arpsecd [-h] [-l <logfile>] [-s]\n" \
+    "\nUSAGE: arpsecd [-h] [-l <logfile>] [-s] [-f]\n" \
     "\n" \
     "where:\n" \
     "   -h - display this help information\n" \
     "   -l - set the log file (stderr by default), where\n" \
     "        logfile - the path to the file to place log information.\n" \
+    "	-f - force the attestation even if the logic approves the mapping.\n" \
     "   -s - simulate the kernel and network traffic\n\n"
 
 //
@@ -85,6 +88,10 @@ int main(int argc, char **argv) {
 
 	    case 's': // Simulate flag
 		simulate = 1;
+		break;
+
+	    case 'f': // Force attest flag
+		ascForceAttest();
 		break;
 
 	    default:  // Default (unknown)

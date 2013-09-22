@@ -4,7 +4,7 @@
 # Created	: Thu Mar 14 07:07:42 EDT 2013
 # By		: Patrick Mcdaniel
 #
-# Modified	: Sep 18, 2013 - add AsTpmDb
+# Modified	: Sep 18, 2013 - add AsTpmDb, tpmd and AT
 # By		: daveti 
 # Modified	: Aug 7, 2013
 # By		: daveti
@@ -24,7 +24,7 @@ CC=gcc
 CFLAGS=-c $(INCLUDES) -g -Wall 
 LINK=gcc
 LINKFLAGS=-g
-LIBS=-lgcrypt
+LIBS=-lgcrypt -ltspi
 
 #
 # Setup builds
@@ -36,9 +36,15 @@ ASOBJS=	arpsecd.o \
 	AsKrnRelay.o \
 	AsNetlink.o \
 	AsTpmDB.o \
+	AT.o \
+	tpmw.o \
 	AsControl.o
+TPMDOBJS= tpmd.o \
+	tpmw.o \
+	AT.o
 ARPSECPL=	arpsec.o
 TARGETS	=	arpsecd \
+		tpmd \
 		checkproc
 
 #
@@ -49,15 +55,18 @@ ARPSEC : $(DEPFILE) $(TARGETS)
 arpsecd : $(ASOBJS) $(ARPSECPL)
 	$(LINK) $(LINKFLAGS) $(ASOBJS) $(LIBS) -o $@
 
+tpmd : $(TPMDOBJS)
+	$(LINK) $(LINKFLAGS) $(TPMDOBJS) $(LIBS) -o $@
+
 checkproc: checkproc.o
 	$(CC) $< -o $@
 
 # Various maintenance stuff
 clean : 
-	rm -f $(TARGETS) $(ASOBJS) $(ARPSECPL) $(DEPFILE) 
+	rm -f $(TARGETS) $(ASOBJS) $(TPMDOBJS) $(ARPSECPL) $(DEPFILE) 2>&1
 
 install:
-	install -C $(ASOBJS) $(ARPSECPL) $(TARGETDIR)
+	install -C $(ASOBJS) $(ARPSECPL) $(TPMDOBJS) $(TARGETDIR)
 
 
 # Do dependency generation

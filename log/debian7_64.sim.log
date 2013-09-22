@@ -1,0 +1,260 @@
+Wed Aug  7 16:12:24 2013 : Intializing arpsecd logic ...
+Wed Aug  7 16:12:24 2013 : Forking child process for logic ...
+Wed Aug  7 16:12:24 2013 : Process forked (parent live)
+Wed Aug  7 16:12:24 2013 : Waiting for input [bytes written], ty=1
+Wed Aug  7 16:12:24 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:24 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:24 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:24 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:24 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:24 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:24 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:24 2013 : GPL input [Wed Aug  7 16:12:24 2013 : Process forked (child live)]
+Wed Aug  7 16:12:24 2013 : GPL input [Wed Aug  7 16:12:24 2013 : Child exec logic [/usr/local/gprolog-1.4.2/bin/gprolog][--consult-file[arpsec.pl] ...]
+Wed Aug  7 16:12:24 2013 : GPL input [GNU Prolog 1.4.2]
+Wed Aug  7 16:12:24 2013 : GPL input [By Daniel Diaz]
+Wed Aug  7 16:12:24 2013 : GPL input [Copyright (C) 1999-2012 Daniel Diaz]
+Wed Aug  7 16:12:24 2013 : GPL input [compiling /root/arpsecd/arpsec.pl for byte code...]
+Wed Aug  7 16:12:24 2013 : GPL input [/root/arpsecd/arpsec.pl compiled, 102 lines read - 8230 bytes written, 13 ms]
+Wed Aug  7 16:12:24 2013 : arpsecd logic initialized.
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys55061 (net=net53_98_138_112,med=media38_b1_77_be_e8_dc)
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys25845 (net=net82_75_219_191,med=media35_60_3b_18_1d_98)
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys51320 (net=net133_79_15_47,med=media52_c4_47_95_3f_bd)
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys52325 (net=net186_2_187_67,med=media55_e7_b2_13_f2_e4)
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys59744 (net=net57_253_155_156,med=mediad8_19_16_bb_49_5a)
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys12946 (net=net173_17_232_136,med=mediac_e_1a_f5_1d_e8)
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys21968 (net=net84_75_243_184,med=media60_f7_da_1a_5e_f5)
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys50345 (net=net238_246_86_161,med=mediab1_da_51_ca_81_74)
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys18203 (net=net71_253_148_166,med=media42_67_2f_e6_fa_65)
+Wed Aug  7 16:12:24 2013 : Creating simulated system sys36304 (net=net7_46_165_144,med=media86_7b_49_7b_77_aa)
+Wed Aug  7 16:12:25 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RREQ,sdn=media38_b1_77_be_e8_dc,dst=HWANY,addr=media52_c4_47_95_3f_bd]
+Wed Aug  7 16:12:25 2013 : Writing to logic [valid_binding(X,media52_c4_47_95_3f_bd,1375917145).
+]
+Wed Aug  7 16:12:25 2013 : Waiting for input [X], ty=2
+Wed Aug  7 16:12:25 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:25 2013 : GPL input []
+Wed Aug  7 16:12:25 2013 : GPL input [no]
+Wed Aug  7 16:12:25 2013 : Failed to find good RARP REQ binding [media52_c4_47_95_3f_bd]
+Wed Aug  7 16:12:25 2013 : METRIC: RARP Binding : 100523
+Wed Aug  7 16:12:25 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RRES,src=sys59744,sdn=media35_60_3b_18_1d_98,dst=HWANY,addr=mediad8_19_16_bb_49_5a,bind=net57_253_155_156]
+Wed Aug  7 16:12:25 2013 : PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:25 2013 : Writing to logic [trusted(sys59744,1375917145).
+]
+Wed Aug  7 16:12:25 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:25 2013 : GPL input []
+Wed Aug  7 16:12:25 2013 : GPL input [no]
+Wed Aug  7 16:12:25 2013 : System (sys59744) found to be trusted at time (1375917145)
+Wed Aug  7 16:12:25 2013 : Writing to logic [asserta(binding_statement(sys59744,mediad8_19_16_bb_49_5a,net57_253_155_156,1375917145)).
+]
+Wed Aug  7 16:12:25 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:25 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:25 2013 : GPL input []
+Wed Aug  7 16:12:25 2013 : GPL input [yes]
+Wed Aug  7 16:12:25 2013 : Binding statement added successfully (sys59744,1375917145)
+Wed Aug  7 16:12:25 2013 : Successfully processed RARP RES [mediad8_19_16_bb_49_5a->net57_253_155_156]
+Wed Aug  7 16:12:25 2013 : METRIC: RARP add binding  : 100710
+Wed Aug  7 16:12:25 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media86_7b_49_7b_77_aa,dst=HWANY,addr=net133_79_15_47]
+Wed Aug  7 16:12:25 2013 : Writing to logic [valid_binding(net133_79_15_47,X,1375917145).
+]
+Wed Aug  7 16:12:25 2013 : Waiting for input [X], ty=2
+Wed Aug  7 16:12:25 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:25 2013 : GPL input []
+Wed Aug  7 16:12:25 2013 : GPL input [no]
+Wed Aug  7 16:12:25 2013 : Failed to find good ARP REQ binding [net133_79_15_47]
+Wed Aug  7 16:12:25 2013 : METRIC: ARP Binding : 100463
+Wed Aug  7 16:12:25 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RRES,src=sys55061,sdn=mediac_e_1a_f5_1d_e8,dst=HWANY,addr=media38_b1_77_be_e8_dc,bind=net53_98_138_112]
+Wed Aug  7 16:12:25 2013 : PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:25 2013 : Writing to logic [trusted(sys55061,1375917145).
+]
+Wed Aug  7 16:12:25 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [no]
+Wed Aug  7 16:12:26 2013 : System (sys55061) found to be trusted at time (1375917145)
+Wed Aug  7 16:12:26 2013 : Writing to logic [asserta(binding_statement(sys55061,media38_b1_77_be_e8_dc,net53_98_138_112,1375917145)).
+]
+Wed Aug  7 16:12:26 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [yes]
+Wed Aug  7 16:12:26 2013 : Binding statement added successfully (sys55061,1375917145)
+Wed Aug  7 16:12:26 2013 : Successfully processed RARP RES [media38_b1_77_be_e8_dc->net53_98_138_112]
+Wed Aug  7 16:12:26 2013 : METRIC: RARP add binding  : 100545
+Wed Aug  7 16:12:26 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RREQ,sdn=media42_67_2f_e6_fa_65,dst=HWANY,addr=media55_e7_b2_13_f2_e4]
+Wed Aug  7 16:12:26 2013 : Writing to logic [valid_binding(X,media55_e7_b2_13_f2_e4,1375917146).
+]
+Wed Aug  7 16:12:26 2013 : Waiting for input [X], ty=2
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [no]
+Wed Aug  7 16:12:26 2013 : Failed to find good RARP REQ binding [media55_e7_b2_13_f2_e4]
+Wed Aug  7 16:12:26 2013 : METRIC: RARP Binding : 100433
+Wed Aug  7 16:12:26 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=mediad8_19_16_bb_49_5a,dst=HWANY,addr=net53_98_138_112]
+Wed Aug  7 16:12:26 2013 : ascProcessArpRequest: UNIMPLEMNTED ARP RESPONSE, waiting for kernel
+Wed Aug  7 16:12:26 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RRES,src=sys18203,sdn=media86_7b_49_7b_77_aa,dst=HWANY,addr=media42_67_2f_e6_fa_65,bind=net71_253_148_166]
+Wed Aug  7 16:12:26 2013 : PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:26 2013 : Writing to logic [trusted(sys18203,1375917146).
+]
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [no]
+Wed Aug  7 16:12:26 2013 : System (sys18203) found to be trusted at time (1375917146)
+Wed Aug  7 16:12:26 2013 : Writing to logic [asserta(binding_statement(sys18203,media42_67_2f_e6_fa_65,net71_253_148_166,1375917146)).
+]
+Wed Aug  7 16:12:26 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [yes]
+Wed Aug  7 16:12:26 2013 : Binding statement added successfully (sys18203,1375917146)
+Wed Aug  7 16:12:26 2013 : Successfully processed RARP RES [media42_67_2f_e6_fa_65->net71_253_148_166]
+Wed Aug  7 16:12:26 2013 : METRIC: RARP add binding  : 100470
+Wed Aug  7 16:12:26 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_RES,src=sys50345,sdn=media86_7b_49_7b_77_aa,dst=HWANY,addr=net238_246_86_161,bind=mediab1_da_51_ca_81_74]
+Wed Aug  7 16:12:26 2013 : PENDING NETWORK BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:26 2013 : Writing to logic [trusted(sys50345,1375917146).
+]
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [no]
+Wed Aug  7 16:12:26 2013 : System (sys50345) found to be trusted at time (1375917146)
+Wed Aug  7 16:12:26 2013 : Writing to logic [asserta(binding_statement(sys50345,mediab1_da_51_ca_81_74,net238_246_86_161,1375917146)).
+]
+Wed Aug  7 16:12:26 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [yes]
+Wed Aug  7 16:12:26 2013 : Binding statement added successfully (sys50345,1375917146)
+Wed Aug  7 16:12:26 2013 : METRIC: ARP add binding  : 100495
+Wed Aug  7 16:12:26 2013 : Successfully processed ARP RES [net238_246_86_161->mediab1_da_51_ca_81_74]
+Wed Aug  7 16:12:26 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_RES,src=sys52325,sdn=media42_67_2f_e6_fa_65,dst=HWANY,addr=net186_2_187_67,bind=media55_e7_b2_13_f2_e4]
+Wed Aug  7 16:12:26 2013 : PENDING NETWORK BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:26 2013 : Writing to logic [trusted(sys52325,1375917146).
+]
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [no]
+Wed Aug  7 16:12:26 2013 : System (sys52325) found to be trusted at time (1375917146)
+Wed Aug  7 16:12:26 2013 : Writing to logic [asserta(binding_statement(sys52325,media55_e7_b2_13_f2_e4,net186_2_187_67,1375917146)).
+]
+Wed Aug  7 16:12:26 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [yes]
+Wed Aug  7 16:12:26 2013 : Binding statement added successfully (sys52325,1375917146)
+Wed Aug  7 16:12:26 2013 : METRIC: ARP add binding  : 100486
+Wed Aug  7 16:12:26 2013 : Successfully processed ARP RES [net186_2_187_67->media55_e7_b2_13_f2_e4]
+Wed Aug  7 16:12:26 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RRES,src=sys21968,sdn=media55_e7_b2_13_f2_e4,dst=HWANY,addr=media60_f7_da_1a_5e_f5,bind=net84_75_243_184]
+Wed Aug  7 16:12:26 2013 : PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:26 2013 : Writing to logic [trusted(sys21968,1375917146).
+]
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:26 2013 : GPL input []
+Wed Aug  7 16:12:26 2013 : GPL input [no]
+Wed Aug  7 16:12:26 2013 : System (sys21968) found to be trusted at time (1375917146)
+Wed Aug  7 16:12:26 2013 : Writing to logic [asserta(binding_statement(sys21968,media60_f7_da_1a_5e_f5,net84_75_243_184,1375917146)).
+]
+Wed Aug  7 16:12:26 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:26 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [yes]
+Wed Aug  7 16:12:27 2013 : Binding statement added successfully (sys21968,1375917146)
+Wed Aug  7 16:12:27 2013 : Successfully processed RARP RES [media60_f7_da_1a_5e_f5->net84_75_243_184]
+Wed Aug  7 16:12:27 2013 : METRIC: RARP add binding  : 100508
+Wed Aug  7 16:12:27 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RRES,src=sys25845,sdn=media86_7b_49_7b_77_aa,dst=HWANY,addr=media35_60_3b_18_1d_98,bind=net82_75_219_191]
+Wed Aug  7 16:12:27 2013 : PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:27 2013 : Writing to logic [trusted(sys25845,1375917147).
+]
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [no]
+Wed Aug  7 16:12:27 2013 : System (sys25845) found to be trusted at time (1375917147)
+Wed Aug  7 16:12:27 2013 : Writing to logic [asserta(binding_statement(sys25845,media35_60_3b_18_1d_98,net82_75_219_191,1375917147)).
+]
+Wed Aug  7 16:12:27 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [yes]
+Wed Aug  7 16:12:27 2013 : Binding statement added successfully (sys25845,1375917147)
+Wed Aug  7 16:12:27 2013 : Successfully processed RARP RES [media35_60_3b_18_1d_98->net82_75_219_191]
+Wed Aug  7 16:12:27 2013 : METRIC: RARP add binding  : 100530
+Wed Aug  7 16:12:27 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=media52_c4_47_95_3f_bd,dst=HWANY,addr=net173_17_232_136]
+Wed Aug  7 16:12:27 2013 : Writing to logic [valid_binding(net173_17_232_136,X,1375917147).
+]
+Wed Aug  7 16:12:27 2013 : Waiting for input [X], ty=2
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [no]
+Wed Aug  7 16:12:27 2013 : Failed to find good ARP REQ binding [net173_17_232_136]
+Wed Aug  7 16:12:27 2013 : METRIC: ARP Binding : 100431
+Wed Aug  7 16:12:27 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RRES,src=sys59744,sdn=media35_60_3b_18_1d_98,dst=HWANY,addr=mediad8_19_16_bb_49_5a,bind=net57_253_155_156]
+Wed Aug  7 16:12:27 2013 : PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:27 2013 : Writing to logic [trusted(sys59744,1375917147).
+]
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [no]
+Wed Aug  7 16:12:27 2013 : System (sys59744) found to be trusted at time (1375917147)
+Wed Aug  7 16:12:27 2013 : Writing to logic [asserta(binding_statement(sys59744,mediad8_19_16_bb_49_5a,net57_253_155_156,1375917147)).
+]
+Wed Aug  7 16:12:27 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [yes]
+Wed Aug  7 16:12:27 2013 : Binding statement added successfully (sys59744,1375917147)
+Wed Aug  7 16:12:27 2013 : Successfully processed RARP RES [mediad8_19_16_bb_49_5a->net57_253_155_156]
+Wed Aug  7 16:12:27 2013 : METRIC: RARP add binding  : 100515
+Wed Aug  7 16:12:27 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RREQ,sdn=media52_c4_47_95_3f_bd,dst=HWANY,addr=media35_60_3b_18_1d_98]
+Wed Aug  7 16:12:27 2013 : Writing to logic [valid_binding(X,media35_60_3b_18_1d_98,1375917147).
+]
+Wed Aug  7 16:12:27 2013 : Waiting for input [X], ty=2
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [no]
+Wed Aug  7 16:12:27 2013 : Failed to find good RARP REQ binding [media35_60_3b_18_1d_98]
+Wed Aug  7 16:12:27 2013 : METRIC: RARP Binding : 100436
+Wed Aug  7 16:12:27 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RRES,src=sys50345,sdn=media35_60_3b_18_1d_98,dst=HWANY,addr=mediab1_da_51_ca_81_74,bind=net238_246_86_161]
+Wed Aug  7 16:12:27 2013 : PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:27 2013 : Writing to logic [trusted(sys50345,1375917147).
+]
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [no]
+Wed Aug  7 16:12:27 2013 : System (sys50345) found to be trusted at time (1375917147)
+Wed Aug  7 16:12:27 2013 : Writing to logic [asserta(binding_statement(sys50345,mediab1_da_51_ca_81_74,net238_246_86_161,1375917147)).
+]
+Wed Aug  7 16:12:27 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [yes]
+Wed Aug  7 16:12:27 2013 : Binding statement added successfully (sys50345,1375917147)
+Wed Aug  7 16:12:27 2013 : Successfully processed RARP RES [mediab1_da_51_ca_81_74->net238_246_86_161]
+Wed Aug  7 16:12:27 2013 : METRIC: RARP add binding  : 100504
+Wed Aug  7 16:12:27 2013 : Processing ARP from kernel [AS Msg [RFC_903_ARP_RRES,src=sys12946,sdn=media38_b1_77_be_e8_dc,dst=HWANY,addr=mediac_e_1a_f5_1d_e8,bind=net173_17_232_136]
+Wed Aug  7 16:12:27 2013 : PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE
+Wed Aug  7 16:12:27 2013 : Writing to logic [trusted(sys12946,1375917147).
+]
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:27 2013 : GPL input []
+Wed Aug  7 16:12:27 2013 : GPL input [no]
+Wed Aug  7 16:12:27 2013 : System (sys12946) found to be trusted at time (1375917147)
+Wed Aug  7 16:12:27 2013 : Writing to logic [asserta(binding_statement(sys12946,mediac_e_1a_f5_1d_e8,net173_17_232_136,1375917147)).
+]
+Wed Aug  7 16:12:27 2013 : Waiting for input [yes], ty=3
+Wed Aug  7 16:12:27 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:28 2013 : GPL input []
+Wed Aug  7 16:12:28 2013 : GPL input [yes]
+Wed Aug  7 16:12:28 2013 : Binding statement added successfully (sys12946,1375917147)
+Wed Aug  7 16:12:28 2013 : Successfully processed RARP RES [mediac_e_1a_f5_1d_e8->net173_17_232_136]
+Wed Aug  7 16:12:28 2013 : METRIC: RARP add binding  : 100523
+Wed Aug  7 16:12:28 2013 : Processing ARP from kernel [AS Msg [RFC_826_ARP_REQ,sdn=mediab1_da_51_ca_81_74,dst=HWANY,addr=net84_75_243_184]
+Wed Aug  7 16:12:28 2013 : Writing to logic [valid_binding(net84_75_243_184,X,1375917148).
+]
+Wed Aug  7 16:12:28 2013 : Waiting for input [X], ty=2
+Wed Aug  7 16:12:28 2013 : Data is ready for reading from logic.
+Wed Aug  7 16:12:28 2013 : System received SIGINT signal, processing.
+Wed Aug  7 16:12:28 2013 : GPL input []
+Wed Aug  7 16:12:28 2013 : GPL input [no]
+Wed Aug  7 16:12:28 2013 : Failed to find good ARP REQ binding [net84_75_243_184]
+Wed Aug  7 16:12:28 2013 : METRIC: ARP Binding : 84890
+Wed Aug  7 16:12:28 2013 : Stopping arpsecd logic ...
+Wed Aug  7 16:12:28 2013 : Writing to logic [halt.
+]
+Wed Aug  7 16:12:28 2013 : Done.
