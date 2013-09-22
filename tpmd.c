@@ -94,7 +94,7 @@ int main(int argc, char **argv)
 	struct hostent *client_hostent = NULL;
 	struct option long_options[] = {
 		{"help", 0, NULL, 'h'},
-		{"foreground", 0, NULL, 'f'},
+		{"fake", 0, NULL, 'f'},
 		{"debug", 0, NULL, 'd'},
 		{"config", 1, NULL, 'c'},
 		{0, 0, 0, 0}

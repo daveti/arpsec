@@ -34,5 +34,8 @@ int astAttestSystem(askRelayMessage *msg);
 
 // Find the DB entry based on the msg recv'd
 tpmdb_entry *astFindDBEntry(askRelayMessage *msg);
+
+// Allow the binding if no DB entry found during attestation
+void astAllowBinding(void);
 	
 #endif

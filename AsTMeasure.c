@@ -33,6 +33,22 @@
 
 // Make it zero once debugging is done
 static int	ast_debug_enabled = 1;
+static int	ast_allow_binding;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : astAllowBinding
+// Description  : Allow binding if no DB entry found during attestation
+//
+// Inputs       : void
+// Outputs      : void
+// Dev          : daveti
+//
+
+void astAllowBinding(void)
+{
+	ast_allow_binding = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -136,8 +152,16 @@ int astAttestSystem(askRelayMessage *msg)
 	entry = astFindDBEntry(msg);
 	if (entry == NULL)
 	{
-		asLogMessage("Error on astFindDBEntry [unable to find the DB entry]");
-		return -1;
+		if (ast_allow_binding == 0)
+		{
+			asLogMessage("Error on astFindDBEntry [unable to find the DB entry]");
+			return -1;
+		}
+		else
+		{
+			asLogMessage("Warning: unable to find the DB entry but allow the binding");
+			return 0;
+		}
 	}
 
 	// Load the PCR mask and PCR values into TPMW

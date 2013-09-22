@@ -384,7 +384,7 @@ tpmdb_entry *astdbFindEntryBasedOnMac(char *mac)
 
 	for (i = 0; i < astdbEntryNum; i++)
 	{
-		if (strcmp(mac, astdb[i]->mac) == 0)
+		if (strcasecmp(mac, astdb[i]->mac) == 0)
 			return astdb[i];
 	}
 
@@ -398,7 +398,7 @@ tpmdb_entry *astdbFindEntryBasedOnIp(char *ip)
 
 	for (i = 0; i < astdbEntryNum; i++)
 	{
-		if (strcmp(ip, astdb[i]->ipv4) == 0)
+		if (strcasecmp(ip, astdb[i]->ipv4) == 0)
 			return astdb[i];
 	}
 

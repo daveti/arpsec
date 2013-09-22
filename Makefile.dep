@@ -1,5 +1,5 @@
 arpsecd.o: arpsecd.c /usr/local/gprolog-1.4.2/include/gprolog.h \
- AsControl.h AsDefs.h AsLogic.h AsLog.h
+ AsControl.h AsDefs.h AsLogic.h AsLog.h AsTMeasure.h AsTpmDB.h
 AsLog.o: AsLog.c AsLog.h
 AsLogic.o: AsLogic.c AsLogic.h AsDefs.h AsLog.h
 AsTMeasure.o: AsTMeasure.c AsDefs.h AsLog.h AsKrnRelay.h AsNetlink.h \

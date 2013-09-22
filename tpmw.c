@@ -174,6 +174,7 @@ int tpmw_at_req_handler(at_rep *rep, at_req *req, int fake)
 	/* Check if this is UT */
 	if (fake == 1)
 	{
+		printf("tpmw - AT reply will be faked\n");
 		tpmw_generate_fake_at_rep(rep);
 		return 0;
 	}
@@ -202,7 +203,7 @@ int tpmw_at_req_handler(at_rep *rep, at_req *req, int fake)
 
 	/* Get the quote using AIK */
 	valid = tpmw_get_quote_with_aik();
-	if (valid != NULL)
+	if (valid == NULL)
 	{
 		printf("tpmw - Error on tpmw_get_quote_with_aik\n");
 		return -1;
@@ -320,6 +321,7 @@ int tpmw_sha1(TSS_HCONTEXT hContext, void *buf, UINT32 bufLen, BYTE *digest)
 	}
 
         memcpy(digest, tmpbuf, tmpbufLen);
+	rtn = 0;
 close:
         Tspi_Context_FreeMemory(hContext, tmpbuf);
         Tspi_Context_CloseObject(hContext, hHash);
@@ -525,7 +527,7 @@ void tpmw_generate_at_rep(at_rep *rep, TSS_VALIDATION *valid)
 			"AT reply data len [%d]\n",
 			valid->ulDataLength,
 			AT_DATA_LEN);
-	memcpy(rep->data, valid->ulDataLength, AT_DATA_LEN);
+	memcpy(rep->data, valid->rgbData, AT_DATA_LEN);
 
 	/* Copy the signature */
 	if (valid->ulValidationDataLength != AT_SIG_LEN)

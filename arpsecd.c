@@ -21,17 +21,19 @@
 #include "AsControl.h"
 #include "AsLogic.h"
 #include "AsLog.h"
+#include "AsTMeasure.h"
 
 // Definitions
-#define ARPSEC_ARGUMENTS "shfl:"
+#define ARPSEC_ARGUMENTS "shfal:"
 #define USAGE \
-    "\nUSAGE: arpsecd [-h] [-l <logfile>] [-s] [-f]\n" \
+    "\nUSAGE: arpsecd [-h] [-l <logfile>] [-s] [-f] [-a]\n" \
     "\n" \
     "where:\n" \
     "   -h - display this help information\n" \
     "   -l - set the log file (stderr by default), where\n" \
     "        logfile - the path to the file to place log information.\n" \
-    "	-f - force the attestation even if the logic approves the mapping.\n" \
+    "   -f - force the attestation even if the logic approves the mapping.\n" \
+    "   -a - allow the binding if no DB entry found during attestation.\n" \
     "   -s - simulate the kernel and network traffic\n\n"
 
 //
@@ -92,6 +94,10 @@ int main(int argc, char **argv) {
 
 	    case 'f': // Force attest flag
 		ascForceAttest();
+		break;
+
+	    case 'a': // Allow the binding if no DB entry found
+		astAllowBinding();
 		break;
 
 	    default:  // Default (unknown)
