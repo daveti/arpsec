@@ -359,12 +359,12 @@ int asnDelBindingInArpCache(askRelayMessage *msg_ptr)
         rtn = sendmsg(arpsec_sock_fd, &msg, 0);
         if (rtn == -1)
         {
-                asLogMessage("asnDelBindingInArpCache: Error on sending netlink bind msg to the kernel [%s]",
+                asLogMessage("asnDelBindingInArpCache: Error on sending netlink binding remove msg to the kernel [%s]",
                                 strerror(errno));
                 free(nlh);
                 return rtn;
         }
-        asLogMessage("asnDelBindingInArpCache: Info - send netlink bind msg to the kernel");
+        asLogMessage("asnDelBindingInArpCache: Info - send netlink binding remove msg to the kernel");
 
         free(nlh);
         return rtn;
