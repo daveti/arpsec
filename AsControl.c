@@ -269,9 +269,19 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
     // If this was a response we were looking for
     if ( ascPendingNetworkBinding(msg->target.network) ) {
 
+	// daveti: Before running the logic and updating the ARP cache, let's check the
+	// black list for MAC at first. If the MAC is in the black list,
+	// we do nothing except logging the warning for this malicious MAC.
+	// Otherwise, move on as we do usually.
+
 	// Check the source system
 	// daveti: add the forceAttestFlag for UT
 	if ( (!aslSystemTrusted(msg->source, now)) || (ascForceAttestFlag == 1) )  {
+
+	    // daveti: Even though we may have the MAC in the white list,
+	    // but we are not sure if the binding is in the ARP cache or not.
+	    // For the case here, it is much more possible that the binding is
+	    // removed by the kernel because of timer expiration.
 
 	    // daveti: Before attesting, the binding needs to be
 	    // added into ARP cache temperarily.
@@ -297,6 +307,10 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
                 	asLogMessage("ascProcessArpResponse: Error on asnDelBindingInArpCache()");
         	else
                 	asLogMessage("ascProcessArpResponse: Info - ARP cache updated (entry removed)");
+
+                // daveti: Add this MAC into the black list to prevent
+                // future ARP spoofing and to reduce the overhead of talking
+                // with the kernel.
 
 		return( -1 );
 	    }
@@ -325,9 +339,17 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 
     } else {
 
+	// daveti: Check the black list to see if we have the MAC already.
+	// If so, no logic running or ARP cache update will happen. Otherwise,
+	// run into the logic verification.
+
 	// Check the source system
 	if ( aslSystemTrusted(msg->source, now) )  {
 
+	    // daveti: As we will not use white list here, we assume the
+	    // nice remote machine would not generate the ARP response
+	    // storm given the short time...
+	
 	    // Ok, now trusted, add binding statement
 	    aslAddBindingStatement( msg->source, msg->target.network, msg->binding.media, now );
 	    asLogMessage( "Successfully processed foriegn ARP RES [%s->%s]", 
@@ -345,8 +367,13 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	    // Foreign IP from untrusted system
 	    asLogMessage( "ascProcessArpResponse: ignoring ARP RES for foreign IP [%s]", 
 		    msg->target.network );
-	}
 
+	    // daveti: Could think about adding the MAC into the black list. However,
+	    // current black list only works for the ones failed attestation. As there
+	    // is no attestation here, we have no idea if this MAC is really bad or not.
+	    // We could add the MAC into the black list, which improves the ARP security
+	    // to certain extent...But now, let's leave it as it is:)
+	}
 
     }
 
