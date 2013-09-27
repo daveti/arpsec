@@ -832,6 +832,7 @@ int ascControlLoop( int mode ) {
 
     // Close downt the procesing
     astdbShutdownDB();
+    aswlShutdownWL();
     asnShutdownNetlink();
     askShutdownRelay();
     aslShutdownLogic();
