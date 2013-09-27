@@ -4,9 +4,11 @@
 # Created	: Thu Mar 14 07:07:42 EDT 2013
 # By		: Patrick Mcdaniel
 #
+# Modified	: Sep 27, 2013 - add AsWhiteList
+# By		: daveti
 # Modified	: Sep 18, 2013 - add AsTpmDb, tpmd and AT
 # By		: daveti 
-# Modified	: Aug 7, 2013
+# Modified	: Aug 7, 2013 - add Kernel Relay and Netlink socket
 # By		: daveti
 
 #
@@ -36,6 +38,7 @@ ASOBJS=	arpsecd.o \
 	AsKrnRelay.o \
 	AsNetlink.o \
 	AsTpmDB.o \
+	AsWhiteList.o \
 	AT.o \
 	tpmw.o \
 	AsControl.o

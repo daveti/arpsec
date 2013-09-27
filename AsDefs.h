@@ -43,6 +43,7 @@ typedef struct {
     AsMediaAddress 	sndr;	// The sender of the message
     AsMediaAddress 	dest;	// The destination HW address of message
     AsNetworkAddress	sndr_net;	// daveti: save the sender's IP here
+    AsNetworkAddress	dest_net;	// daveti: save the target's IP here
     unsigned		op;	// The message type (ArpOpcode)
     union {
 	AsNetworkAddress    network;	// Network address to lookup

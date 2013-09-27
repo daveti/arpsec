@@ -27,6 +27,8 @@
 #include "AsTMeasure.h"
 #include "AsNetlink.h"
 #include "AsTpmDB.h"
+#include "AsWhiteList.h"
+#include "tpmw.h"
 
 // Defines
 #define SELECT_WAIT_PERIOD 1
@@ -34,9 +36,9 @@
 // Module data
 int	ascControlDone = 0;
 int	ascForceAttestFlag = 0;	    // daveti: Force the attestation even if the logic approves
-char	*ascLocalSystem = NULL;	    // The name of the local system
-char	*ascLocalNet = NULL;	    // The local network address name
-char	*ascLocalMedia = NULL;	    // The local media address name
+char	*ascLocalSystem = NULL;	    // The name of the local system (logic format)
+char	*ascLocalNet = NULL;	    // The local network address name (logic format)
+char	*ascLocalMedia = NULL;	    // The local media address name (logic format)
 
 //
 // Module functions
@@ -168,12 +170,25 @@ void ascReleaseMemForLocalInfo(void)
 // Description  : determine whether this response is in relation to prev request
 //
 // Inputs       : addr - the address to check
-// Outputs      : 0 if successful, -1 if failure
+// Outputs      : 1 if successful, 0 if failure
+// Dev		: daveti
 
 int ascPendingNetworkBinding( AsNetworkAddress addr ) {
     // For now, just return pending for everything
-    asLogMessage( "PENDING NETWORK BINDING: UNIMPLEMNTED, returning TRUE" );
-    return( 1 );
+    // asLogMessage( "PENDING NETWORK BINDING: UNIMPLEMNTED, returning TRUE" );
+    // daveti: we have no idea if this response is related with our prev request
+    // as we do not trace the ARP request from the kernel. However, based on the
+    // assumption that all the corresponding response should have the target as
+    // arpsecd, we will determine if this response is the one we are waiting for.
+    // NOTE: this assumption includes all the responses with the same target....
+
+    // Check if the network address is ourselves
+    asLogMessage("ascPendingNetworkBinding: Debug - addr [%s], asLocalNet [%s]",
+		addr, ascLocalNet);
+    if (strcasecmp(addr, ascLocalNet) == 0)
+    	return 1;
+
+    return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -182,12 +197,21 @@ int ascPendingNetworkBinding( AsNetworkAddress addr ) {
 // Description  : determine whether this response is in relation to prev request
 //
 // Inputs       : addr - the address to check
-// Outputs      : 0 if successful, -1 if failure
+// Outputs      : 1 if successful, 0 if failure
+// Dev		: daveti
 
 int ascPendingMediaBinding( AsMediaAddress addr )  {
     // For now, just return pending for everything
-    asLogMessage( "PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE" );
-    return( 1 );
+    // asLogMessage( "PENDING MEDIA BINDING: UNIMPLEMNTED, returning TRUE" );
+    // daveti: the same comments above, Man~!
+    
+    // Check if the MAC address is ourselves
+    asLogMessage("ascPendingMediaBinding: Debug - addr [%s], asLocalMedia [%s]",
+		addr, ascLocalMedia);
+    if (strcasecmp(addr, ascLocalMedia) == 0)
+	return 1;
+
+    return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -232,7 +256,7 @@ int ascProcessArpRequest( askRelayMessage *msg ) {
 	// Check to see if we have a good binding for this
 	asStartMetricsTimer();
 	if ( aslFindValidMediaBinding( msg->target.network, med, now ) )  {
-	    asLogMessage( "Found good ARP REQ binding {%s->%s]", msg->target.network, med );
+	    asLogMessage( "Found good ARP REQ binding [%s->%s]", msg->target.network, med );
 	} else {
 	    asLogMessage( "Failed to find good ARP REQ binding [%s]", msg->target.network );
 	}
@@ -258,7 +282,10 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
     //Local variables
     int ret = 0;
     int bound = 0;
+    int trusted = 0;
     AsTime now = time(NULL);
+    char mac[ARPSEC_NETLINK_STR_MAC_LEN];
+    char ip[ARPSEC_NETLINK_STR_IPV4_LEN];
 
     // Do a quick sanity check
     if ( msg->op != RFC_826_ARP_RES ) {
@@ -266,20 +293,38 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	exit( -1 );
     }
 
+    // Convert the logic MAC/IPv4 to normal string MAC/IPv4
+    asnLogicMacToStringMac(msg->sndr, mac);
+    asnLogicIpToStringIp(msg->sndr_net, ip);
+
     // If this was a response we were looking for
-    if ( ascPendingNetworkBinding(msg->target.network) ) {
+    //if ( ascPendingNetworkBinding(msg->target.network) ) {
+    // daveti: msg->target.network is saving the sender's IPv4!
+    if (ascPendingNetworkBinding(msg->dest_net))
+    {
+	asLogMessage("ascProcessArpResponse: Info - pending ARP response for arpsecd");
 
 	// daveti: Before running the logic and updating the ARP cache, let's check the
 	// black list for MAC at first. If the MAC is in the black list,
 	// we do nothing except logging the warning for this malicious MAC.
 	// Otherwise, move on as we do usually.
 
+	// daveti: After checking the black list, let's check the White List, to see
+	// if the MAC/IP is the one we trust. If it is, the logic layer will be bypassed.
+	// This is necessary in the real network env. As we need to trust the DNS and
+	// gateway within the network even if they do not have TPMs.
+	// NOTE: this is a security hole...
+	trusted = aswlCheckMacIpTrusted(mac, ip);
+	if (trusted)
+		asLogMessage("ascProcessArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
+			mac, ip);
+
 	// Check the source system
 	// daveti: add the forceAttestFlag for UT
-	if ( (!aslSystemTrusted(msg->source, now)) || (ascForceAttestFlag == 1) )  {
+	// daveti: add the trusted flag for White List
+	if ( (!trusted) && ((!aslSystemTrusted(msg->source, now)) || (ascForceAttestFlag == 1)) )  {
 
-	    // daveti: Even though we may have the MAC in the white list,
-	    // but we are not sure if the binding is in the ARP cache or not.
+	    // daveti: we are not sure if the binding is in the ARP cache or not.
 	    // For the case here, it is much more possible that the binding is
 	    // removed by the kernel because of timer expiration.
 
@@ -321,9 +366,9 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 
 	// Ok, now trusted, add binding statement
 	asStartMetricsTimer();
-	aslAddBindingStatement( msg->source, msg->target.network, msg->binding.media, now );
+	aslAddBindingStatement( msg->source, msg->binding.media, msg->target.network, now );
 	asStopMetricsTimer( "ARP add binding ");
-	asLogMessage( "Successfully processed ARP RES [%s->%s]", msg->target.media, msg->binding.network );
+	asLogMessage( "Successfully processed ARP RES [%s->%s]", msg->target.network, msg->binding.media);
 
 	// daveti: add the binding into ARP cache
 	if (bound == 1)
@@ -339,21 +384,35 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 
     } else {
 
+	asLogMessage("ascProcessArpResponse: Info - non-pending ARP response for arpsecd");
+
 	// daveti: Check the black list to see if we have the MAC already.
 	// If so, no logic running or ARP cache update will happen. Otherwise,
 	// run into the logic verification.
 
+        // daveti: After checking the black list, let's check the White List, to see
+        // if the MAC/IP is the one we trust. If it is, the logic layer will be bypassed.
+        // This is necessary in the real network env. As we need to trust the DNS and
+        // gateway within the network even if they do not have TPMs.
+        // NOTE: this is a security hole...
+        trusted = aswlCheckMacIpTrusted(mac, ip);
+        if (trusted)
+                asLogMessage("ascProcessArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
+                        mac, ip);
+
+
 	// Check the source system
-	if ( aslSystemTrusted(msg->source, now) )  {
+	// daveti: add the trusted flag for the white list
+	if ( (trusted) || (aslSystemTrusted(msg->source, now)) )  {
 
 	    // daveti: As we will not use white list here, we assume the
 	    // nice remote machine would not generate the ARP response
 	    // storm given the short time...
 	
 	    // Ok, now trusted, add binding statement
-	    aslAddBindingStatement( msg->source, msg->target.network, msg->binding.media, now );
+	    aslAddBindingStatement( msg->source, msg->binding.media, msg->target.network, now );
 	    asLogMessage( "Successfully processed foriegn ARP RES [%s->%s]", 
-		    msg->target.media, msg->binding.network );
+		    msg->target.network, msg->binding.media);
 
 	    // daveti: add the binding into ARP cache
             ret = asnAddBindingToArpCache(msg);
@@ -447,7 +506,10 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
     //Local variables
     int ret = 0;
     int bound = 0;
+    int trusted = 0;
     AsTime now = time(NULL);
+    char mac[ARPSEC_NETLINK_STR_MAC_LEN];
+    char ip[ARPSEC_NETLINK_STR_IPV4_LEN];
 
     // Do a quick sanity check
     if ( msg->op != RFC_903_ARP_RRES ) {
@@ -455,12 +517,34 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	exit( -1 );
     }
 
+    // Convert the logic MAC/IPv4 to normal string MAC/IPv4
+    asnLogicMacToStringMac(msg->sndr, mac);
+    asnLogicIpToStringIp(msg->sndr_net, ip);
+
     // If this was a response we were looking for
-    if ( ascPendingMediaBinding(msg->target.media) ) {
+    //if ( ascPendingMediaBinding(msg->target.media) ) {
+    if (ascPendingMediaBinding(msg->dest))
+    {
+	asLogMessage("ascProcessArpResponse: Info - pending RARP response for arpsecd");
+
+        // daveti: Before running the logic and updating the ARP cache, let's check the
+        // black list for MAC at first. If the MAC is in the black list,
+        // we do nothing except logging the warning for this malicious MAC.
+        // Otherwise, move on as we do usually.
+
+        // daveti: After checking the black list, let's check the White List, to see
+        // if the MAC/IP is the one we trust. If it is, the logic layer will be bypassed.
+        // This is necessary in the real network env. As we need to trust the DNS and
+        // gateway within the network even if they do not have TPMs.
+        // NOTE: this is a security hole...
+        trusted = aswlCheckMacIpTrusted(mac, ip);
+        if (trusted)
+                asLogMessage("ascProcessArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
+                        mac, ip);
 
 	// Check the source system
 	// daveti: add the forceAttestFlag for UT
-	if ( (!aslSystemTrusted(msg->source, now)) || (ascForceAttestFlag == 1) )  {
+	if ( (!trusted) && ((!aslSystemTrusted(msg->source, now)) || (ascForceAttestFlag == 1)) )  {
 
             // daveti: Before attesting, the binding needs to be
             // added into ARP cache temperarily.
@@ -496,8 +580,8 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 
 	// Now add the binding statement
 	asStartMetricsTimer();
-	aslAddBindingStatement( msg->source, msg->binding.media, msg->target.network, now );
-	asLogMessage( "Successfully processed RARP RES [%s->%s]", msg->target.network, msg->binding.media );
+	aslAddBindingStatement( msg->source, msg->target.media, msg->binding.network, now );
+	asLogMessage( "Successfully processed RARP RES [%s->%s]", msg->target.media, msg->binding.network);
 	asStopMetricsTimer( "RARP add binding ");
 
         // daveti: add the binding into ARP cache
@@ -514,13 +598,29 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 
     } else {
 
+	asLogMessage("ascProcessArpResponse: Info - non-pending RARP response for arpsecd");
+
+        // daveti: Check the black list to see if we have the MAC already.
+        // If so, no logic running or ARP cache update will happen. Otherwise,
+        // run into the logic verification.
+
+        // daveti: After checking the black list, let's check the White List, to see
+        // if the MAC/IP is the one we trust. If it is, the logic layer will be bypassed.
+        // This is necessary in the real network env. As we need to trust the DNS and
+        // gateway within the network even if they do not have TPMs.
+        // NOTE: this is a security hole...
+        trusted = aswlCheckMacIpTrusted(mac, ip);
+        if (trusted)
+                asLogMessage("ascProcessArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
+                        mac, ip);
+
 	// Check the source system
-	if (  aslSystemTrusted(msg->source, now) )  {
+	if ( (trusted) || (aslSystemTrusted(msg->source, now)) )  {
 
 	    // Now add the binding statement
-	    aslAddBindingStatement( msg->source, msg->binding.media, msg->target.network, now );
+	    aslAddBindingStatement( msg->source, msg->target.media, msg->binding.network, now );
 	    asLogMessage( "Successfully processed foreign RARP RES [%s->%s]", 
-		    msg->target.network, msg->binding.media );
+		    msg->target.media, msg->binding.network);
 
             // daveti: add the binding into ARP cache
 	    ret = asnAddBindingToArpCache(msg);
@@ -603,7 +703,8 @@ int ascProcessMessage( askRelayMessage *msg ) {
 int ascControlLoop( int mode ) {
     
     // Local variables
-    int rval, nfds, sim, fh;
+    //int rval, nfds, sim, fh;
+    int rval, nfds, sim;
     struct timeval next;
     fd_set rdfds, wrfds;
     askRelayMessage *msg;
@@ -625,6 +726,7 @@ int ascControlLoop( int mode ) {
 	|| (askInitRelay(sim))
 	|| (asnInitNetlink(sim))
 	|| (astdbInitDB(sim))
+	|| (aswlInitWL(sim))
 	|| (astInitAttest(sim)) )
     {
 	// Log and error out of processing
@@ -634,10 +736,12 @@ int ascControlLoop( int mode ) {
 
    // daveti: test the bidirectional netlink socket
    // daveti: test the TPM DB
+   // daveti: test the White List
    if (sim == ASKRN_RELAY)
    {
 	asnTestNetlink();
 	astdbDisplayDB();
+	aswlDisplayWL();
    }
 
    // daveti: setup the select before the loop

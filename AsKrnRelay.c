@@ -843,6 +843,8 @@ askRelayMessage * askConvertArpmsg( arpsec_rlmsg *rlmsg_ptr) {
 
 		// Set the sender IP for all the cases
 		msg->sndr_net = askGetArSipFromArpmsg(arp_ptr);
+		// Set the target IP for all the cases
+		msg->dest_net = askGetArTipFromArpmsg(arp_ptr);
 
 		switch (askGetOpcodeFromArpmsg(arp_ptr))
 		{
@@ -888,7 +890,8 @@ askRelayMessage * askConvertArpmsg( arpsec_rlmsg *rlmsg_ptr) {
 				free(tmp_ptr);
                                 msg->sndr = askGetArShaFromArpmsg(arp_ptr);
                                 msg->dest = askGetArThaFromArpmsg(arp_ptr);
-                                // Duplicate the sender's info as the target!
+                                // Duplicate the target's info as the target!
+				// daveti: NOTE, this may be wrong - needs real msg to verify...
                                 msg->target.media = askGetArThaFromArpmsg(arp_ptr);
                                 msg->binding.network = askGetArTipFromArpmsg(arp_ptr);
 				break;
@@ -1094,7 +1097,7 @@ askRelayMessage * askAllocateBuffer( askRelayMessage **buf ) {
 //
 // Inputs       : buf - the buffer to release
 // Outputs      : 0 if successful, -1 if failure
-// Updated	: daveti - sndr_net added
+// Updated	: daveti - sndr_net and dest_net added
 
 int askReleaseBuffer( askRelayMessage *buf ) {
 
@@ -1104,6 +1107,7 @@ int askReleaseBuffer( askRelayMessage *buf ) {
     if ( buf->sndr != NULL ) free( buf->sndr );
     if ( buf->dest != NULL ) free( buf->dest );
     if ( buf->sndr_net != NULL ) free( buf->sndr_net );
+    if ( buf->dest_net != NULL ) free( buf->dest_net );
     if ( (buf->op == RFC_826_ARP_REQ) || (buf->op == RFC_826_ARP_RES) ) {
 	if (  buf->target.network != NULL ) free( buf->target.network );
 	if (  buf->binding.media != NULL ) free( buf->binding.media );

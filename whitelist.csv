@@ -1,0 +1,11 @@
+# whitelist.csv
+# Holds all the trusted MAC/IPv4 mappings which do not need attestation
+# Format: MAC,IPv4
+# Sep 26, 2013
+# root@davejingtian.org
+# http://davejingtian.org
+mac,ipv4
+# dns.cs.uoregon.edu
+00:03:ba:c0:f5:79,128.223.6.9
+# vl-6-gw.uoregon.edu
+00:00:5e:00:01:01,128.223.6.1
