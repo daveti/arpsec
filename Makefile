@@ -4,6 +4,8 @@
 # Created	: Thu Mar 14 07:07:42 EDT 2013
 # By		: Patrick Mcdaniel
 #
+# Modified	: Sep 28, 2013 - add timer queue thread
+# By		: daveti
 # Modified	: Sep 27, 2013 - add AsWhiteList
 # By		: daveti
 # Modified	: Sep 18, 2013 - add AsTpmDb, tpmd and AT
@@ -26,7 +28,7 @@ CC=gcc
 CFLAGS=-c $(INCLUDES) -g -Wall 
 LINK=gcc
 LINKFLAGS=-g
-LIBS=-lgcrypt -ltspi
+LIBS=-lgcrypt -ltspi -lpthread
 
 #
 # Setup builds
@@ -41,6 +43,8 @@ ASOBJS=	arpsecd.o \
 	AsWhiteList.o \
 	AT.o \
 	tpmw.o \
+	timer_queue.o \
+	timer_thread.o \
 	AsControl.o
 TPMDOBJS= tpmd.o \
 	tpmw.o \

@@ -18,6 +18,7 @@
 #include <errno.h>
 #include <string.h>
 #include <signal.h>
+#include <pthread.h>
 
 // Project Includes
 #include "AsControl.h"
@@ -29,6 +30,8 @@
 #include "AsTpmDB.h"
 #include "AsWhiteList.h"
 #include "tpmw.h"
+#include "timer_queue.h"
+#include "timer_thread.h"
 
 // Defines
 #define SELECT_WAIT_PERIOD 1
@@ -39,7 +42,8 @@ int	ascForceAttestFlag = 0;	    // daveti: Force the attestation even if the log
 char	*ascLocalSystem = NULL;	    // The name of the local system (logic format)
 char	*ascLocalNet = NULL;	    // The local network address name (logic format)
 char	*ascLocalMedia = NULL;	    // The local media address name (logic format)
-
+extern pthread_mutex_t	timer_queue_mutex;	// daveti: timer queue mutex
+static pthread_t	timer_thread_tid;	// daveti: timer thread id
 //
 // Module functions
 
@@ -286,6 +290,7 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
     AsTime now = time(NULL);
     char mac[ARPSEC_NETLINK_STR_MAC_LEN];
     char ip[ARPSEC_NETLINK_STR_IPV4_LEN];
+    timer_queue_msg *tqm;
 
     // Do a quick sanity check
     if ( msg->op != RFC_826_ARP_RES ) {
@@ -308,6 +313,15 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	// black list for MAC at first. If the MAC is in the black list,
 	// we do nothing except logging the warning for this malicious MAC.
 	// Otherwise, move on as we do usually.
+	pthread_mutex_lock(&timer_queue_mutex);
+	tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_MAC, mac, TIMER_THREAD_BLACKLIST_MAC);
+	pthread_mutex_unlock(&timer_queue_mutex);
+	if (tqm != NULL)
+	{
+		asLogMessage("ascProcessArpResponse: Warning - got ARP response from malicious MAC [%s]",
+				mac);
+		return -1;
+	}
 
 	// daveti: After checking the black list, let's check the White List, to see
 	// if the MAC/IP is the one we trust. If it is, the logic layer will be bypassed.
@@ -356,7 +370,12 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
                 // daveti: Add this MAC into the black list to prevent
                 // future ARP spoofing and to reduce the overhead of talking
                 // with the kernel.
-
+		pthread_mutex_lock(&timer_queue_mutex);
+		ret = tq_create_add_msg(TIMER_QUEUE_MSG_TYPE_MAC, mac, TIMER_THREAD_BLACKLIST_MAC);
+		pthread_mutex_unlock(&timer_queue_mutex);
+		if (ret != 0)
+			asLogMessage("ascProcessArpResponse: Error on tq_create_add_msg for MAC [%s]",
+					mac);
 		return( -1 );
 	    }
 
@@ -389,6 +408,15 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	// daveti: Check the black list to see if we have the MAC already.
 	// If so, no logic running or ARP cache update will happen. Otherwise,
 	// run into the logic verification.
+        pthread_mutex_lock(&timer_queue_mutex);
+        tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_MAC, mac, TIMER_THREAD_BLACKLIST_MAC);
+        pthread_mutex_unlock(&timer_queue_mutex);
+        if (tqm != NULL)
+        {
+                asLogMessage("ascProcessArpResponse: Warning - got ARP response from malicious MAC [%s]",
+                                mac);
+                return -1;
+        }
 
         // daveti: After checking the black list, let's check the White List, to see
         // if the MAC/IP is the one we trust. If it is, the logic layer will be bypassed.
@@ -399,7 +427,6 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
         if (trusted)
                 asLogMessage("ascProcessArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
                         mac, ip);
-
 
 	// Check the source system
 	// daveti: add the trusted flag for the white list
@@ -433,7 +460,6 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	    // We could add the MAC into the black list, which improves the ARP security
 	    // to certain extent...But now, let's leave it as it is:)
 	}
-
     }
 
     // Otherwise this is intended for somebody else
@@ -510,6 +536,7 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
     AsTime now = time(NULL);
     char mac[ARPSEC_NETLINK_STR_MAC_LEN];
     char ip[ARPSEC_NETLINK_STR_IPV4_LEN];
+    timer_queue_msg *tqm;
 
     // Do a quick sanity check
     if ( msg->op != RFC_903_ARP_RRES ) {
@@ -525,12 +552,21 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
     //if ( ascPendingMediaBinding(msg->target.media) ) {
     if (ascPendingMediaBinding(msg->dest))
     {
-	asLogMessage("ascProcessArpResponse: Info - pending RARP response for arpsecd");
+	asLogMessage("ascProcessRArpResponse: Info - pending RARP response for arpsecd");
 
         // daveti: Before running the logic and updating the ARP cache, let's check the
         // black list for MAC at first. If the MAC is in the black list,
         // we do nothing except logging the warning for this malicious MAC.
         // Otherwise, move on as we do usually.
+        pthread_mutex_lock(&timer_queue_mutex);
+        tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
+        pthread_mutex_unlock(&timer_queue_mutex);
+        if (tqm != NULL)
+        {
+                asLogMessage("ascProcessRArpResponse: Warning - got ARP response from malicious IP [%s]",
+                                ip);
+                return -1;
+        }
 
         // daveti: After checking the black list, let's check the White List, to see
         // if the MAC/IP is the one we trust. If it is, the logic layer will be bypassed.
@@ -539,7 +575,7 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
         // NOTE: this is a security hole...
         trusted = aswlCheckMacIpTrusted(mac, ip);
         if (trusted)
-                asLogMessage("ascProcessArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
+                asLogMessage("ascProcessRArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
                         mac, ip);
 
 	// Check the source system
@@ -571,6 +607,14 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
                 else
                         asLogMessage("ascProcessRArpResponse: Info - ARP cache updated (entry removed)");
 
+		// daveti: add the malicious IP into the black list to
+		// prevent further spoofing and the overhead talking with kernel.
+                pthread_mutex_lock(&timer_queue_mutex);
+                ret = tq_create_add_msg(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
+                pthread_mutex_unlock(&timer_queue_mutex);
+                if (ret != 0)
+                        asLogMessage("ascProcessArpResponse: Error on tq_create_add_msg for IP [%s]",
+                                        ip);
 		return( -1 );
 	    }
 
@@ -598,11 +642,20 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 
     } else {
 
-	asLogMessage("ascProcessArpResponse: Info - non-pending RARP response for arpsecd");
+	asLogMessage("ascProcessRArpResponse: Info - non-pending RARP response for arpsecd");
 
         // daveti: Check the black list to see if we have the MAC already.
         // If so, no logic running or ARP cache update will happen. Otherwise,
         // run into the logic verification.
+        pthread_mutex_lock(&timer_queue_mutex);
+        tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
+        pthread_mutex_unlock(&timer_queue_mutex);
+        if (tqm != NULL)
+        {
+		asLogMessage("ascProcessRArpResponse: Warning - got ARP response from malicious IP [%s]",
+                                ip);
+                return -1;
+        }
 
         // daveti: After checking the black list, let's check the White List, to see
         // if the MAC/IP is the one we trust. If it is, the logic layer will be bypassed.
@@ -611,7 +664,7 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
         // NOTE: this is a security hole...
         trusted = aswlCheckMacIpTrusted(mac, ip);
         if (trusted)
-                asLogMessage("ascProcessArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
+                asLogMessage("ascProcessRArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
                         mac, ip);
 
 	// Check the source system
@@ -633,7 +686,7 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	} else {
 
 	    // Ignore message
-	    asLogMessage( "ascProcessArpResponse: ignoring ARP REQ for foreign IP [%s]", 
+	    asLogMessage( "ascProcessRArpResponse: ignoring RARP RES for foreign IP [%s]", 
 		    msg->target.network );
 	}
     }
@@ -727,21 +780,33 @@ int ascControlLoop( int mode ) {
 	|| (asnInitNetlink(sim))
 	|| (astdbInitDB(sim))
 	|| (aswlInitWL(sim))
-	|| (astInitAttest(sim)) )
+	|| (astInitAttest(sim))
+	|| (tq_init_queue_all(sim)) )
     {
 	// Log and error out of processing
-	asLogMessage( "arpsec deamon initalization failed, aborting.\n" );
+	asLogMessage( "arpsec daemon initalization failed, aborting.\n" );
 	return( -1 );
     }
 
    // daveti: test the bidirectional netlink socket
    // daveti: test the TPM DB
    // daveti: test the White List
+   // daveti: test timer queue and create timer thread
    if (sim == ASKRN_RELAY)
    {
 	asnTestNetlink();
 	astdbDisplayDB();
 	aswlDisplayWL();
+	tq_display_queue_all();
+
+	// Create timer thread to control the black lists
+	rval = pthread_create(&timer_thread_tid, NULL, timer_thread_main, NULL);
+	if (rval != 0)
+	{
+		asLogMessage("arpsec daemon unable to create timer thread [%s]. Aborting",
+				strerror(errno));
+		return -1;
+	}
    }
 
    // daveti: setup the select before the loop
@@ -831,12 +896,17 @@ int ascControlLoop( int mode ) {
     }
 
     // Close downt the procesing
-    astdbShutdownDB();
-    aswlShutdownWL();
-    asnShutdownNetlink();
-    askShutdownRelay();
     aslShutdownLogic();
-    tpmw_close_tpm();
+    if (sim == ASKRN_RELAY)
+    {
+	pthread_kill(timer_thread_tid, SIGTERM);
+	askShutdownRelay();
+	asnShutdownNetlink();
+	astdbShutdownDB();
+	aswlShutdownWL();
+	tpmw_close_tpm();
+	tq_destroy_queue_all();
+    }
 
     // Return sucessfully
     return( 0 );
