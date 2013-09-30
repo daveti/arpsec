@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
+#include "AsLog.h"
 #include "timer_queue.h"
 #include "timer_thread.h"
 
@@ -38,7 +39,7 @@ void *timer_thread_main(void *data)
 			{
 				if (tqm[j].timer <= time(NULL))
 				{
-					printf("timer thread: remove the msg at time [%lu] in queue [%d]\n", time(NULL), i);
+					asLogMessage("arpsecd timer thread: remove the msg at time [%lu] in queue [%d]", time(NULL), i);
 					tq_display_msg(&(tqm[j]));
 
 					if (tqm[j].type == TIMER_QUEUE_MSG_TYPE_MAC)

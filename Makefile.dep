@@ -13,7 +13,7 @@ AT.o: AT.c AT.h
 tpmw.o: tpmw.c tpmw.h AT.h
 timer_queue.o: timer_queue.c timer_queue.h timer_thread.h AsKrnRelay.h \
  AsDefs.h
-timer_thread.o: timer_thread.c timer_queue.h timer_thread.h
+timer_thread.o: timer_thread.c AsLog.h timer_queue.h timer_thread.h
 AsControl.o: AsControl.c AsControl.h AsDefs.h AsLogic.h AsKrnRelay.h \
  AsLog.h AsTMeasure.h AsTpmDB.h AsNetlink.h AsWhiteList.h tpmw.h AT.h \
  timer_queue.h timer_thread.h

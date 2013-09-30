@@ -376,6 +376,7 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 		if (ret != 0)
 			asLogMessage("ascProcessArpResponse: Error on tq_create_add_msg for MAC [%s]",
 					mac);
+		asLogMessage("ascProcessArpResponse: Info - add MAC [%s] into the MAC Black List", mac);
 		return( -1 );
 	    }
 
@@ -613,8 +614,9 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
                 ret = tq_create_add_msg(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
                 pthread_mutex_unlock(&timer_queue_mutex);
                 if (ret != 0)
-                        asLogMessage("ascProcessArpResponse: Error on tq_create_add_msg for IP [%s]",
+                        asLogMessage("ascProcessRArpResponse: Error on tq_create_add_msg for IP [%s]",
                                         ip);
+		asLogMessage("ascProcessRArpResponse: Info - add the IP [%s] into the IP Black List", ip);
 		return( -1 );
 	    }
 
@@ -807,6 +809,7 @@ int ascControlLoop( int mode ) {
 				strerror(errno));
 		return -1;
 	}
+	asLogMessage("arpsec daemon timer thread is created");
    }
 
    // daveti: setup the select before the loop
