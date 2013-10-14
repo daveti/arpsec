@@ -313,21 +313,29 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	// black list for MAC at first. If the MAC is in the black list,
 	// we do nothing except logging the warning for this malicious MAC.
 	// Otherwise, move on as we do usually.
-	pthread_mutex_lock(&timer_queue_mutex);
-	tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_MAC, mac, TIMER_THREAD_BLACKLIST_MAC);
-	pthread_mutex_unlock(&timer_queue_mutex);
-	if (tqm != NULL)
+	// daveti: if ascForceAttestFlag is enabled, even though this is the MAC in the
+	// black list, we will move on doing attestation to avoid potential DDoS/DoS attack.
+	// NOTE: ascForceAttestFlag eventually should work both for black and white list.
+	// However, to make it flexible for the hybrid network, we trust white list anyway,
+	// as these machines may not have TPM within their machines.
+	if (ascForceAttestFlag == 0)
 	{
-		asLogMessage("ascProcessArpResponse: Warning - got ARP response from malicious MAC [%s]",
+		pthread_mutex_lock(&timer_queue_mutex);
+		tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_MAC, mac, TIMER_THREAD_BLACKLIST_MAC);
+		pthread_mutex_unlock(&timer_queue_mutex);
+		if (tqm != NULL)
+		{
+			asLogMessage("ascProcessArpResponse: Warning - got ARP response from malicious MAC [%s]",
 				mac);
-		return -1;
+			return -1;
+		}
 	}
 
 	// daveti: After checking the black list, let's check the White List, to see
 	// if the MAC/IP is the one we trust. If it is, the logic layer will be bypassed.
 	// This is necessary in the real network env. As we need to trust the DNS and
 	// gateway within the network even if they do not have TPMs.
-	// NOTE: this is a security hole...
+	// NOTE: this is a security hole...ascForceAttestFlag should be considered in future!
 	trusted = aswlCheckMacIpTrusted(mac, ip);
 	if (trusted)
 		asLogMessage("ascProcessArpResponse: Info - found trusted MAC/IPv4 [%s|%s] in the white list",
@@ -370,13 +378,17 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
                 // daveti: Add this MAC into the black list to prevent
                 // future ARP spoofing and to reduce the overhead of talking
                 // with the kernel.
-		pthread_mutex_lock(&timer_queue_mutex);
-		ret = tq_create_add_msg(TIMER_QUEUE_MSG_TYPE_MAC, mac, TIMER_THREAD_BLACKLIST_MAC);
-		pthread_mutex_unlock(&timer_queue_mutex);
-		if (ret != 0)
-			asLogMessage("ascProcessArpResponse: Error on tq_create_add_msg for MAC [%s]",
+		if (ascForceAttestFlag == 0)
+		{
+			pthread_mutex_lock(&timer_queue_mutex);
+			ret = tq_create_add_msg(TIMER_QUEUE_MSG_TYPE_MAC, mac, TIMER_THREAD_BLACKLIST_MAC);
+			pthread_mutex_unlock(&timer_queue_mutex);
+			if (ret != 0)
+				asLogMessage("ascProcessArpResponse: Error on tq_create_add_msg for MAC [%s]",
 					mac);
-		asLogMessage("ascProcessArpResponse: Info - add MAC [%s] into the MAC Black List", mac);
+			asLogMessage("ascProcessArpResponse: Info - add MAC [%s] into the MAC Black List", mac);
+		}
+
 		return( -1 );
 	    }
 
@@ -409,14 +421,17 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	// daveti: Check the black list to see if we have the MAC already.
 	// If so, no logic running or ARP cache update will happen. Otherwise,
 	// run into the logic verification.
-        pthread_mutex_lock(&timer_queue_mutex);
-        tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_MAC, mac, TIMER_THREAD_BLACKLIST_MAC);
-        pthread_mutex_unlock(&timer_queue_mutex);
-        if (tqm != NULL)
-        {
-                asLogMessage("ascProcessArpResponse: Warning - got ARP response from malicious MAC [%s]",
+	if (ascForceAttestFlag == 0)
+	{
+        	pthread_mutex_lock(&timer_queue_mutex);
+        	tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_MAC, mac, TIMER_THREAD_BLACKLIST_MAC);
+        	pthread_mutex_unlock(&timer_queue_mutex);
+        	if (tqm != NULL)
+        	{
+                	asLogMessage("ascProcessArpResponse: Warning - got ARP response from malicious MAC [%s]",
                                 mac);
-                return -1;
+                	return -1;
+		}
         }
 
         // daveti: After checking the black list, let's check the White List, to see
@@ -559,14 +574,17 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
         // black list for MAC at first. If the MAC is in the black list,
         // we do nothing except logging the warning for this malicious MAC.
         // Otherwise, move on as we do usually.
-        pthread_mutex_lock(&timer_queue_mutex);
-        tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
-        pthread_mutex_unlock(&timer_queue_mutex);
-        if (tqm != NULL)
-        {
-                asLogMessage("ascProcessRArpResponse: Warning - got ARP response from malicious IP [%s]",
+	if (ascForceAttestFlag == 0)
+	{
+        	pthread_mutex_lock(&timer_queue_mutex);
+        	tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
+        	pthread_mutex_unlock(&timer_queue_mutex);
+        	if (tqm != NULL)
+        	{
+                	asLogMessage("ascProcessRArpResponse: Warning - got ARP response from malicious IP [%s]",
                                 ip);
-                return -1;
+                	return -1;
+		}
         }
 
         // daveti: After checking the black list, let's check the White List, to see
@@ -610,13 +628,17 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 
 		// daveti: add the malicious IP into the black list to
 		// prevent further spoofing and the overhead talking with kernel.
-                pthread_mutex_lock(&timer_queue_mutex);
-                ret = tq_create_add_msg(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
-                pthread_mutex_unlock(&timer_queue_mutex);
-                if (ret != 0)
-                        asLogMessage("ascProcessRArpResponse: Error on tq_create_add_msg for IP [%s]",
+		if (ascForceAttestFlag == 0)
+		{
+                	pthread_mutex_lock(&timer_queue_mutex);
+                	ret = tq_create_add_msg(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
+                	pthread_mutex_unlock(&timer_queue_mutex);
+                	if (ret != 0)
+                        	asLogMessage("ascProcessRArpResponse: Error on tq_create_add_msg for IP [%s]",
                                         ip);
-		asLogMessage("ascProcessRArpResponse: Info - add the IP [%s] into the IP Black List", ip);
+			asLogMessage("ascProcessRArpResponse: Info - add the IP [%s] into the IP Black List", ip);
+		}
+
 		return( -1 );
 	    }
 
@@ -649,14 +671,17 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
         // daveti: Check the black list to see if we have the MAC already.
         // If so, no logic running or ARP cache update will happen. Otherwise,
         // run into the logic verification.
-        pthread_mutex_lock(&timer_queue_mutex);
-        tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
-        pthread_mutex_unlock(&timer_queue_mutex);
-        if (tqm != NULL)
-        {
-		asLogMessage("ascProcessRArpResponse: Warning - got ARP response from malicious IP [%s]",
+	if (ascForceAttestFlag == 0)
+	{
+        	pthread_mutex_lock(&timer_queue_mutex);
+        	tqm = tq_get_msg_on_str(TIMER_QUEUE_MSG_TYPE_IPV4, ip, TIMER_THREAD_BLACKLIST_IPV4);
+        	pthread_mutex_unlock(&timer_queue_mutex);
+        	if (tqm != NULL)
+        	{
+			asLogMessage("ascProcessRArpResponse: Warning - got ARP response from malicious IP [%s]",
                                 ip);
-                return -1;
+                	return -1;
+		}
         }
 
         // daveti: After checking the black list, let's check the White List, to see
