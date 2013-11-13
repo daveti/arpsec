@@ -735,6 +735,10 @@ int ascProcessMessage( askRelayMessage *msg ) {
     // Log the fact that we got the message
     int ret;
     char buf[256];
+// daveti: add timing
+struct timeval tpstart,tpend;
+float timeuse = 0;
+
     asLogMessage( "Processing ARP from kernel [%s]", askMessageToString(msg,buf, 256) );
 
 
@@ -752,7 +756,19 @@ int ascProcessMessage( askRelayMessage *msg ) {
 	break;
 
 	case RFC_826_ARP_RES:    // ARP Response
+//daveti: timing for ARP response processing
+{
+gettimeofday(&tpstart,NULL);
+
 	ret = ascProcessArpResponse( msg );
+
+//daveti: end timing
+gettimeofday(&tpend,NULL);
+timeuse=1000000*(tpend.tv_sec-tpstart.tv_sec)+tpend.tv_usec-tpstart.tv_usec;
+timeuse/=1000000;
+asLogMessage("arpsec - Total time on ascProcessArpResponse_time() is [%f] ms\n", timeuse);
+}
+
 	break;
 
 	case RFC_903_ARP_RREQ:   // ARP Reverse Request
@@ -786,6 +802,8 @@ int ascControlLoop( int mode ) {
     //int rval, nfds, sim, fh;
     int rval, nfds, sim;
     struct timeval next;
+    struct timeval tpstart, tpend;
+    float timeuse;
     fd_set rdfds, wrfds;
     askRelayMessage *msg;
 #ifdef UNIT_TESTING
@@ -907,7 +925,18 @@ int ascControlLoop( int mode ) {
 	//if ( (msg = askGetNextMessage()) != NULL ) {
 	// daveti: make it a while loop
 	while ((msg = askGetNextMessage()) != NULL) {
+//daveti: timing
+timeuse = 0;
+gettimeofday(&tpstart,NULL);
+
 	    ascProcessMessage(msg);
+
+//daveti: timing end
+gettimeofday(&tpend,NULL);
+timeuse=1000000*(tpend.tv_sec-tpstart.tv_sec)+tpend.tv_usec-tpstart.tv_usec;
+timeuse/=1000000;
+asLogMessage("arpsec - Total time on ascProcessMessage() is [%f] ms\n", timeuse);
+
 	    askReleaseBuffer(msg);
 	}
 

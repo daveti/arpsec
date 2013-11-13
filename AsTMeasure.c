@@ -17,6 +17,7 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#include <sys/time.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -283,7 +284,7 @@ int astAttestSystem(askRelayMessage *msg)
 		if (at_is_msg_rep(&rep) != 1)
 		{
 			/* DDos may be considered here */
-			asLogMessage("Error: invalid AT request - drop it");
+			asLogMessage("Error: invalid AT reply - drop it");
 		}
 		else
 		{
