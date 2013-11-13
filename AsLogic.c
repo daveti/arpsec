@@ -352,7 +352,9 @@ asLogMessage("Total time on Prolog_Logic_Run() is [%f] ms", timeuse);
 		aslWritePrologLogic( "\n" );
 		if ( ! aslWaitOutput( "yes", ASL_WAIT_IS ) ) {
 		    asLogMessage( "Prolog launch failed, aborting." );
-		    exit( -1 );
+		    //exit( -1 );
+		    //daveti: make it untrusted!
+		    return( 0 );
 		}
 	    }
 
@@ -372,19 +374,22 @@ asLogMessage("Total time on Prolog_Logic_Run() is [%f] ms", timeuse);
 	// Negative confirmation
 	if ( strcmp( aslOutputLines[i], "no") == 0 ) {
 	    asLogMessage( "System (%s) found to be NOT trusted at time (%lu)", s, t );
-	    return( 1 );
+	    return( 0 );
 	}
+
 	// daveti: add another pattern of negative confirmation
 	// currently no idea why this may be triggered...
 	if ( aslIsGplOutputNegative(aslOutputLines[i]) == 1 ) {
 	    asLogMessage( "System (%s) found to be NOT trusted at time (%lu) with time delay", s, t);
-	    return ( 1 );
+	    return ( 0 );
 	}
     }
 
     // Did not get a response we could recognize, abort
     asLogMessage( "Faild to get a postive or negative result on system trust (%s,%lu)", s, t);
-    exit( -1 );
+    //exit( -1 );
+    //daveti: make it untrusted
+    return( 0 );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
