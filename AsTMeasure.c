@@ -149,6 +149,11 @@ int astAttestSystem(askRelayMessage *msg)
 	at_req	req;
 	at_rep	rep;
 
+//daveti: timing for attestation
+struct timeval tpstart,tpend;
+float timeuse = 0;
+gettimeofday(&tpstart,NULL);
+
 	// Find the corresponding DB entry
 	entry = astFindDBEntry(msg);
 	if (entry == NULL)
@@ -273,6 +278,11 @@ int astAttestSystem(askRelayMessage *msg)
 
 	memcpy(&rep, sock_buff, AT_REP_LEN);
 	ret = -1;
+
+//daveti: timing for AT reply processing
+struct timeval tpstart1,tpend1;
+float timeuse1 = 0;
+
 	/* Handle the first msg and then go thru the queue */
 	do
 	{
@@ -289,7 +299,20 @@ int astAttestSystem(askRelayMessage *msg)
 		else
 		{
 			/* Process the AT reply and do the verification */
-			if (tpmw_at_rep_handler(&rep) != 0)
+
+//daveti: timing for AT reply
+timeuse1 = 0;
+gettimeofday(&tpstart1,NULL);
+
+			ret = tpmw_at_rep_handler(&rep);
+
+//daveti: timing end for AT reply
+gettimeofday(&tpend1,NULL);
+timeuse1=1000000*(tpend1.tv_sec-tpstart1.tv_sec)+tpend1.tv_usec-tpstart1.tv_usec;
+timeuse1/=1000000;
+asLogMessage("Total time on tpmw_at_rep_handler_in_attestation() is [%f] ms", timeuse1);
+
+			if (ret != 0)
 			{
 				asLogMessage("Error: attestation failed for remote [%s]",
 						msg->source);
@@ -309,6 +332,13 @@ int astAttestSystem(askRelayMessage *msg)
 close:
 	freeaddrinfo(res);
 	close(sock_fd);
+
+//daveti timing end
+gettimeofday(&tpend,NULL);
+timeuse=1000000*(tpend.tv_sec-tpstart.tv_sec)+tpend.tv_usec-tpstart.tv_usec;
+timeuse/=1000000;
+asLogMessage("Total time on Attestation_Run() is [%f] ms", timeuse);
+
 	return ret;
 }
 

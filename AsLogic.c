@@ -19,6 +19,7 @@
 #include <errno.h>
 #include <signal.h>
 #include <sys/types.h>
+#include <sys/time.h>
 #include <regex.h>
 
 // Project Includes
@@ -310,11 +311,23 @@ int aslSystemTrusted( AsSystem s, AsTime t ) {
     if ( ! aslogic_initialized ) aslInitLogic();
 
     // Setup command and run 
+//daveti: timing for logic running
+struct timeval tpstart,tpend;
+float timeuse = 0;
+gettimeofday(&tpstart,NULL);
+
     snprintf( cmd, 256, "trusted(%s,%lu).\n", s, t );
     aslWritePrologLogic( cmd );
 
     // Get the input
     int lines = aslGetPrologOutput();
+
+//daveti: timing end
+gettimeofday(&tpend,NULL);
+timeuse=1000000*(tpend.tv_sec-tpstart.tv_sec)+tpend.tv_usec-tpstart.tv_usec;
+timeuse/=1000000;
+asLogMessage("Total time on Prolog_Logic_Run() is [%f] ms", timeuse);
+
     for ( i=0; i<lines; i++)  {
 
 	// daveti: handle speical case with empty ouput

@@ -766,7 +766,7 @@ gettimeofday(&tpstart,NULL);
 gettimeofday(&tpend,NULL);
 timeuse=1000000*(tpend.tv_sec-tpstart.tv_sec)+tpend.tv_usec-tpstart.tv_usec;
 timeuse/=1000000;
-asLogMessage("arpsec - Total time on ascProcessArpResponse_time() is [%f] ms\n", timeuse);
+asLogMessage("arpsec - Total time on ascProcessArpResponse_time() is [%f] ms", timeuse);
 }
 
 	break;
@@ -935,7 +935,7 @@ gettimeofday(&tpstart,NULL);
 gettimeofday(&tpend,NULL);
 timeuse=1000000*(tpend.tv_sec-tpstart.tv_sec)+tpend.tv_usec-tpstart.tv_usec;
 timeuse/=1000000;
-asLogMessage("arpsec - Total time on ascProcessMessage() is [%f] ms\n", timeuse);
+asLogMessage("arpsec - Total time on ascProcessMessage() is [%f] ms", timeuse);
 
 	    askReleaseBuffer(msg);
 	}
