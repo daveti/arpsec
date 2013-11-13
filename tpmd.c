@@ -8,6 +8,8 @@
  * between the communication between arpsecd and tpmd.
  * For detailes, please read the damn code!
  * Reference: Trousers (tcsd)
+ * Nov 12, 2013
+ * Added timing for AT msg processing
  * Sep 16, 2013 (my brithday, man)
  * root@davejingtian.org
  * http://davejingtian.org
@@ -99,6 +101,10 @@ int main(int argc, char **argv)
 		{"config", 1, NULL, 'c'},
 		{0, 0, 0, 0}
 	};
+
+//daveti: add time measurement for this function call
+struct timeval tpstart,tpend;
+float timeuse = 0;
 
 	while ((c = getopt_long(argc, argv, "fhdc:", long_options, &option_index)) != -1) {
 		switch (c) {
@@ -237,6 +243,9 @@ int main(int argc, char **argv)
 			}
 			else
 			{
+//daveti: do the time measure
+timeuse = 0;
+gettimeofday(&tpstart,NULL);
 				/* Process the AT request and generate the AT reply */
 				if (tpmw_at_req_handler(&msg_rep, &msg_req, use_fake_tpm_info) != 0)
 				{
@@ -255,6 +264,12 @@ int main(int argc, char **argv)
 					else
 						printf("tpmd - Info: sent an reply to host [%s]\n", hostname);
 				}
+//daveti: end timing
+gettimeofday(&tpend,NULL);
+timeuse=1000000*(tpend.tv_sec-tpstart.tv_sec)+tpend.tv_usec-tpstart.tv_usec;
+timeuse/=1000000;
+printf("tpmd - Total time on tpmw_at_req_handler() and send() is [%f] ms\n", timeuse);
+
 			}
 
 		} while ((at_get_msg_num_queue(AT_MSG_REQ) != 0) && (at_pop_head_msg_queue(&msg_req, AT_MSG_REQ) == 0));
