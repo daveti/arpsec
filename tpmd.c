@@ -278,6 +278,9 @@ printf("tpmd - Total time on tpmw_at_req_handler() and send() is [%f] ms\n", tim
 		free(hostname);
 		hostname = NULL;
 
+		/* Close the socket file */
+		close(newsd);
+
 	} while (1);
 
 	/* To close correctly, we must receive a SIGTERM */
