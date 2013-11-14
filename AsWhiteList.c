@@ -22,7 +22,7 @@
 
 /* Global definitions */
 static whitelist_entry *aswl[ASWL_ENTRY_NUM_MAX];
-static int aswlEntryNum;
+static int aswlEntryNum;	// this number (if valid) should be the next available empty entry!
 
 /* AsWhiteList methods */
 
@@ -212,4 +212,33 @@ int aswlCheckMacIpTrusted(char *mac, char *ip)
 			return 1;
 	return 0;
 }
+
+/* Add the MAC/IP binding into the white list - as a cache */
+int aswlAddMacIpTrusted(char *mac, char *ip)
+{
+	/* First need to check if we have the room */
+	if (aswlEntryNum >= ASWL_ENTRY_NUM_MAX)
+	{
+		asLogMessage("Error: Unable to add MAC/IP [%s|%s] into the whitelist - no extra space", mac, ip);
+		return -1;
+	}
+
+	/* Second to see if the binding is already there */
+	if (aswlCheckMacIpTrusted(mac, ip) == 1)
+	{
+		asLogMessage("Warining: The MAC/IP [%s|%s] is already in the white list", mac, ip);
+		return 0;
+	}
+
+	/* Now add this new binding */
+	whitelist_entry tmpEntry;
+	memset(&tmpEntry, 0, sizeof(tmpEntry));
+	strcpy(tmpEntry.mac, mac);
+	strcpy(tmpEntry.ipv4, ip);
+	memcpy(aswl[aswlEntryNum], &tmpEntry, sizeof(tmpEntry));
+	aswlEntryNum++;
+
+	return 0;
+}
+
 

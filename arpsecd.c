@@ -24,7 +24,7 @@
 #include "AsTMeasure.h"
 
 // Definitions
-#define ARPSEC_ARGUMENTS "shfal:"
+#define ARPSEC_ARGUMENTS "shfcal:"
 #define USAGE \
     "\nUSAGE: arpsecd [-h] [-l <logfile>] [-s] [-f] [-a]\n" \
     "\n" \
@@ -34,6 +34,7 @@
     "        logfile - the path to the file to place log information.\n" \
     "   -f - force the attestation even if the logic approves the mapping.\n" \
     "   -a - allow the binding if no DB entry found during attestation.\n" \
+    "	-c - cache the MAC/IP if the attestation succeed.\n" \
     "   -s - simulate the kernel and network traffic\n\n"
 
 //
@@ -94,6 +95,10 @@ int main(int argc, char **argv) {
 
 	    case 'f': // Force attest flag
 		ascForceAttest();
+		break;
+
+	    case 'c': // Enable the cache
+		ascEnableCache();
 		break;
 
 	    case 'a': // Allow the binding if no DB entry found

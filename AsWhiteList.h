@@ -49,5 +49,9 @@ whitelist_entry *aswlFindEntryBasedOnIp(char *ip);
 
 /* Check if the MAC/IP binding is in the white list */
 int aswlCheckMacIpTrusted(char *mac, char *ip);
+
+/* Add the MAC/IP binding into the white list - used as a cache */
+int aswlAddMacIpTrusted(char *mac, char *ip);
+
 	
 #endif

@@ -18,6 +18,9 @@
 //
 // Module methods
 
+// Enable cache to avoid frequent attestation
+void ascEnableCache(void);
+
 // Force the attestation for UT
 void ascForceAttest(void);
 

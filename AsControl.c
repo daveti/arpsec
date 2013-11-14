@@ -39,6 +39,7 @@
 // Module data
 int	ascControlDone = 0;
 int	ascForceAttestFlag = 0;	    // daveti: Force the attestation even if the logic approves
+int	ascEnableCacheFlag = 0;	    // daveti: Enable cache (using the whitelist) if the attestation succeeds
 char	*ascLocalSystem = NULL;	    // The name of the local system (logic format)
 char	*ascLocalNet = NULL;	    // The local network address name (logic format)
 char	*ascLocalMedia = NULL;	    // The local media address name (logic format)
@@ -46,6 +47,19 @@ extern pthread_mutex_t	timer_queue_mutex;	// daveti: timer queue mutex
 static pthread_t	timer_thread_tid;	// daveti: timer thread id
 //
 // Module functions
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : ascEnableCache
+// Description  : Enable the cache (using the whitelist) if the attestation succeeds
+//
+// Inputs       : void
+// Outputs      : void
+
+void ascEnableCache(void)
+{
+        ascEnableCacheFlag = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -394,6 +408,16 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 
 	    // Add the attestation time to the logic
 	    aslAddTrustStatement( msg->source, now );
+
+	    // Add the MAC/IP into the whitelist (cache) if the attestation succeeds
+	    // Currently only ARP response has caching functionality
+	    //  - RARP response is not implemented yet!
+	    if (ascEnableCacheFlag == 1)
+	    {
+		asLogMessage("ascProcessArpResponse: Info - add MAC/IP [%s|%s] into the white list", mac, ip);
+		if (aswlAddMacIpTrusted(mac, ip) == -1)
+			asLogMessage("ascProcessArpResponse: Error on aswlAddMacIpTrusted()");
+	    }
 	}
 
 	// Ok, now trusted, add binding statement
