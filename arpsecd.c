@@ -24,9 +24,9 @@
 #include "AsTMeasure.h"
 
 // Definitions
-#define ARPSEC_ARGUMENTS "shfcal:"
+#define ARPSEC_ARGUMENTS "shfcanl:"
 #define USAGE \
-    "\nUSAGE: arpsecd [-h] [-l <logfile>] [-s] [-f] [-a]\n" \
+    "\nUSAGE: arpsecd [-h] [-l <logfile>] [-s] [-f] [-a] [-c] [-n]\n" \
     "\n" \
     "where:\n" \
     "   -h - display this help information\n" \
@@ -35,6 +35,7 @@
     "   -f - force the attestation even if the logic approves the mapping.\n" \
     "   -a - allow the binding if no DB entry found during attestation.\n" \
     "	-c - cache the MAC/IP if the attestation succeed.\n" \
+    "	-n - no logic layer invoked (always return 'untrusted' from logic layer).\n" \
     "   -s - simulate the kernel and network traffic\n\n"
 
 //
@@ -99,6 +100,10 @@ int main(int argc, char **argv) {
 
 	    case 'c': // Enable the cache
 		ascEnableCache();
+		break;
+
+	    case 'n': // Disable the logic layer
+		aslDisableLogic();
 		break;
 
 	    case 'a': // Allow the binding if no DB entry found

@@ -49,6 +49,22 @@ pid_t	aslLogicPid;
 int	aslNumOutputLines;	    // The number of output lines
 char	aslOutputLines[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];  // logic buffer (input)
 char	aslOutputBuffer[MAX_OUTPUT_LINES*MAX_OUTPUT_LINE_LENGTH];  // logic buffer (lines)
+int	aslDisableLogicFlag = 0;    // daveti: for better performance, logic layer could be disabled!
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : aslDisableLogic
+// Description  : Disable the logic layer even though it is init'd
+//
+// Inputs       : void
+// Outputs      : void
+
+void aslDisableLogic( void )
+{
+	aslDisableLogicFlag = 1;
+	asLogMessage("arpsecd: Warning - Logic layer (gprolog) is disabled");
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -112,6 +128,10 @@ int aslShutdownLogic( void ) {
 
 int aslAddTrustStatement( AsSystem s, AsTime t ) {
 
+    // Check if the logic layer is disabled
+    if (aslDisableLogicFlag == 1)
+	return 0;
+
     // Local variables
     char cmd[256];
 
@@ -145,6 +165,10 @@ int aslAddTrustStatement( AsSystem s, AsTime t ) {
 // Outputs	: 0 if successful, -1 if not
 
 int aslAddBindingStatement( AsSystem s, AsMediaAddress m, AsNetworkAddress n, AsTime t ) {
+
+    // Check if the logic layer is disabled
+    if (aslDisableLogicFlag == 1)
+	return 0;
 
     // Local variables
     char cmd[256];
@@ -181,6 +205,10 @@ int aslAddBindingStatement( AsSystem s, AsMediaAddress m, AsNetworkAddress n, As
 // Outputs	: 1 if found, 0 if not
 	
 int aslFindValidMediaBinding( AsNetworkAddress n, AsMediaAddress m, AsTime t ) {
+
+    // Check if the logic layer is disabled
+    if (aslDisableLogicFlag == 1)
+	return 0;
 
     // Local variables
     int i;
@@ -302,6 +330,10 @@ int aslFindValidNetworkBinding( AsNetworkAddress n, AsMediaAddress m, AsTime t )
 // Outputs	: 1 if trusted, 0 if not
 
 int aslSystemTrusted( AsSystem s, AsTime t ) {
+
+    // Check if the logic layer is disabled
+    if (aslDisableLogicFlag == 1)
+	return 0;
 
     // Local variables
     int i;

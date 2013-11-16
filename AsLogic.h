@@ -9,13 +9,17 @@
 //
 //  Author : Patrick McDaniel
 //  Created : Sun Mar 24 06:53:30 EDT 2013
-//
+//  Dev    : Dave Tian
+//  Modified: Sat Nov 16 10:25:58 PST 2013
 
 // Project Includes
 #include "AsDefs.h"
 
 //
 // Module methods
+
+// Disable the logic layer for arpsecd
+void aslDisableLogic( void );
 	
 // Initialize the interface to the Logic engine (with parameters)
 int aslInitLogic( void );
