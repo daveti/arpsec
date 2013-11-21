@@ -27,6 +27,9 @@ void ascForceAttest(void);
 // Disable the logic find bindings for performance debugging
 void ascDisableLogicFindBindings(void);
 
+// Disable the logic add bindings for performance debugging
+void ascDisableLogicAddBindings(void);
+
 // Get the local information associated with this process
 char *ascGetLocalNet(void);
 char *ascGetLocalMedia(void);

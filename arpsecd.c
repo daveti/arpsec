@@ -24,9 +24,9 @@
 #include "AsTMeasure.h"
 
 // Definitions
-#define ARPSEC_ARGUMENTS "shfcandl:"
+#define ARPSEC_ARGUMENTS "shfcandbl:"
 #define USAGE \
-    "\nUSAGE: arpsecd [-h] [-l <logfile>] [-s] [-f] [-a] [-c] [-n] [-d]\n" \
+    "\nUSAGE: arpsecd [-h] [-l <logfile>] [-s] [-f] [-a] [-c] [-n] [-d] [-b]\n" \
     "\n" \
     "where:\n" \
     "   -h - display this help information\n" \
@@ -37,6 +37,7 @@
     "	-c - cache the MAC/IP if the attestation succeed.\n" \
     "	-n - no logic layer invoked (always return 'untrusted' from logic layer).\n" \
     "	-d - disable aslFindXXXBindings (only for dev performance debugging).\n" \
+    "	-b - disable aslAddBindingsXXX (only for dev performance debugging).\n" \
     "   -s - simulate the kernel and network traffic\n\n"
 
 //
@@ -109,6 +110,10 @@ int main(int argc, char **argv) {
 
 	    case 'd': // Disable the aslFindXXXBindings
 		ascDisableLogicFindBindings();
+		break;
+
+	    case 'b': // Disable the aslAddBindingsXXX
+		ascDisableLogicAddBindings();
 		break;
 
 	    case 'a': // Allow the binding if no DB entry found

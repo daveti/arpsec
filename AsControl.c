@@ -41,6 +41,7 @@ int	ascControlDone = 0;
 int	ascForceAttestFlag = 0;	    // daveti: Force the attestation even if the logic approves
 int	ascEnableCacheFlag = 0;	    // daveti: Enable cache (using the whitelist) if the attestation succeeds
 int 	ascDisableLogicFindBindingsFlag = 0;	// daveti: disable the aslFindXXXBindings calls for perf debugging
+int	ascDisableLogicAddBindingsFlag = 0;	// daveti: dsiable the aslAddBindingsXXX calls for perf debugging
 char	*ascLocalSystem = NULL;	    // The name of the local system (logic format)
 char	*ascLocalNet = NULL;	    // The local network address name (logic format)
 char	*ascLocalMedia = NULL;	    // The local media address name (logic format)
@@ -48,6 +49,19 @@ extern pthread_mutex_t	timer_queue_mutex;	// daveti: timer queue mutex
 static pthread_t	timer_thread_tid;	// daveti: timer thread id
 //
 // Module functions
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : ascDisableLogicAddBindings
+// Description  : Disable the aslAddBindingsXXX calls in the ARP msg processing
+//
+// Inputs       : void
+// Outputs      : void
+
+void ascDisableLogicAddBindings(void)
+{
+        ascDisableLogicAddBindingsFlag = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -439,9 +453,14 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	}
 
 	// Ok, now trusted, add binding statement
-	asStartMetricsTimer();
-	aslAddBindingStatement( msg->source, msg->binding.media, msg->target.network, now );
-	asStopMetricsTimer( "ARP add binding ");
+	if (ascDisableLogicAddBindingsFlag == 0)
+	{
+		asStartMetricsTimer();
+		aslAddBindingStatement( msg->source, msg->binding.media, msg->target.network, now );
+		asStopMetricsTimer( "ARP add binding ");
+	} else {
+		asLogMessage("ascProcessArpResponse: Info - aslAddBindingStatement() is disabled");
+	}
 	asLogMessage( "Successfully processed ARP RES [%s->%s]", msg->target.network, msg->binding.media);
 
 	// daveti: add the binding into ARP cache
@@ -495,7 +514,10 @@ int ascProcessArpResponse( askRelayMessage *msg ) {
 	    // storm given the short time...
 	
 	    // Ok, now trusted, add binding statement
-	    aslAddBindingStatement( msg->source, msg->binding.media, msg->target.network, now );
+	    if (ascDisableLogicAddBindingsFlag == 0)
+	    	aslAddBindingStatement( msg->source, msg->binding.media, msg->target.network, now );
+	    else
+		asLogMessage("ascProcessArpResponse: Info - aslAddBindingStatement() is disabled");
 	    asLogMessage( "Successfully processed foriegn ARP RES [%s->%s]", 
 		    msg->target.network, msg->binding.media);
 
@@ -693,10 +715,15 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	}
 
 	// Now add the binding statement
-	asStartMetricsTimer();
-	aslAddBindingStatement( msg->source, msg->target.media, msg->binding.network, now );
+	if (ascDisableLogicAddBindingsFlag == 0)
+	{
+		asStartMetricsTimer();
+		aslAddBindingStatement( msg->source, msg->target.media, msg->binding.network, now );
+		asStopMetricsTimer( "RARP add binding ");
+	} else {
+		asLogMessage("ascProcessRArpResponse: Info - aslAddBindingStatement() is disabled");
+	}
 	asLogMessage( "Successfully processed RARP RES [%s->%s]", msg->target.media, msg->binding.network);
-	asStopMetricsTimer( "RARP add binding ");
 
         // daveti: add the binding into ARP cache
 	if (bound == 1)
@@ -744,7 +771,10 @@ int ascProcessRArpResponse( askRelayMessage *msg ) {
 	if ( (trusted) || (aslSystemTrusted(msg->source, now)) )  {
 
 	    // Now add the binding statement
-	    aslAddBindingStatement( msg->source, msg->target.media, msg->binding.network, now );
+	    if (ascDisableLogicAddBindingsFlag == 0)
+	    	aslAddBindingStatement( msg->source, msg->target.media, msg->binding.network, now );
+	    else
+		asLogMessage("ascProcessRArpResponse: Info - aslAddBindingStatement() is disabled");
 	    asLogMessage( "Successfully processed foreign RARP RES [%s->%s]", 
 		    msg->target.media, msg->binding.network);
 
