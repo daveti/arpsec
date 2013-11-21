@@ -40,6 +40,7 @@
 int	ascControlDone = 0;
 int	ascForceAttestFlag = 0;	    // daveti: Force the attestation even if the logic approves
 int	ascEnableCacheFlag = 0;	    // daveti: Enable cache (using the whitelist) if the attestation succeeds
+int 	ascDisableLogicFindBindingsFlag = 0;	// daveti: disable the aslFindXXXBindings calls for perf debugging
 char	*ascLocalSystem = NULL;	    // The name of the local system (logic format)
 char	*ascLocalNet = NULL;	    // The local network address name (logic format)
 char	*ascLocalMedia = NULL;	    // The local media address name (logic format)
@@ -47,6 +48,19 @@ extern pthread_mutex_t	timer_queue_mutex;	// daveti: timer queue mutex
 static pthread_t	timer_thread_tid;	// daveti: timer thread id
 //
 // Module functions
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function     : ascDisableLogicFindBindings
+// Description  : Disable the aslFindXXXBinding calls in the ARP msg processing
+//
+// Inputs       : void
+// Outputs      : void
+
+void ascDisableLogicFindBindings(void)
+{
+        ascDisableLogicFindBindingsFlag = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -272,14 +286,18 @@ int ascProcessArpRequest( askRelayMessage *msg ) {
     } else {
 
 	// Check to see if we have a good binding for this
-	asStartMetricsTimer();
-	if ( aslFindValidMediaBinding( msg->target.network, med, now ) )  {
-	    asLogMessage( "Found good ARP REQ binding [%s->%s]", msg->target.network, med );
+	if (ascDisableLogicFindBindingsFlag == 0)
+	{
+		asStartMetricsTimer();
+		if ( aslFindValidMediaBinding( msg->target.network, med, now ) )  {
+	    		asLogMessage( "Found good ARP REQ binding [%s->%s]", msg->target.network, med );
+		} else {
+	    		asLogMessage( "Failed to find good ARP REQ binding [%s]", msg->target.network );
+		}
+		asStopMetricsTimer( "ARP Binding" );
 	} else {
-	    asLogMessage( "Failed to find good ARP REQ binding [%s]", msg->target.network );
+		asLogMessage("ascProcessArpRequest: Info - aslFindValidMediaBinding() is disabled");
 	}
-	asStopMetricsTimer( "ARP Binding" );
-
     }
 
     // Return the return code
@@ -544,14 +562,18 @@ int ascProcessRArpRequest( askRelayMessage *msg ) {
     } else {
 
 	// Check to see if we have a good binding for this
-	asStartMetricsTimer();
-	if ( aslFindValidNetworkBinding( net, msg->target.media, now ) )  {
-	    asLogMessage( "Found good ARP binding {%s->%s]", msg->target.media, net );
+	if (ascDisableLogicFindBindingsFlag == 0)
+	{
+		asStartMetricsTimer();
+		if ( aslFindValidNetworkBinding( net, msg->target.media, now ) )  {
+	    		asLogMessage( "Found good ARP binding {%s->%s]", msg->target.media, net );
+		} else {
+	    		asLogMessage( "Failed to find good RARP REQ binding [%s]", msg->target.media );
+		}
+		asStopMetricsTimer( "RARP Binding" );
 	} else {
-	    asLogMessage( "Failed to find good RARP REQ binding [%s]", msg->target.media );
+		asLogMessage("ascProcessRArpRequest: Info - aslFindValidNetworkBinding() is disabled");
 	}
-	asStopMetricsTimer( "RARP Binding" );
-
     }
 
     // Return the processing code

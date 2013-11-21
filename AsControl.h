@@ -24,6 +24,9 @@ void ascEnableCache(void);
 // Force the attestation for UT
 void ascForceAttest(void);
 
+// Disable the logic find bindings for performance debugging
+void ascDisableLogicFindBindings(void);
+
 // Get the local information associated with this process
 char *ascGetLocalNet(void);
 char *ascGetLocalMedia(void);
