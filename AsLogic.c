@@ -271,6 +271,10 @@ int aslFindValidMediaBinding( AsNetworkAddress n, AsMediaAddress m, AsTime t ) {
 
 int aslFindValidNetworkBinding( AsNetworkAddress n, AsMediaAddress m, AsTime t )  {
 
+    // Check if the logic layer is disabled
+    if (aslDisableLogicFlag == 1)
+        return 0;
+
     // Local variables
     int i;
     char cmd[256], *buf;
@@ -295,7 +299,7 @@ int aslFindValidNetworkBinding( AsNetworkAddress n, AsMediaAddress m, AsTime t )
 	if ( strncmp( VALID_BINDING_MARKER, aslOutputLines[i], strlen(VALID_BINDING_MARKER)) == 0 ) {
 
 	    // Copy and remove trailing space
-	    strncpy( n, &aslOutputLines[i][strlen(VALID_BINDING_MARKER)], MAX_MEDADDR_LENGTH );
+	    strncpy( n, &aslOutputLines[i][strlen(VALID_BINDING_MARKER)], MAX_NETADDR_LENGTH );
 	    buf = strchr( n, ' ' );
 	    if ( buf != NULL ) *buf = 0x0;
 	    asLogMessage( "Find valid network binding successfully (%s,%lu)->[%s]", m, t, n );
