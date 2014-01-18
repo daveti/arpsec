@@ -1220,7 +1220,7 @@ int askAddMsgIntoRelayQueue(void *msg, int len)
 	int rtn = 0;
 
 	numOfMsgInQueue = askGetMsgNumInRelayQueue();
-	numOfMsgRequested = len % sizeof(arpsec_rlmsg);
+	numOfMsgRequested = len / sizeof(arpsec_rlmsg);
 	numOfMsgToBeQueued = numOfMsgRequested;
 
 	// Defensive checking
@@ -1319,7 +1319,7 @@ int askGetMsgNumInRelayQueue(void)
 	if (relayQueuePtr == relayQueue + ARPSEC_RELAY_QUEUE_SIZE)
 		return ARPSEC_RELAY_QUEUE_MSG_NUM;
 	else
-		return (int)((relayQueuePtr-relayQueue)%sizeof(arpsec_rlmsg));
+		return (int)((relayQueuePtr-relayQueue)/sizeof(arpsec_rlmsg));
 }
 
 
